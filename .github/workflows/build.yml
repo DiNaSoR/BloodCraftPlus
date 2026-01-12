@@ -9,7 +9,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     env:
-      NEW_SHARED_KEY: ${{ secrets.NEW_SHARED_KEY }}
+      NEW_SHARED_KEY: ${{ secrets['NEW_SHARED_KEY'] }}
 
     steps:
       - name: Checkout

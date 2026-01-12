@@ -7,8 +7,8 @@ jobs:
   publish_on_thunderstore:
     runs-on: ubuntu-latest
     env:
-      NEW_SHARED_KEY: ${{ secrets.NEW_SHARED_KEY }}
-      THUNDERSTORE_TOKEN: ${{ secrets.THUNDERSTORE_KEY }}
+      NEW_SHARED_KEY: ${{ secrets['NEW_SHARED_KEY'] }}
+      THUNDERSTORE_TOKEN: ${{ secrets['THUNDERSTORE_KEY'] }}
     steps:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
