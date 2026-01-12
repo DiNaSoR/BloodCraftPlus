@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- Built from src/index.template.html. Run Docs/DesignMock/build.ps1 -->
 <html lang="en">
 
 <head>
@@ -20,7 +21,7 @@
         <button class="main-tab" data-main="bloodcraft">Bloodcraft</button>
       </div>
 
-      <!-- Equipment Tab Panel -->
+            <!-- Equipment Tab Panel -->
       <div class="equipment-panel main-panel is-active" id="panel-equipment">
         <!-- Gear Level Section -->
         <div class="gear-level-section">
@@ -141,7 +142,7 @@
         <div class="note">Equipment tab with Bloodcraft stats summary</div>
       </div>
 
-      <!-- Bloodcraft Tab Panel -->
+            <!-- Bloodcraft Tab Panel -->
       <div class="panel main-panel" id="panel-bloodcraft">
         <div class="subtabs">
           <button class="subtab" data-tab="prestige">Prestige</button>
@@ -152,7 +153,7 @@
         </div>
 
         <div class="content">
-          <div class="content-section" id="tab-prestige">
+                    <div class="content-section" id="tab-prestige">
             <div class="familiar-scrollable">
               <div class="familiar-card">
                 <div class="familiar-card-header is-prestige">
@@ -212,7 +213,8 @@
             </div>
           </div>
 
-          <div class="content-section" id="tab-exoform">
+
+                    <div class="content-section" id="tab-exoform">
             <!-- If Exo prestiging is disabled, show a simple status message instead of the UI below. -->
             <!-- <div style="text-align:center; opacity:.75;">Exo prestiging disabled.</div> -->
 
@@ -320,7 +322,8 @@
             </div>
           </div>
 
-          <div class="content-section" id="tab-bonuses">
+
+                    <div class="content-section" id="tab-bonuses">
             <!-- System Toggle Tabs -->
             <div class="stat-bonus-tabs">
               <button class="stat-bonus-tab is-active" data-stat-type="weapon">
@@ -505,7 +508,8 @@
             </div>
           </div>
 
-          <div class="content-section" id="tab-progression">
+
+                    <div class="content-section" id="tab-progression">
             <!-- Progression Sub-tabs (Professions / Class) -->
             <div class="familiar-mode-tabs">
               <button class="familiar-mode-tab is-active" data-prog-mode="professions">
@@ -718,7 +722,8 @@
               </div>
             </div>
           </div>
-          <div class="content-section is-active" id="tab-familiars">
+
+                    <div class="content-section is-active" id="tab-familiars">
             <!-- Familiars - internal sections (Manage / Battles) -->
             <div class="familiar-mode-tabs">
               <button class="familiar-mode-tab is-active" data-fam-mode="manage">
@@ -1101,7 +1106,7 @@
 
             <!-- TALENTS TAB -->
             <div class="familiar-mode-content" id="familiar-talents-content">
-              <!-- Talents styles moved to design-mock.css -->
+              <!-- Talents styles live in design-mock.familiars.css -->
 
               <div class="familiar-scrollable">
                 <div class="familiar-card talent-card" style="height: auto; min-height: 600px;">
@@ -1195,11 +1200,13 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
+
     </div>
 
-    <div class="note">Edit CSS variables in design-mock.css to tweak sizing.</div>
+    <div class="note">Edit CSS variables in design-mock.tokens.css to tweak sizing.</div>
   </div>
   </div>
   </div>

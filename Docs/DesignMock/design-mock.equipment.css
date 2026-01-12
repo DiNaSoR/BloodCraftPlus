@@ -1,0 +1,196 @@
+    /* Equipment Tab Styles */
+    .equipment-panel {
+      width: var(--panel-width);
+      height: var(--panel-height);
+      background: url("./assets/sprites/Window_Background_02.png") center/100% 100% no-repeat;
+      padding: 20px var(--panel-padding-x);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gear-level-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .gear-level-number {
+      font-size: 48px;
+      font-weight: bold;
+      color: #e8e2d7;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+      line-height: 1;
+    }
+
+    .gear-level-bar {
+      width: 180px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #8b1a1a, transparent);
+      margin: 4px 0;
+    }
+
+    .gear-level-label {
+      font-size: 16px;
+      color: #9a938a;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .bloodcraft-stats-summary {
+      font-size: 14px;
+      color: #d9b36c;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      margin-top: 6px;
+    }
+
+    .equipment-stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 16px 0;
+      padding: 0 20px;
+    }
+
+    .equipment-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .equipment-stat-icon {
+      width: 28px;
+      height: 28px;
+      background: url("./assets/sprites/Icon_Stat_PhysicalPower.png") center/contain no-repeat;
+      opacity: 0.6;
+    }
+
+    .equipment-stat-value {
+      font-size: 22px;
+      color: #e8e2d7;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .equipment-stat-label {
+      font-size: 13px;
+      color: #9a938a;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .equipment-slots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0 12px;
+    }
+
+    .equipment-slot {
+      width: 64px;
+      height: 64px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .equipment-slot.has-item {
+      background: rgba(40, 35, 30, 0.8);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .equipment-slot-upgrade {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background: #4fd154;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+
+    .equipment-slot-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hotbar-slots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 16px 0;
+    }
+
+    .hotbar-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .hotbar-divider {
+      width: 2px;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 0 8px;
+    }
+
+    .hotbar-slot {
+      width: 56px;
+      height: 56px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .hotbar-slot.has-item {
+      background: rgba(40, 35, 30, 0.8);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .hotbar-slot-number {
+      position: absolute;
+      bottom: 2px;
+      left: 4px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 56px);
+      gap: 4px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .inventory-slot {
+      width: 56px;
+      height: 56px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .inventory-slot.has-item {
+      background: rgba(40, 35, 30, 0.7);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .inventory-slot.locked {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .inventory-slot.locked::after {
+      content: "";
+      width: 20px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.15);
+      clip-path: polygon(20% 0%, 80% 0%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
+    }
+

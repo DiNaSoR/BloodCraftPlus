@@ -81,7 +81,7 @@ internal static class DataService
         Exoform,
         Battles,
         StatBonuses,
-        Professions,
+        Progression,
         Familiars
     }
 

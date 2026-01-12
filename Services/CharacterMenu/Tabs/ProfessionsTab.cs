@@ -68,7 +68,7 @@ internal class ProfessionsTab : CharacterMenuTabBase, ICharacterMenuTabWithPanel
     public override string TabId => "Professions";
     public override string TabLabel => "Professions";
     public override string SectionTitle => "Professions";
-    public override BloodcraftTab TabType => BloodcraftTab.Professions;
+    public override BloodcraftTab TabType => BloodcraftTab.Progression;
 
     #endregion
 

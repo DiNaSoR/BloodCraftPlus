@@ -1,0 +1,270 @@
+    /* Stat Bonuses - Unity Compatible */
+    .stat-bonus-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 12px;
+    }
+
+    .stat-bonus-tab {
+      flex: 1;
+      padding: 10px 16px;
+      background: url("./assets/sprites/Tab_Normal.png") center/100% 100% no-repeat;
+      border: none;
+      font-family: var(--body-font);
+      font-size: 13px;
+      color: var(--tab-color);
+      text-shadow: var(--tab-shadow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .stat-bonus-tab:hover {
+      color: #ffffff;
+    }
+
+    .stat-bonus-tab.is-active {
+      color: #f4e3e3;
+      box-shadow: inset 0 0 0 999px var(--accent);
+    }
+
+    .stat-bonus-tab-icon {
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.9;
+    }
+
+    .stat-bonus-tab-icon.is-weapon {
+      background-image: url("./assets/sprites/Poneti_Icon_Sword_v2_48.png");
+    }
+
+    .stat-bonus-tab-icon.is-blood {
+      background-image: url("./assets/sprites/Stunlock_Icons_spellbook_blood.png");
+    }
+
+    .stat-bonus-content {
+      display: none;
+    }
+
+    .stat-bonus-content.is-active {
+      display: block;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      margin-bottom: 10px;
+      background: url("./assets/sprites/Act_BG.png") center/100% 100% no-repeat;
+      background-color: var(--header-tint);
+      background-blend-mode: multiply;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 44px;
+    }
+
+    .stat-header-icon {
+      width: 32px;
+      height: 32px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+    }
+
+    .stat-header-icon.is-sword {
+      background-image: url("./assets/sprites/Poneti_Icon_Sword_v2_48.png");
+    }
+
+    .stat-header-icon.is-spear {
+      background-image: url("./assets/sprites/Poneti_Icon_Spear_v2_01.png");
+    }
+
+    .stat-header-icon.is-axe {
+      background-image: url("./assets/sprites/Poneti_Icon_Axe_v2_04.png");
+    }
+
+    .stat-header-icon.is-crossbow {
+      background-image: url("./assets/sprites/Poneti_Icon_Crossbow_v2_01.png");
+    }
+
+    .stat-header-icon.is-warrior {
+      background-image: url("./assets/sprites/BloodType_Warrior_Fill.png");
+    }
+
+    .stat-header-icon.is-rogue {
+      background-image: url("./assets/sprites/BloodType_Rogue_Fill.png");
+    }
+
+    .stat-header-icon.is-brute {
+      background-image: url("./assets/sprites/BloodType_Brute_Fill.png");
+    }
+
+    .stat-header-icon.is-scholar {
+      background-image: url("./assets/sprites/BloodType_Scholar_Fill.png");
+    }
+
+    .stat-header-icon.is-creature {
+      background-image: url("./assets/sprites/BloodType_Creature_Fill.png");
+    }
+
+    .stat-header-icon.is-worker {
+      background-image: url("./assets/sprites/BloodType_Worker_Fill.png");
+    }
+
+    .stat-header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .stat-header-name {
+      font-size: 16px;
+      color: #f1d7b2;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .stat-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .stat-header-slots {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .stat-header-level {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .stat-header-level-bar {
+      width: 60px;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .stat-header-level-bar span {
+      display: block;
+      height: 100%;
+      width: var(--pct, 0%);
+      background: linear-gradient(90deg, #d4a34f, #f1d17a);
+    }
+
+    .stat-scrollable {
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .stat-scrollable::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .stat-scrollable::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-scrollable::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+
+    .stat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      background: url("./assets/sprites/Window_Box_Background.png") center/100% 100% no-repeat;
+      background-color: rgba(9, 9, 12, 0.6);
+      background-blend-mode: multiply;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+
+    .stat-row:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateX(2px);
+    }
+
+    .stat-row-selected {
+      background: linear-gradient(90deg, rgba(128, 12, 16, 0.4), rgba(88, 28, 18, 0.25));
+      border-color: rgba(128, 12, 16, 0.6);
+    }
+
+    .stat-row-selected:hover {
+      border-color: rgba(180, 30, 30, 0.7);
+    }
+
+    .stat-check {
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #4fd154;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+    }
+
+    .stat-row-selected .stat-check {
+      background: rgba(79, 209, 84, 0.15);
+      border-color: rgba(79, 209, 84, 0.4);
+    }
+
+    .stat-name {
+      flex: 1;
+      font-size: 13px;
+      color: #e8e2d7;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .stat-row:not(.stat-row-selected) .stat-name {
+      opacity: 0.7;
+    }
+
+    .stat-value {
+      font-size: 13px;
+      color: #4fd154;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      min-width: 50px;
+      text-align: right;
+    }
+
+    .stat-row:not(.stat-row-selected) .stat-value {
+      opacity: 0.6;
+    }
+
+    .note {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+

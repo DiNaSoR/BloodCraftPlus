@@ -70,7 +70,7 @@ internal static class CharacterMenuService
     static Transform subTabRoot;
     static readonly List<SimpleStunButton> subTabButtons = [];
     static readonly List<TMP_Text> subTabLabels = [];
-    static Transform professionsRoot;
+    static Transform progressionRoot;
     static Transform prestigeRoot;
     static Transform exoformRoot;
     static Transform statBonusesRoot;
@@ -100,7 +100,7 @@ internal static class CharacterMenuService
         BloodcraftTab.Prestige,
         BloodcraftTab.Exoform,
         BloodcraftTab.StatBonuses,
-        BloodcraftTab.Professions,
+        BloodcraftTab.Progression,
         BloodcraftTab.Familiars
     ];
 
@@ -110,7 +110,7 @@ internal static class CharacterMenuService
         { BloodcraftTab.Exoform, "Exoform" },
         { BloodcraftTab.Battles, "Familiar Battles" },
         { BloodcraftTab.StatBonuses, "Stat Bonuses" },
-        { BloodcraftTab.Professions, "Professions" },
+        { BloodcraftTab.Progression, "Progression" },
         { BloodcraftTab.Familiars, "Familiars" }
     };
 
@@ -120,7 +120,7 @@ internal static class CharacterMenuService
         { BloodcraftTab.Exoform, "Exoforms" },
         { BloodcraftTab.Battles, "Familiar Battles" },
         { BloodcraftTab.StatBonuses, "Stat Bonuses" },
-        { BloodcraftTab.Professions, "Professions" },
+        { BloodcraftTab.Progression, "Progression" },
         { BloodcraftTab.Familiars, "Familiar Management" }
     };
 
@@ -236,7 +236,7 @@ internal static class CharacterMenuService
         CharacterMenuIntegration.Reset();
         _familiarsTab.Reset();
         _statBonusesTab.Reset();
-        _professionsTab.Reset();
+        _progressionTab.Reset();
         _exoformTab.Reset();
         _prestigeTab.Reset();
 
@@ -256,7 +256,7 @@ internal static class CharacterMenuService
         subTabRoot = null;
         subTabButtons.Clear();
         subTabLabels.Clear();
-        professionsRoot = null;
+        progressionRoot = null;
         prestigeRoot = null;
         statBonusesRoot = null;
         exoformRoot = null;
@@ -671,7 +671,7 @@ internal static class CharacterMenuService
             entryTemplate = CreateEntryTemplate(entriesRoot, referenceText);
         }
 
-        professionsRoot = _professionsTab.CreatePanel(bodyRoot, referenceText);
+        progressionRoot = _progressionTab.CreatePanel(bodyRoot, referenceText);
         prestigeRoot = _prestigeTab.CreatePanel(bodyRoot, referenceText);
         exoformRoot = _exoformTab.CreatePanel(bodyRoot, referenceText);
         statBonusesRoot = _statBonusesTab.CreatePanel(bodyRoot, referenceText);
@@ -1374,10 +1374,10 @@ internal static class CharacterMenuService
             EnsureEntries(0);
             _prestigeTab.UpdatePanel();
         }
-        else if (activeTab == BloodcraftTab.Professions)
+        else if (activeTab == BloodcraftTab.Progression)
         {
             EnsureEntries(0);
-            _professionsTab.UpdatePanel();
+            _progressionTab.UpdatePanel();
         }
         else if (activeTab == BloodcraftTab.Exoform)
         {
@@ -1411,7 +1411,8 @@ internal static class CharacterMenuService
     static readonly ExoformTab _exoformTab = new();
     static readonly BattlesTab _battlesTab = new();
     static readonly StatBonusesTab _statBonusesTab = new();
-    static readonly ProfessionsTab _professionsTab = new();
+    static readonly ProfessionsTab _professionsTab = new(); // Kept for fallback, but ProgressionTab wraps it
+    static readonly ProgressionTab _progressionTab = new();
     static readonly FamiliarsTab _familiarsTab = new();
 
     // Note: AppendPrestigeEntries, AppendExoFormEntries, and AppendFamiliarBattleEntries
