@@ -57,7 +57,9 @@
                 <None Include="Factory/README-Usage.cs" />
         </ItemGroup>
 	
-	<Target Name="BuildToServer" AfterTargets="Build" Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\BepInEx\plugins')">
+	<Target Name="BuildToServer"
+	        AfterTargets="Build"
+	        Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\BepInEx\plugins') AND '$(SkipServerCopy)' != 'true'">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\BepInEx\plugins" ContinueOnError="true" />
 	</Target>
 	
