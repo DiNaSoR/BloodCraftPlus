@@ -132,6 +132,40 @@
 
 ---
 
+## L-010 — CI: `dotnet build -t:Compile` does not create `bin/` outputs
+
+### Status
+- Active
+
+### Tags
+- [CI] [Build] [DX]
+
+### Introduced
+- 2026-01-12
+
+### Symptom
+- GitHub Actions release steps fail with unmatched files when expecting `bin/Release/.../*.dll` after running `dotnet build -t:Compile`.
+
+### Root cause
+- The `Compile` target emits assemblies to `obj/...` (intermediate output); `Build` is responsible for copying outputs to `bin/...`.
+
+### Wrong approach (DO NOT REPEAT)
+- Using `-t:Compile` and then uploading/releasing from `bin/...` paths.
+
+### Correct approach
+- Use `dotnet build` (default `Build` target) and disable optional post-build steps via properties.
+- If compile-only is required, release from `obj/...` (intermediate) paths intentionally.
+
+### Rule
+> If CI expects outputs under `bin/...`, do not use `-t:Compile` (or adjust artifact paths accordingly).
+
+### References
+- Files:
+  - `.github/workflows/build.yml`
+  - `.github/workflows/release.yml`
+
+---
+
 ## L-009 — MSBuild post-build targets must not break builds
 
 ### Status
