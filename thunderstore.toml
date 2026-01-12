@@ -1,0 +1,17 @@
+[package.dependencies]
+BepInEx-BepInExPack_V_Rising = "1.733.2"
+
+[publish]
+communities = ["v-rising"]
+repository = "https://thunderstore.io"
+
+[publish.categories]
+v-rising = ["oakveil-update", "mods", "client"]
+
+[package]
+namespace = "DiNaSoR"
+name = "EclipsePlus"
+versionNumber = "1.3.12"
+description = "Client UI for BloodCraftPlus!"
+websiteUrl = "https://github.com/DiNaSoR/BloodCraftPlus"
+containsNsfwContent = false

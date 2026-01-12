@@ -1,0 +1,67 @@
+[Root]
+label=Main menu
+path=MainMenuCanvas(Clone)
+active=True
+dump=D:\Program Files (x86)\Steam\steamapps\common\VRising\BepInEx\Eclipse/Dumps\MainMenu_20251226_190527
+
+[Sprites]
+image=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip|sprite=Tooltip_BG|file=Tooltip_BG.png|border=(4,4,4,4)|rect=(0,0,50,50)|ppu=100|type=Sliced
+image=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/SoftwareCursor|sprite=MapIcon_Target__|file=MapIcon_Target__.png|border=(0,0,0,0)|rect=(0,0,16,16)|ppu=100|type=Simple
+
+[Fonts]
+text=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent/Header|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=40|style=Bold, SmallCaps|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent/SteamId|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=16|style=Bold, SmallCaps|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent/Header|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=40|style=Bold, SmallCaps|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent/SteamId|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=16|style=Bold, SmallCaps|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre/WatermarkParent/Header|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=40|style=Bold, SmallCaps|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre/WatermarkParent/SteamId|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=32|style=Bold, SmallCaps|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip/TooltipText|font=BORUTTA GROUP - Nocturne Serif Regular SDF|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_SDF_atlas.png|fontSize=18|style=Normal|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+text=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString/background/Text|font=BORUTTA GROUP - Nocturne Serif Regular DropShadow|atlas=BORUTTA_GROUP_-_Nocturne_Serif_Regular_DropShadow_atlas.png|fontSize=20|style=Bold|material=BORUTTA GROUP - Nocturne Serif Regular SDF Material (Instance)
+
+[Layout]
+path=MainMenuCanvas(Clone)|active=True|anchorMin=(0.5,0.5)|anchorMax=(0.5,0.5)|pivot=(0.5,0.5)|pos=(960,540)|size=(1920,1080)|rectW=1920|rectH=1080|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas|active=True|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0.5,0.5)|pos=(1920,1080)|size=(1920,1080)|rectW=1920|rectH=1080|scale=(2,2,2)
+path=MainMenuCanvas(Clone)/Canvas/MenuParent|active=True|anchorMin=(0,0)|anchorMax=(1,1)|pivot=(0.5,0.5)|pos=(0,0)|size=(0,0)|rectW=1920|rectH=1080|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/MenuParent/AmbienceVolume|active=False|anchorMin=(0.5,0.5)|anchorMax=(0.5,0.5)|pivot=(0.5,0.5)|pos=(0,0)|size=(100,100)|rectW=100|rectH=100|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/MenuParent/MusicVolume|active=False|anchorMin=(0.5,0.5)|anchorMax=(0.5,0.5)|pivot=(0.5,0.5)|pos=(0,0)|size=(100,100)|rectW=100|rectH=100|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft|active=True|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0.5,0)|pos=(32,32)|size=(0,0)|rectW=0|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,0)|size=(340,300)|rectW=340|rectH=300|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent/Header|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,24)|size=(380,0)|rectW=380|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent/SteamId|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,0)|size=(380,0)|rectW=380|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame|active=True|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0.5,0)|pos=(32,280)|size=(0,0)|rectW=0|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,0)|size=(340,300)|rectW=340|rectH=300|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent/Header|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,24)|size=(380,0)|rectW=380|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent/SteamId|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,0)|size=(380,0)|rectW=380|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre|active=True|anchorMin=(0,0)|anchorMax=(1,1)|pivot=(0.5,0)|pos=(0,0)|size=(0,0)|rectW=1920|rectH=1080|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre/WatermarkParent|active=False|anchorMin=(0,0)|anchorMax=(1,1)|pivot=(0,0)|pos=(0,0)|size=(0,0)|rectW=1920|rectH=1080|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre/WatermarkParent/Header|active=False|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0,0)|pos=(0,24)|size=(380,91.21)|rectW=380|rectH=91.21|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre/WatermarkParent/SteamId|active=False|anchorMin=(0.5,0.5)|anchorMax=(0.5,0.5)|pivot=(0.5,0.5)|pos=(0,100)|size=(1920,38.41)|rectW=1920|rectH=38.41|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/PopupParent|active=True|anchorMin=(0,0)|anchorMax=(1,1)|pivot=(0.5,0.5)|pos=(0,0)|size=(0,0)|rectW=1920|rectH=1080|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager|active=True|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0.5,0.5)|pos=(0,0)|size=(0,0)|rectW=0|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip|active=False|anchorMin=(0.5,0.5)|anchorMax=(0.5,0.5)|pivot=(1,0.5)|pos=(51.11,2.22)|size=(212,28.11)|rectW=212|rectH=28.11|scale=(1.11,1.11,1.11)
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip/TooltipText|active=False|anchorMin=(0,1)|anchorMax=(0,1)|pivot=(0.5,0.5)|pos=(106,-14.06)|size=(200,20.11)|rectW=200|rectH=20.11|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu|active=True|anchorMin=(0,0)|anchorMax=(0,0)|pivot=(0.5,0.5)|pos=(1920,1080)|size=(3840,2160)|rectW=3840|rectH=2160|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent|active=True|anchorMin=(0,0)|anchorMax=(1,1)|pivot=(0.5,0.5)|pos=(0,0)|size=(0,0)|rectW=3840|rectH=2160|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString|active=True|anchorMin=(0,0)|anchorMax=(1,1)|pivot=(0.5,0.5)|pos=(0,0)|size=(0,0)|rectW=3840|rectH=2160|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString/background|active=True|anchorMin=(1,0)|anchorMax=(1,0)|pivot=(1,0)|pos=(0,0)|size=(0,0)|rectW=0|rectH=0|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString/background/Text|active=True|anchorMin=(0,1)|anchorMax=(0,1)|pivot=(1,0)|pos=(0,0)|size=(315.63,24.01)|rectW=315.63|rectH=24.01|scale=(1,1,1)
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/SoftwareCursor|active=False|anchorMin=(0.5,0.5)|anchorMax=(0.5,0.5)|pivot=(0.5,0.5)|pos=(0,0)|size=(25,25)|rectW=25|rectH=25|scale=(1,1,1)
+
+[LayoutElements]
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip/TooltipText|minW=-1|minH=-1|prefW=200|prefH=-1|flexW=-1|flexH=-1|ignoreLayout=False
+
+[LayoutGroups]
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip|type=Vertical|padding=(6,6,4,4)|spacing=4|align=UpperLeft|ctrlW=False|ctrlH=True|expandW=False|expandH=False
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString/background|type=Vertical|padding=(0,0,0,0)|spacing=0|align=UpperLeft|ctrlW=False|ctrlH=False|expandW=True|expandH=True
+
+[ContentSizeFitters]
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent/Header|hFit=Unconstrained|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft/WatermarkParent/SteamId|hFit=Unconstrained|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent/Header|hFit=Unconstrained|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkBottomLeft_InGame/WatermarkParent/SteamId|hFit=Unconstrained|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/Canvas/BetaWatermarkCentre/WatermarkParent/Header|hFit=Unconstrained|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip|hFit=PreferredSize|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/Canvas/TooltipManager/Tooltip/TooltipText|hFit=PreferredSize|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString/background|hFit=PreferredSize|vFit=PreferredSize
+path=MainMenuCanvas(Clone)/CanvasUnscaledMainMenu/VersionParent/VersionString/background/Text|hFit=PreferredSize|vFit=PreferredSize
+

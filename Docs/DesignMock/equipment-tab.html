@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Equipment Tab - 1:1 Unity Mock</title>
+  <style>
+    :root {
+      /* Unity reference dimensions */
+      --equipment-tab-width: 596px;
+      --equipment-tab-height: 343px;
+      --equipment-bg-width: 594px;
+      --equipment-bg-height: 267px;
+
+      /* GearLevelParent */
+      --gear-parent-width: 160px;
+      --gear-parent-height: 112px;
+
+      /* StatEntries GridLayout */
+      --stat-cell-size: 100px;
+      --stat-spacing: 48px;
+
+      /* Equipment Container GridLayout */
+      --slot-cell-size: 55px;
+      --slot-spacing: 12px;
+
+      /* Fonts */
+      --title-font: "Cinzel", "Palatino Linotype", serif;
+      --body-font: "Cinzel", "Palatino Linotype", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, #1a2330, #0b0f14 60%);
+      color: #e8e2d7;
+      font-family: var(--body-font);
+    }
+
+    .stage {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    /* EquipmentTab - pos:(0,-108) size:(-24,343) anchor:stretch-top pivot:center-top */
+    .equipment-tab {
+      position: relative;
+      width: var(--equipment-tab-width);
+      height: var(--equipment-tab-height);
+      /* anchor stretch horizontally with -24 margin = 596px effective */
+    }
+
+    /* EquipmentBG - pos:(0,7) size:(594,267) anchor:center-top pivot:center-top */
+    .equipment-bg {
+      position: absolute;
+      top: -7px; /* Unity Y is inverted, pos Y=7 means 7px from anchor */
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--equipment-bg-width);
+      height: var(--equipment-bg-height);
+      background: rgba(255, 255, 255, 0.05); /* color:(1,1,1,0.05) */
+      pointer-events: none;
+    }
+
+    /* GearLevelParent - pos:(0,0) size:(160,112) anchor:center-top pivot:center-top */
+    .gear-level-parent {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--gear-parent-width);
+      height: var(--gear-parent-height);
+    }
+
+    /* Image (gear icon) - pos:(0,0) size:(56,56) anchor:center pivot:center */
+    .gear-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: #383838; /* color:(0.22,0.22,0.22,1) */
+      border-radius: 4px;
+    }
+
+    /* Line - pos:(0,8) size:(180,12) anchor:bottom-center of icon pivot:center */
+    /* Line is child of Image, positioned 8px below icon's bottom edge */
+    .gear-line {
+      position: absolute;
+      top: calc(50% + 28px + 8px); /* center + half icon height + 8px offset */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 12px;
+      background: linear-gradient(90deg, transparent, #8b1a1a, transparent);
+    }
+
+    /* Gear Level (number) - pos:(0,0) size:(stretch,40) anchor:center pivot:center */
+    /* Number "21" overlays the icon, centered in parent */
+    .gear-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 40px;
+      font-size: 33.3px;
+      color: rgba(222, 222, 219, 1); /* color:(0.87,0.87,0.86,1) */
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      text-align: center;
+      line-height: 40px;
+    }
+
+    /* GearLevelText - pos:(0,-35) size:(stretch,30) anchor:center pivot:center */
+    /* "Gear Level" label is 35px below center */
+    .gear-label {
+      position: absolute;
+      top: calc(50% + 35px);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 30px;
+      font-size: 18px;
+      color: rgba(128, 128, 128, 1); /* color:(0.5,0.5,0.5,1) */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      line-height: 30px;
+    }
+
+    /* BloodcraftStatsSummary - pos:(0,-5) size:(300,20) anchor:bottom-center pivot:bottom-center */
+    /* Y=-5 means 5px below the bottom edge of GearLevelParent */
+    /* pivot:(0.5,0) means bottom of text is at anchor, so bottom:-5px positions text's bottom 5px below parent */
+    .bloodcraft-stats {
+      position: absolute;
+      bottom: -5px; /* Text bottom is 5px below GearLevelParent bottom */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11.7px;
+      color: rgba(217, 179, 115, 1); /* color:(0.85,0.7,0.45,1) */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      width: 300px;
+      height: 20px;
+      line-height: 20px;
+    }
+
+    /* StatEntries - pos:(0,-112) size:(stretch,100) anchor:stretch-top pivot:center-top */
+    /* GridLayout: cellSize:(100,100) spacing:(48,0) constraint:FixedRowCount=1 */
+    .stat-entries {
+      position: absolute;
+      top: 112px; /* Unity -112 from top anchor */
+      left: 0;
+      right: 0;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      gap: var(--stat-spacing);
+    }
+
+    /* Physical Power, MaxHealth, Spellpower - size:(100,100) */
+    /* Each stat entry cell from GridLayout */
+    .stat-entry {
+      width: var(--stat-cell-size);
+      height: var(--stat-cell-size);
+      position: relative;
+    }
+
+    /* AttributeBigEntry > Image - pos:(0,0) or pos:(0,6) size:(56,56) anchor:center pivot:center */
+    /* Icon is centered in the 100x100 cell */
+    .stat-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(51, 51, 51, 1); /* color:(0.2,0.2,0.2,1) */
+      border-radius: 4px;
+    }
+
+    /* Layout > Number - pos:(0,0) size:(120,24) fontSize:20 anchor:center pivot:center */
+    /* Number overlays the icon, centered in cell */
+    .stat-value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 24px;
+      font-size: 20px;
+      color: rgba(230, 230, 230, 1); /* color:(0.9,0.9,0.9,1) */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      line-height: 24px;
+    }
+
+    /* Layout > Text - pos:(0,-42) size:(130,40) fontSize:18 anchor:center pivot:center */
+    /* Label is 42px below center of cell */
+    .stat-label {
+      position: absolute;
+      top: calc(50% + 42px);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 130px;
+      height: 40px;
+      font-size: 18px;
+      color: rgba(128, 128, 128, 1); /* color:(0.5,0.5,0.5,1) */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      line-height: 40px;
+    }
+
+    /* EquipmentContainerParent - pos:(0,0) size:(0,0) anchor:(0,0)-(1,1) stretch pivot:(0.5,1) */
+    /* Fills entire EquipmentTab area */
+    .equipment-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.06); /* color:(1,1,1,0.06) */
+    }
+
+    /* Equipment - pos:(0,24) size:(-32,55) anchor:bottom-stretch pivot:bottom-center */
+    /* Equipment slots row at bottom, 24px up from bottom edge */
+    .equipment-slots {
+      position: absolute;
+      bottom: 24px;
+      left: 16px;
+      right: 16px;
+      height: 55px;
+      display: flex;
+      justify-content: center;
+      gap: var(--slot-spacing);
+    }
+
+    /* ContainerSlot - size:(55,55) */
+    .container-slot {
+      width: var(--slot-cell-size);
+      height: var(--slot-cell-size);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Background - ContainerSlot_Default sprite */
+    .slot-background {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 28, 26, 0.9);
+      border: 2px solid rgba(80, 75, 70, 0.8);
+      border-radius: 2px;
+    }
+
+    /* ItemIcon - pos:(0,0) size:(-4,-4) */
+    .slot-item-icon {
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      background: rgba(150, 150, 150, 0.63); /* placeholder */
+      border-radius: 2px;
+    }
+
+    .slot-item-icon.empty {
+      background: transparent;
+    }
+
+    /* Frame - ItemFrame sprite */
+    .slot-frame {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(100, 95, 85, 0.5);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    /* EquippedState - ItemFrame_Equipped */
+    .slot-equipped {
+      position: absolute;
+      inset: 0;
+      border: 2px solid rgba(180, 160, 120, 0.7);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    /* Upgrade arrow - pos:(-10,-10) size:(16,12) anchor:top-right */
+    .slot-upgrade {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 16px;
+      height: 12px;
+      background: rgba(100, 255, 0, 1); /* color:(0.39,1,0,1) */
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+
+    /* DamagedParent - pos:(-6,6) size:(8,16) anchor:bottom-right */
+    .slot-damaged {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 8px;
+      height: 16px;
+      background: rgba(255, 227, 0, 1); /* color:(1,0.89,0,1) */
+      clip-path: polygon(50% 0%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
+    }
+
+    /* TransmogDropDownButtons - pos:(6,0) size:(-28,14) anchor:top-stretch pivot:(0.5,0) */
+    /* Positioned above equipment slots, at top of Equipment section */
+    .transmog-buttons {
+      position: absolute;
+      bottom: 93px; /* 24px (slots from bottom) + 55px (slot height) + 14px (button height) */
+      left: 20px;
+      right: 20px;
+      height: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .transmog-button {
+      width: 55px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Button > Background - FoldoutButton_Normal size:(61,32) */
+    .transmog-btn-bg {
+      width: 61px;
+      height: 32px;
+      background: rgba(60, 55, 50, 0.8);
+      border: 1px solid rgba(100, 95, 85, 0.6);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Icon - FoldoutButton_Arrow size:(17,9) */
+    .transmog-arrow {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 9px solid rgba(200, 190, 180, 0.8);
+    }
+
+    .note {
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stage">
+    <div class="equipment-tab">
+      <!-- EquipmentBG -->
+      <div class="equipment-bg"></div>
+
+      <!-- GearLevelParent -->
+      <div class="gear-level-parent">
+        <div class="gear-icon"></div>
+        <div class="gear-line"></div>
+        <div class="gear-number">21</div>
+        <div class="gear-label">Gear Level</div>
+        <div class="bloodcraft-stats">WP:6 | Cl:4 | Exp:15</div>
+      </div>
+
+      <!-- StatEntries - GridLayout cellSize:100x100 spacing:48 -->
+      <div class="stat-entries">
+        <!-- Physical Power pos:(150,-34) -->
+        <div class="stat-entry">
+          <div class="stat-icon"></div>
+          <div class="stat-value">15.1</div>
+          <div class="stat-label">Physical Power</div>
+        </div>
+        <!-- MaxHealth pos:(298,-34) -->
+        <div class="stat-entry">
+          <div class="stat-icon"></div>
+          <div class="stat-value">238</div>
+          <div class="stat-label">Max Health</div>
+        </div>
+        <!-- Spellpower pos:(446,-34) -->
+        <div class="stat-entry">
+          <div class="stat-icon"></div>
+          <div class="stat-value">15.3</div>
+          <div class="stat-label">Spell Power</div>
+        </div>
+      </div>
+
+      <!-- EquipmentContainerParent -->
+      <div class="equipment-container">
+        <!-- TransmogDropDownButtons -->
+        <div class="transmog-buttons">
+          <div class="transmog-button"><div class="transmog-btn-bg"><div class="transmog-arrow"></div></div></div>
+          <div class="transmog-button"><div class="transmog-btn-bg"><div class="transmog-arrow"></div></div></div>
+          <div class="transmog-button"><div class="transmog-btn-bg"><div class="transmog-arrow"></div></div></div>
+          <div class="transmog-button"><div class="transmog-btn-bg"><div class="transmog-arrow"></div></div></div>
+          <div class="transmog-button"><div class="transmog-btn-bg"><div class="transmog-arrow"></div></div></div>
+        </div>
+
+        <!-- Equipment > Container - GridLayout cellSize:55x55 spacing:12 -->
+        <div class="equipment-slots">
+          <!-- 5 equipment slots -->
+          <div class="container-slot">
+            <div class="slot-background"></div>
+            <div class="slot-item-icon"></div>
+            <div class="slot-frame"></div>
+            <div class="slot-equipped"></div>
+            <div class="slot-upgrade"></div>
+          </div>
+          <div class="container-slot">
+            <div class="slot-background"></div>
+            <div class="slot-item-icon"></div>
+            <div class="slot-frame"></div>
+            <div class="slot-equipped"></div>
+          </div>
+          <div class="container-slot">
+            <div class="slot-background"></div>
+            <div class="slot-item-icon"></div>
+            <div class="slot-frame"></div>
+            <div class="slot-equipped"></div>
+            <div class="slot-upgrade"></div>
+          </div>
+          <div class="container-slot">
+            <div class="slot-background"></div>
+            <div class="slot-item-icon"></div>
+            <div class="slot-frame"></div>
+            <div class="slot-equipped"></div>
+          </div>
+          <div class="container-slot">
+            <div class="slot-background"></div>
+            <div class="slot-item-icon empty"></div>
+            <div class="slot-frame"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">1:1 Unity Equipment Tab Layout</div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish_on_thunderstore:
+    runs-on: ubuntu-latest
+    env:
+      NEW_SHARED_KEY: ${{ secrets.NEW_SHARED_KEY }}
+      THUNDERSTORE_TOKEN: ${{ secrets.THUNDERSTORE_KEY }}
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
+      - name: Extract versions from .csproj
+        id: extract_versions
+        run: |
+          eclipse_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Eclipse.csproj")
+          bloodcraft_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Docs/Bloodcraft/Bloodcraft.csproj")
+
+          echo "eclipse_version=$eclipse_version" >> $GITHUB_OUTPUT
+          echo "bloodcraft_version=$bloodcraft_version" >> $GITHUB_OUTPUT
+
+      - name: Create secrets.json
+        run: |
+          mkdir -p "${{ github.workspace }}/Resources"
+          mkdir -p "${{ github.workspace }}/Docs/Bloodcraft/Resources"
+
+          cat > "${{ github.workspace }}/Resources/secrets.json" <<EOF
+          {
+            "NEW_SHARED_KEY": "${NEW_SHARED_KEY}"
+          }
+          EOF
+
+          cat > "${{ github.workspace }}/Docs/Bloodcraft/Resources/secrets.json" <<EOF
+          {
+            "NEW_SHARED_KEY": "${NEW_SHARED_KEY}"
+          }
+          EOF
+
+      - name: Restore
+        run: |
+          dotnet restore Eclipse.csproj
+          dotnet restore Docs/Bloodcraft/Bloodcraft.csproj
+
+      - name: Build EclipsePlus (Release)
+        run: dotnet build Eclipse.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.eclipse_version }} -p:RunGenerateREADME=false
+
+      - name: Build BloodCraftPlus (Release, compile only)
+        run: dotnet build Docs/Bloodcraft/Bloodcraft.csproj --configuration Release -t:Compile -p:Version=${{ steps.extract_versions.outputs.bloodcraft_version }} -p:RunGenerateREADME=false
+
+      - name: Install Thunderstore CLI (tcli)
+        run: dotnet tool install --global tcli
+
+      - name: Publish EclipsePlus to Thunderstore
+        run: |
+          tcli publish --token "${THUNDERSTORE_TOKEN}" --package-version "${{ steps.extract_versions.outputs.eclipse_version }}"
+
+      - name: Publish BloodCraftPlus to Thunderstore
+        run: |
+          cd Docs/Bloodcraft
+          tcli publish --token "${THUNDERSTORE_TOKEN}" --package-version "${{ steps.extract_versions.outputs.bloodcraft_version }}"

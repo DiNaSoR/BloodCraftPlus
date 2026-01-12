@@ -1,0 +1,120 @@
+﻿---
+description: "Project-agnostic global coding rules + multi-layer project memory protocol"
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+## Global Engineering Rules (mandatory)
+
+- Always reason about the **existing codebase first** before writing or modifying any code.
+- Preserve **modular architecture**; do not introduce monolithic logic when helpers/modules exist.
+- Reuse **existing utilities/shared modules** instead of duplicating logic.
+- Do not introduce new global state, singletons, hooks, or background processes without confirming an established pattern exists.
+- Prefer small, reviewable changes over large refactors unless an ADR exists (see memory system).
+
+---
+
+## Verification Policy (mandatory when touching external behavior)
+
+When changing code that depends on external behavior (framework APIs, SDKs, OS behavior, network APIs, browser behavior, third-party services, etc.):
+
+- Verify against **primary sources** in this order:
+  1) Official docs / reference
+  2) Official changelog / release notes
+  3) Projects pinned versions and lockfiles
+  4) Existing codebase behavior/tests
+- If your environment has a â€œverification toolâ€‌ (e.g. Context7 MCP, internal docs MCP, etc.), use it when:
+  - behavior is version-sensitive
+  - you are unsure about an API or UI behavior
+  - a change risks regressions or subtle timing/ordering effects
+- If verification is not possible, implement the **lowest-risk** change and document assumptions in the journal.
+
+---
+
+## Project Memory System (CRITICAL)
+
+This project uses a **multi-layer memory system**. All layers must be respected to reduce regressions and repeated mistakes.
+
+### Canonical memory paths (do not vary)
+
+All memory is stored in:
+
+- `.cursor/memory/memo.md`
+- `.cursor/memory/lessons.md`
+- `.cursor/memory/journal.md` and `.cursor/memory/journal/*`
+- `.cursor/memory/index.md`
+- `.cursor/memory/hot-rules.md`
+- `.cursor/memory/regression-checklist.md`
+- `.cursor/memory/id-registry.md`
+- `.cursor/memory/digests/*`
+- `.cursor/memory/adr/*`
+
+> If you see a misspelling like `.curosr/` anywhere, treat it as a bug and standardize to `.cursor/`.
+
+---
+
+## File roles
+
+### `memo.md` — Current truth (high-signal, curated)
+- MUST be read before implementing/modifying any feature.
+- MUST be updated whenever â€œcurrent truthâ€‌ changes:
+  - invariants, ownership, architecture, load order, default behaviors, safety constraints
+- Memo can be edited (it is NOT append-only).
+- Must maintain an accurate `Last updated:` date.
+
+### `lessons.md` — Never-break rules from real failures (append-only)
+- MUST be read before coding.
+- MUST NOT be violated.
+- Append-only: never delete or rewrite old lessons.
+- If a lesson becomes obsolete:
+  - add a NEW lesson that explicitly **supersedes** the old one.
+
+### `journal/*` — Change history (append-only, monthly)
+- After any meaningful change, write a journal entry:
+  - what changed, why, key files touched, verification + regressions run
+- Journal is append-only.
+- Journal is split by month for scalability.
+
+### `adr/*` — Architecture Decision Records
+- Use ADRs for big decisions/refactors, tradeoffs, and â€œwhy we chose thisâ€‌.
+
+### `digests/*` — Periodic compression
+- Use digests to summarize a month/quarter:
+  - stable patterns, major changes, new pitfalls, critical links to lessons/ADRs
+
+---
+
+## Mandatory Workflow (non-optional)
+
+Before writing code:
+1) Read `.cursor/memory/index.md` (fast orientation + hotspots).
+2) Read `.cursor/memory/hot-rules.md` (tiny, high priority).
+3) Read `.cursor/memory/memo.md` (current truth).
+4) Read `.cursor/memory/lessons.md` (hard rules).
+5) Search the codebase for similar logic; do not duplicate patterns.
+
+While writing code:
+- Avoid parallel implementations and duplicate ownership.
+- Prefer existing extension points and shared helpers.
+- Make behavior changes explicit and testable.
+
+After implementing a change:
+1) Append to the active journal file in `.cursor/memory/journal/`:
+   - what changed, why, key files, verification, regressions run
+2) If it fixed a non-obvious bug or prevents repeating a mistake:
+   - add a new lesson to `.cursor/memory/lessons.md`
+3) If it changes â€œcurrent truthâ€‌:
+   - update `.cursor/memory/memo.md` and bump `Last updated:`
+4) Run the relevant section(s) of `.cursor/memory/regression-checklist.md` and record results.
+
+---
+
+## Authority Order (highest â†’ lowest)
+
+1) `lessons.md` (hard rules, never break)
+2) `memo.md` (current truth)
+3) Existing codebase (behavior + patterns)
+4) New code/refactors
+
+If there is a conflict, higher authority wins.

@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
+      "Bash(dotnet build:*)",
+      "Bash(cat:*)",
+      "Bash(where:*)",
+      "Bash(dir \"C:\\\\Program Files\\\\dotnet\\\\dotnet.exe\")",
+      "Bash(dir \"C:\\\\Program Files \\(x86\\)\\\\dotnet\\\\dotnet.exe\")",
+      "Bash(\"C:\\\\Program Files\\\\dotnet\\\\dotnet.exe\" build Eclipse.csproj)",
+      "Bash(dir:*)",
+      "Bash(cmd /c \"dir /s /b \"\"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\MSBuild.exe\"\"\")",
+      "Bash(cmd /c \"where /r \"\"C:\\\\Program Files\"\" MSBuild.exe 2>nul\")",
+      "Bash(cmd /c \"where /r \"\"C:\\\\Program Files \\(x86\\)\"\" MSBuild.exe 2>nul\")",
+      "Bash($env:PATH = \"C:\\\\Users\\\\Asus\\\\.dotnet8;$env:PATH\")",
+      "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release)",
+      "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release \"h:\\\\My gits\\\\Eclipse\\\\Eclipse.csproj\")",
+      "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release \"h:\\\\My gits\\\\Eclipse\\\\Docs\\\\Bloodcraft\\\\Bloodcraft.csproj\")"
+    ]
+  }
+}
