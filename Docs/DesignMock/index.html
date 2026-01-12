@@ -147,7 +147,7 @@
           <button class="subtab" data-tab="prestige">Prestige</button>
           <button class="subtab" data-tab="exoform">Exoform</button>
           <button class="subtab" data-tab="bonuses">Stat Bonuses</button>
-          <button class="subtab" data-tab="professions">Professions</button>
+          <button class="subtab" data-tab="progression">Progression</button>
           <button class="subtab is-active" data-tab="familiars">Familiars</button>
         </div>
 
@@ -505,84 +505,217 @@
             </div>
           </div>
 
-          <div class="content-section" id="tab-professions">
-            <div class="prof-table">
-              <div class="prof-header">
-                <div></div>
-                <div>Profession</div>
-                <div>Level</div>
-                <div>Progress</div>
-                <div></div>
+          <div class="content-section" id="tab-progression">
+            <!-- Progression Sub-tabs (Professions / Class) -->
+            <div class="familiar-mode-tabs">
+              <button class="familiar-mode-tab is-active" data-prog-mode="professions">
+                <span class="familiar-mode-tab-icon is-profession"></span>
+                <span>Professions</span>
+              </button>
+              <button class="familiar-mode-tab" data-prog-mode="class">
+                <span class="familiar-mode-tab-icon is-class"></span>
+                <span>Class</span>
+              </button>
+            </div>
+
+            <!-- PROFESSIONS SUB-TAB -->
+            <div class="familiar-mode-content is-active" id="progression-professions-content">
+              <div class="prof-table">
+                <div class="prof-header">
+                  <div></div>
+                  <div>Profession</div>
+                  <div>Level</div>
+                  <div>Progress</div>
+                  <div></div>
+                </div>
+
+                <div class="prof-row" style="--pct:0%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#a46bd4;">Enchanting</div>
+                  <div>0</div>
+                  <div class="progress"><span></span></div>
+                  <div>0%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:0%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#37c4a1;">Alchemy</div>
+                  <div>0</div>
+                  <div class="progress"><span></span></div>
+                  <div>0%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:97%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#4fd154;">Harvesting</div>
+                  <div>4</div>
+                  <div class="progress"><span></span></div>
+                  <div>97%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:0%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#7c8791;">Blacksmithing</div>
+                  <div>0</div>
+                  <div class="progress"><span></span></div>
+                  <div>0%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:0%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#e07841;">Tailoring</div>
+                  <div>0</div>
+                  <div class="progress"><span></span></div>
+                  <div>0%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:15%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#c08a3a;">Woodcutting</div>
+                  <div>6</div>
+                  <div class="progress"><span></span></div>
+                  <div>15%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:58%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#9aa0a8;">Mining</div>
+                  <div>8</div>
+                  <div class="progress"><span></span></div>
+                  <div>58%</div>
+                </div>
+
+                <div class="prof-row" style="--pct:0%;">
+                  <div class="prof-icon"></div>
+                  <div class="prof-name" style="color:#2aa3d6;">Fishing</div>
+                  <div>0</div>
+                  <div class="progress"><span></span></div>
+                  <div>0%</div>
+                </div>
               </div>
 
-              <div class="prof-row" style="--pct:0%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#a46bd4;">Enchanting</div>
-                <div>0</div>
-                <div class="progress"><span></span></div>
-                <div>0%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:0%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#37c4a1;">Alchemy</div>
-                <div>0</div>
-                <div class="progress"><span></span></div>
-                <div>0%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:97%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#4fd154;">Harvesting</div>
-                <div>4</div>
-                <div class="progress"><span></span></div>
-                <div>97%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:0%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#7c8791;">Blacksmithing</div>
-                <div>0</div>
-                <div class="progress"><span></span></div>
-                <div>0%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:0%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#e07841;">Tailoring</div>
-                <div>0</div>
-                <div class="progress"><span></span></div>
-                <div>0%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:15%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#c08a3a;">Woodcutting</div>
-                <div>6</div>
-                <div class="progress"><span></span></div>
-                <div>15%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:58%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#9aa0a8;">Mining</div>
-                <div>8</div>
-                <div class="progress"><span></span></div>
-                <div>58%</div>
-              </div>
-
-              <div class="prof-row" style="--pct:0%;">
-                <div class="prof-icon"></div>
-                <div class="prof-name" style="color:#2aa3d6;">Fishing</div>
-                <div>0</div>
-                <div class="progress"><span></span></div>
-                <div>0%</div>
+              <div class="prof-footer">
+                <div>Total Level: 18</div>
+                <div>Avg Progress: 21%</div>
               </div>
             </div>
 
-            <div class="prof-footer">
-              <div>Total Level: 18</div>
-              <div>Avg Progress: 21%</div>
+            <!-- CLASS SUB-TAB -->
+            <div class="familiar-mode-content" id="progression-class-content">
+              <div class="familiar-scrollable">
+                <div class="familiar-layout familiar-animate">
+                  <!-- Left Column: Class Selection -->
+                  <div class="familiar-column is-left">
+                    <div class="familiar-card familiar-animate delay-1">
+                      <div class="familiar-card-header is-class">
+                        <span class="familiar-card-icon"></span>
+                        <span class="familiar-card-title">Class Selection</span>
+                      </div>
+
+                      <div class="familiar-active-name">Current: <span style="color:#ff4444;">Blood Knight</span></div>
+                      <div class="familiar-active-meta">On-Hit: Leech → Blood Curse</div>
+
+                      <div class="class-list" style="margin-top: 12px;">
+                        <button type="button" class="class-row is-active" style="--class-color: #ff0000;">
+                          <span class="class-row-icon"></span>
+                          <span class="class-row-name">Blood Knight</span>
+                          <span class="class-row-status">Active</span>
+                        </button>
+                        <button type="button" class="class-row" style="--class-color: #ffcc00;">
+                          <span class="class-row-icon"></span>
+                          <span class="class-row-name">Demon Hunter</span>
+                        </button>
+                        <button type="button" class="class-row" style="--class-color: #00ffff;">
+                          <span class="class-row-icon"></span>
+                          <span class="class-row-name">Vampire Lord</span>
+                        </button>
+                        <button type="button" class="class-row" style="--class-color: #9933ff;">
+                          <span class="class-row-icon"></span>
+                          <span class="class-row-name">Shadow Blade</span>
+                        </button>
+                        <button type="button" class="class-row" style="--class-color: #008080;">
+                          <span class="class-row-icon"></span>
+                          <span class="class-row-name">Arcane Sorcerer</span>
+                        </button>
+                        <button type="button" class="class-row" style="--class-color: #00ff00;">
+                          <span class="class-row-icon"></span>
+                          <span class="class-row-name">Death Mage</span>
+                        </button>
+                      </div>
+
+                      <div class="exo-hint" style="margin-top: 10px;">
+                        Click a class to select or change. Changing class may require a special item.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="familiar-column-divider" aria-hidden="true"></div>
+
+                  <!-- Right Column: Class Spells -->
+                  <div class="familiar-column is-right">
+                    <div class="familiar-card familiar-animate delay-1">
+                      <div class="familiar-card-header is-class">
+                        <span class="familiar-card-icon"></span>
+                        <span class="familiar-card-title">Class Spells</span>
+                      </div>
+
+                      <div class="familiar-active-meta">Shift Slot: <span style="color:#9ef2b5;">Ready</span></div>
+
+                      <div class="class-spell-list" style="margin-top: 12px;">
+                        <button type="button" class="class-spell-row is-active">
+                          <span class="class-spell-index">0</span>
+                          <span class="class-spell-name">Crimson Aegis</span>
+                          <span class="class-spell-req"></span>
+                        </button>
+                        <button type="button" class="class-spell-row">
+                          <span class="class-spell-index">1</span>
+                          <span class="class-spell-name">Blood Rite</span>
+                          <span class="class-spell-req">(P1)</span>
+                        </button>
+                        <button type="button" class="class-spell-row">
+                          <span class="class-spell-index">2</span>
+                          <span class="class-spell-name">Sanguine Coil</span>
+                          <span class="class-spell-req">(P2)</span>
+                        </button>
+                        <button type="button" class="class-spell-row" disabled>
+                          <span class="class-spell-index">3</span>
+                          <span class="class-spell-name">Bloodstorm</span>
+                          <span class="class-spell-req is-locked">(P5)</span>
+                        </button>
+                      </div>
+
+                      <div class="exo-hint" style="margin-top: 10px;">
+                        Click a spell to set it as your Shift ability. (P#) indicates prestige requirement.
+                      </div>
+                    </div>
+
+                    <div class="familiar-card familiar-animate delay-2" style="margin-top: 12px;">
+                      <div class="familiar-card-header is-class">
+                        <span class="familiar-card-icon"></span>
+                        <span class="familiar-card-title">Stat Synergies</span>
+                      </div>
+
+                      <div class="class-synergy-section">
+                        <div class="class-synergy-label">Weapon Stats (1.5x)</div>
+                        <div class="class-synergy-chips">
+                          <span class="class-synergy-chip">Physical Power</span>
+                          <span class="class-synergy-chip">Primary Leech</span>
+                          <span class="class-synergy-chip">Phys Crit Dmg</span>
+                        </div>
+                      </div>
+
+                      <div class="class-synergy-section" style="margin-top: 8px;">
+                        <div class="class-synergy-label">Blood Stats (1.5x)</div>
+                        <div class="class-synergy-chips">
+                          <span class="class-synergy-chip">Healing Received</span>
+                          <span class="class-synergy-chip">Dmg Reduction</span>
+                          <span class="class-synergy-chip">Phys Resistance</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="content-section is-active" id="tab-familiars">
