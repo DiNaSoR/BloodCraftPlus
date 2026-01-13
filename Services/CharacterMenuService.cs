@@ -1349,9 +1349,9 @@ internal static class CharacterMenuService
             prestigeRoot.gameObject.SetActive(activeTab == BloodcraftTab.Prestige);
         }
 
-        if (professionsRoot != null)
+        if (progressionRoot != null)
         {
-            professionsRoot.gameObject.SetActive(activeTab == BloodcraftTab.Professions);
+            progressionRoot.gameObject.SetActive(activeTab == BloodcraftTab.Progression);
         }
 
         if (exoformRoot != null)

@@ -166,6 +166,44 @@
 
 ---
 
+## L-011 — Character menu tabs: keep `BloodcraftTab` enum and tab wiring consistent
+
+### Status
+- Active
+
+### Tags
+- [UI] [Build] [DX]
+
+### Introduced
+- 2026-01-12
+
+### Symptom
+- Build fails with `CS0117`/`CS0103` after tab refactors (e.g., references to `BloodcraftTab.Professions` or `professionsRoot` remain after renaming the tab to `Progression`).
+
+### Root cause
+- Refactor renamed the top-level tab concept, but legacy wiring/integration code still referenced the old enum member and UI root variable.
+
+### Wrong approach (DO NOT REPEAT)
+- Renaming tabs without updating:
+  - `DataService.BloodcraftTab`
+  - Legacy UI roots/visibility logic
+  - Orchestrator registration and accessors
+
+### Correct approach
+- Treat `BloodcraftTab` as the single source of truth for top-level tabs.
+- Ensure all wiring uses the same tab key (e.g., `Progression`) and registers the correct owning tab (e.g., `ProgressionTab`, not its embedded sub-tabs).
+
+### Rule
+> Any tab rename/refactor must update the enum + UI roots + orchestrator registration/accessors together; no stale tab identifiers may remain.
+
+### References
+- Files:
+  - `Services/DataService.cs`
+  - `Services/CharacterMenuService.cs`
+  - `Services/CharacterMenu/CharacterMenuIntegration.cs`
+
+---
+
 ## L-009 — MSBuild post-build targets must not break builds
 
 ### Status

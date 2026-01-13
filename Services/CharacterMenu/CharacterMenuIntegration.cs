@@ -34,7 +34,7 @@ internal static class CharacterMenuIntegration
         _orchestrator.RegisterTab(new PrestigeTab());
         _orchestrator.RegisterTab(new ExoformTab());
         _orchestrator.RegisterTab(new StatBonusesTab());
-        _orchestrator.RegisterTab(new ProfessionsTab());
+        _orchestrator.RegisterTab(new ProgressionTab());
         _orchestrator.RegisterTab(new FamiliarsTab());
     }
 
@@ -67,7 +67,8 @@ internal static class CharacterMenuIntegration
     /// </summary>
     public static ProfessionsTab GetProfessionsTab()
     {
-        return _orchestrator?.GetTab<ProfessionsTab>(BloodcraftTab.Professions);
+        ProgressionTab progressionTab = _orchestrator?.GetTab<ProgressionTab>(BloodcraftTab.Progression);
+        return progressionTab?.ProfessionsTabInstance;
     }
 
     /// <summary>

@@ -2,6 +2,7 @@ using Eclipse.Services.CharacterMenu.Base;
 using Eclipse.Services.CharacterMenu.Interfaces;
 using Eclipse.Services.CharacterMenu.Shared;
 using Eclipse.Services.HUD.Shared;
+using ProjectM.UI;
 using System;
 using System.Collections.Generic;
 using TMPro;
