@@ -1,17 +1,40 @@
+<div align="center">
+
+# 🧛 BloodCraftPlus
+
+### *Server-Side RPG Mod for V Rising*
+
+[![V Rising](https://img.shields.io/badge/V%20Rising-1.1-darkred?style=for-the-badge&logo=steam&logoColor=white)](https://store.steampowered.com/app/1604030/V_Rising/)
+[![Server Mod](https://img.shields.io/badge/Type-Server%20Mod-green?style=for-the-badge)](https://github.com/DiNaSoR/BloodcraftPlus)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey?style=for-the-badge)](LICENSE.md)
+
+*Experience leveling, weapon expertise, blood legacies, classes, familiars, quests, and professions!*
+
+</div>
+
+---
+
+> 💡 **For the best experience**, install [EclipsePlus](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/) on your client for the UI!
+
+---
+
+## 💫 Credits
+
+| Role | Credit |
+|------|--------|
+| **Original Creator** | [mfoltz](https://github.com/mfoltz) |
+| **Fork Maintainer** | [DiNaSoR](https://github.com/DiNaSoR) |
+
+---
+
 ## Table of Contents
 
-- [EclipsePlus](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/) <--- **RECOMMENDED**
-- [Support Development](#support-development)
 - [Feature Overview](#feature-overview)
 - [Bleeding Edge](#bleeding-edge)
 - [Extra Recipes](#extra-recipes)
 - [Chat Commands](#chat-commands)
 - [Configuration](#configuration)
 - [Recommended Mods](#recommended-mods)
-
-## Support Development
-
-This is a fork maintained by **DiNaSoR**.
 
 ## Content Sections
 

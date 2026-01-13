@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧛 BloodcraftPlus
+# 🧛 BloodCraftPlus
 
 ### *The Ultimate V Rising RPG Experience*
 
@@ -8,18 +8,22 @@
 [![BepInEx](https://img.shields.io/badge/BepInEx-6.x-blueviolet?style=for-the-badge)](https://github.com/BepInEx/BepInEx)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey?style=for-the-badge)](LICENSE.md)
 
-<br/>
-
-![EclipsePlus](https://img.shields.io/badge/🖥️_Client-EclipsePlus-0066CC?style=flat-square&labelColor=1a1a2e)
-![Bloodcraftplus](https://img.shields.io/badge/🖧_Server-Bloodcraftplus-00AA44?style=flat-square&labelColor=1a1a2e)
-
-<br/>
-
 *Transform your V Rising server into a full-fledged RPG with experience levels, weapon expertise, blood legacies, classes, familiars, and much more!*
 
-[📥 Download](https://github.com/DiNaSoR/BloodcraftPlus/releases) • [📖 Documentation](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/) • [🐛 Report Bug](https://github.com/DiNaSoR/BloodcraftPlus/issues)
-
 </div>
+
+---
+
+## 📦 This Repository Contains Two Mods
+
+This is a **monorepo** containing both the client and server components:
+
+| Mod | Type | Description |
+|-----|------|-------------|
+| **EclipsePlus** | 🖥️ Client | Beautiful UI overlay for players |
+| **BloodCraftPlus** | 🖧 Server | Core RPG systems and game logic |
+
+> ⚡ **Both mods are required** - The server mod provides the features, and the client mod displays them!
 
 ---
 
@@ -83,7 +87,7 @@
 
 ---
 
-## 📦 Installation
+## 📥 Installation
 
 ### Client Setup (EclipsePlus)
 ```
@@ -91,13 +95,25 @@
    └── EclipsePlus.dll
 ```
 
-### Server Setup (Bloodcraftplus)
+### Server Setup (BloodCraftPlus)
 ```
 📁 VRisingServer/BepInEx/plugins/
-   └── Bloodcraftplus.dll
+   └── BloodCraftPlus.dll
 ```
 
-> **Note**: Both mods are required for full functionality. Client mod provides UI, server mod provides features.
+---
+
+## 🛠️ Quick Start
+
+After installation, use these chat commands to get started:
+
+```
+.lvl get          → Check your level
+.class l          → List available classes
+.class s BloodKnight  → Select a class
+.fam l            → List your familiars
+.quest d          → View daily quest
+```
 
 ---
 
@@ -105,23 +121,23 @@
 
 <div align="center">
 
-### Original Creator
-**[mfoltz](https://github.com/mfoltz)** - Creator of the original Bloodcraft mod
-
-### Fork Maintainer  
-**[DiNaSoR](https://github.com/DiNaSoR)** - BloodcraftPlus fork development
+| Role | Credit |
+|------|--------|
+| **Original Creator** | [mfoltz](https://github.com/mfoltz) |
+| **Fork Maintainer** | [DiNaSoR](https://github.com/DiNaSoR) |
 
 </div>
 
 ---
 
-## 🔗 Links
+## 🔗 Downloads
 
 <div align="center">
 
-[![Thunderstore](https://img.shields.io/badge/Thunderstore-EclipsePlus-orange?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/)
-[![Thunderstore](https://img.shields.io/badge/Thunderstore-Bloodcraftplus-orange?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/)
-[![Discord](https://img.shields.io/badge/Discord-V%20Rising%20Modding-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/vrising)
+[![Thunderstore EclipsePlus](https://img.shields.io/badge/Thunderstore-EclipsePlus%20(Client)-blue?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/)
+[![Thunderstore BloodCraftPlus](https://img.shields.io/badge/Thunderstore-BloodCraftPlus%20(Server)-green?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/)
+
+[![GitHub Releases](https://img.shields.io/badge/GitHub-Releases-black?style=for-the-badge&logo=github)](https://github.com/DiNaSoR/BloodCraftPlus/releases)
 
 </div>
 
