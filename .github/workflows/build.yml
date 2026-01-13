@@ -161,3 +161,17 @@ jobs:
             ./Docs/Bloodcraft/bin/Release/net6.0/Bloodcraftplus.dll
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Thunderstore CLI (tcli)
+        run: dotnet tool install --global tcli
+
+      - name: Publish EclipsePlus to Thunderstore
+        run: |
+          tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.eclipse_version }}"
+        continue-on-error: true
+
+      - name: Publish Bloodcraftplus to Thunderstore
+        run: |
+          cd Docs/Bloodcraft
+          tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.bloodcraft_version }}"
+        continue-on-error: true
