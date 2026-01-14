@@ -104,9 +104,13 @@ Last updated: 2026-01-14
 - Backwards compatibility policy:
   - Public APIs remain stable; legacy nested static classes delegate to extracted manager classes.
 
+- Optional debug tooling lives in a separate plugin:
+  - Debug plugin: `Tools/VDebug` (GUID: `com.dinasor.vdebug`)
+  - EclipsePlus calls it via reflection: `Services/DebugToolsBridge.cs` (safe no-op when not installed)
+
 - Il2Cpp constraints to remember:
-  - Avoid ambiguous `Object.Destroy()` → prefer `UnityEngine.Object.Destroy()`.
-  - Avoid `new RectOffset(left,right,top,bottom)`; set properties explicitly.
+  - Avoid ambiguous `Object.Destroy()` → prefer `UnityEngine.Object.Destroy()`. 
+  - Avoid `new RectOffset(left,right,top,bottom)`; set properties explicitly.   
 
 - Old monolithic sources are archived at:
   - `Docs/Archive/OldServices/*`

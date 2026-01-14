@@ -198,6 +198,70 @@
 
 ---
 
+## L-016 — BepInEx.PluginInfoProps: `MyPluginInfo` is generated under `RootNamespace`
+
+### Status
+- Active
+
+### Tags
+- [Build] [DX]
+
+### Introduced
+- 2026-01-14
+
+### Symptom
+- A new Tools/aux plugin fails to compile with `The name 'MyPluginInfo' does not exist in the current context`.
+
+### Root cause
+- `BepInEx.PluginInfoProps` writes `MyPluginInfo` into `namespace $(RootNamespace)`, and the default `RootNamespace` is the `.csproj` filename (not the plugin’s code namespace or `<AssemblyName>`).
+
+### Wrong approach (DO NOT REPEAT)
+- Assuming `MyPluginInfo` is generated in the global namespace or matches `<AssemblyName>`.
+
+### Correct approach
+- Set `<RootNamespace>` to the namespace where `MyPluginInfo` is referenced, or fully qualify the generated namespace.
+
+### Rule
+> Any project using `MyPluginInfo` must ensure `<RootNamespace>` matches the code namespace that references it.
+
+### References
+- Files:
+  - `Tools/VDebug/VDebug.csproj`
+
+---
+
+## L-017 — Optional plugin integration: don’t depend on `Chainloader` (BepInEx 6 IL2CPP)
+
+### Status
+- Active
+
+### Tags
+- [Integration] [IL2CPP] [Reliability]
+
+### Introduced
+- 2026-01-14
+
+### Symptom
+- Client plugin code fails to compile when referencing `BepInEx.Bootstrap.Chainloader` (e.g. `Chainloader.PluginInfos`).
+
+### Root cause
+- In this repo’s build setup (BepInEx 6 IL2CPP), plugin projects do not have a public `Chainloader` API available at compile time.
+
+### Wrong approach (DO NOT REPEAT)
+- Using `Chainloader.PluginInfos` to detect optional plugins.
+
+### Correct approach
+- Discover optional plugins via reflection on loaded assemblies (stable API type/method names), and treat missing plugins as safe no-ops.
+
+### Rule
+> Optional plugin calls must be discovered via reflection and must never hard-fail when the optional plugin isn’t installed.
+
+### References
+- Files:
+  - `Services/DebugToolsBridge.cs`
+
+---
+
 ## L-013 — UI command indices must match server semantics
 
 ### Status

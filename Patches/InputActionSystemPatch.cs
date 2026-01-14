@@ -48,7 +48,7 @@ internal static class InputActionSystemPatch
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            AssetDumpService.DumpMenuAssets();
+            DebugToolsBridge.TryDumpMenuAssets();
         }
 
     }
