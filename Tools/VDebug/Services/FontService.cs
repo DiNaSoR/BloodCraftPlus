@@ -61,69 +61,46 @@ public static class FontService
                  }
             }
 
-            // 2. Try to load system fonts via Unity API
-            // Note: CreateDynamicFontFromOSFont might be stripped in IL2CPP builds
-            string[] fontNames = { "Segoe UI Emoji", "Arial", "Consolas" };
-            if (Plugin.CustomFontName != null && !string.IsNullOrEmpty(Plugin.CustomFontName.Value))
-            {
-                // Prepend custom font
-                string[] newFonts = new string[fontNames.Length + 1];
-                newFonts[0] = Plugin.CustomFontName.Value;
-                Array.Copy(fontNames, 0, newFonts, 1, fontNames.Length);
-                fontNames = newFonts;
-            }
+            // 2. Try to find the configured font among globally loaded Game Assets (Resources)
+            // This is the robust method since OS font loading is stripped.
+            
+            // Default preference if user hasn't configued anything: NotoSansMono (cleaner for debug)
+            string targetName = Plugin.CustomFontName?.Value;
+            if (string.IsNullOrEmpty(targetName)) targetName = "NotoSansMono-Regular"; // Good default if available
 
-            foreach (var fontName in fontNames)
-            {
-                try 
-                {
-                    // Check if OS has it
-                    string[] osFonts = Font.GetOSInstalledFontNames();
-                    bool osHasIt = false;
-                    foreach(var f in osFonts) if (f.Equals(fontName, StringComparison.OrdinalIgnoreCase)) osHasIt = true;
+            VDebugLog.Log.LogInfo($"[VDebug] Searching in-game assets for font: '{targetName}'...");
 
-                    if (osHasIt)
-                    {
-                        VDebugLog.Log.LogInfo($"[VDebug] Attempting to load OS font: {fontName}");
-                        Font osFont = Font.CreateDynamicFontFromOSFont(fontName, 16);
-                        if (osFont != null)
-                        {
-                            _customFont = TMP_FontAsset.CreateFontAsset(osFont);
-                            _customFont.name = $"VDebug_{fontName}";
-                            return _customFont;
-                        }
-                    }
-                }
-                catch (Exception ex)
+            // Search TMP Assets first
+            var allTmpAssets = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+            
+            foreach (var tmp in allTmpAssets)
+            {
+                if (tmp.name.Contains(targetName, StringComparison.OrdinalIgnoreCase))
                 {
-                    // Log but continue to next candidate
-                    VDebugLog.Log.LogWarning($"[VDebug] Failed to load OS font '{fontName}': {ex.Message}");
+                    VDebugLog.Log.LogInfo($"[VDebug] Found match in TMP assets: {tmp.name}");
+                    _customFont = tmp;
+                    return _customFont;
                 }
             }
 
-            // Fallback: Try to find existing fonts in the game
-            VDebugLog.Log.LogInfo("[VDebug] Fallback: Searching for in-game fonts...");
-            var allFonts = Resources.FindObjectsOfTypeAll<Font>();
-            foreach (var f in allFonts)
+            // Search Raw Fonts second
+            var allRawFonts = Resources.FindObjectsOfTypeAll<Font>();
+            
+            foreach (var f in allRawFonts)
             {
-                // Try to find a good fallback like Arial
-                if (f.name.Contains("Arial") || f.name.Contains("Liberation"))
+                if (f.name.Contains(targetName, StringComparison.OrdinalIgnoreCase))
                 {
-                    VDebugLog.Log.LogInfo($"[VDebug] Found in-game font: {f.name}");
+                    VDebugLog.Log.LogInfo($"[VDebug] Found match in raw fonts: {f.name}");
                     _customFont = TMP_FontAsset.CreateFontAsset(f);
                     return _customFont;
                 }
             }
             
-            // If we found ANY font, use it?
-            if (allFonts.Length > 0)
-            {
-                 VDebugLog.Log.LogInfo($"[VDebug] Using first available in-game font: {allFonts[0].name}");
-                 _customFont = TMP_FontAsset.CreateFontAsset(allFonts[0]);
-                 return _customFont;
-            }
+            // --- DEBUG LOGGING REMOVED ---
+            // If debug is needed, uncomment or add a debug config flag
+            // VDebugLog.Log.LogInfo($"[VDebug] Found {allTmpAssets.Length} TMP assets and {allRawFonts.Length} raw fonts.");
 
-            // Try built-in Arial explicitly
+            // 3. Fallback to Unity built-in Arial (last resort)
             Font builtin = Resources.GetBuiltinResource<Font>("Arial.ttf");
             if (builtin != null)
             {

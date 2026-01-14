@@ -19,7 +19,7 @@ internal class Plugin : BasePlugin
         Instance = this;
         VDebugLog.SetLog(Log);
 
-        CustomFontName = Config.Bind("General", "CustomFontName", "Segoe UI Emoji", "Name of the OS font to use for VDebug UI (supports emojis). Install the font in Windows and type its name here.");
+        CustomFontName = Config.Bind("General", "CustomFontName", "NotoSansMono-Regular", "Name of the font to use. Can be a font in vdebug.bundle or an in-game font.");
 
         if (Application.productName == "VRisingServer")
         {
