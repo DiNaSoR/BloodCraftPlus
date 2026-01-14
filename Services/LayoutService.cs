@@ -3,12 +3,11 @@ using Il2CppInterop.Runtime.Injection;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using UnityEngine;
-using Eclipse.Services;
 
 namespace Eclipse.Services;
+
 
 internal static class LayoutService
 {
@@ -79,6 +78,7 @@ internal static class LayoutService
         var config = new LayoutConfig
         {
             Layouts = SavedLayouts,
+            Defaults = DefaultLayouts,
             Options = Options
         };
 
@@ -106,6 +106,8 @@ internal static class LayoutService
             if (config != null)
             {
                 SavedLayouts = config.Layouts ?? new();
+                if (config.Defaults != null && config.Defaults.Count > 0)
+                    DefaultLayouts = config.Defaults;
                 Options = config.Options ?? new();
                 ApplyAllLayouts();
                 DebugToolsBridge.TryLogInfo($"[Layout] Loaded layout from: {LayoutPath}");
@@ -165,8 +167,10 @@ internal static class LayoutService
         rect.anchorMax = new Vector2(entry.AnchorMaxX, entry.AnchorMaxY);
         rect.pivot = new Vector2(entry.PivotX, entry.PivotY);
         rect.anchoredPosition = new Vector2(entry.AnchoredPosX, entry.AnchoredPosY);
+        rect.sizeDelta = new Vector2(entry.SizeDeltaX, entry.SizeDeltaY);
         rect.localScale = new Vector3(entry.ScaleX, entry.ScaleY, entry.ScaleZ);
     }
+
 
     static void CacheLayouts()
     {
@@ -513,6 +517,8 @@ internal static class LayoutService
         public float PivotY { get; set; }
         public float AnchoredPosX { get; set; }
         public float AnchoredPosY { get; set; }
+        public float SizeDeltaX { get; set; }
+        public float SizeDeltaY { get; set; }
         public float ScaleX { get; set; }
         public float ScaleY { get; set; }
         public float ScaleZ { get; set; }
@@ -529,6 +535,8 @@ internal static class LayoutService
                 PivotY = rect.pivot.y,
                 AnchoredPosX = rect.anchoredPosition.x,
                 AnchoredPosY = rect.anchoredPosition.y,
+                SizeDeltaX = rect.sizeDelta.x,
+                SizeDeltaY = rect.sizeDelta.y,
                 ScaleX = rect.localScale.x,
                 ScaleY = rect.localScale.y,
                 ScaleZ = rect.localScale.z
@@ -536,20 +544,22 @@ internal static class LayoutService
         }
     }
 
+
     sealed class LayoutConfig
     {
         public Dictionary<string, LayoutEntry> Layouts { get; set; } = new();
+        public Dictionary<string, LayoutEntry> Defaults { get; set; } = new();
         public LayoutOptions Options { get; set; } = new();
     }
+
 
     internal sealed class LayoutOptions
     {
         public bool SnapToGrid { get; set; } = true;
         public bool ShowGrid { get; set; } = true;
         public float GridSize { get; set; } = 10f;
-
-        // Kept for backward compatibility with configurators
         public bool VerticalBars { get; set; }
         public bool CompactQuests { get; set; }
     }
+
 }

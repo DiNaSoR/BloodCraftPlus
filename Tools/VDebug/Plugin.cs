@@ -22,6 +22,8 @@ internal class Plugin : BasePlugin
             return;
         }
 
-        Log.LogInfo($"{MyPluginInfo.PLUGIN_NAME}[{MyPluginInfo.PLUGIN_VERSION}] loaded.");
+        // Initialize the debug panel (will be created when API is called or automatically)
+        // Panel initialization is deferred until a canvas is available
+        Log.LogInfo($"{MyPluginInfo.PLUGIN_NAME}[{MyPluginInfo.PLUGIN_VERSION}] loaded. Call VDebugApi.ShowDebugPanel() to activate.");
     }
 }

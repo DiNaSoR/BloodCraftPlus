@@ -53,6 +53,29 @@ internal static class DebugToolsBridge
         TryLog(nameof(TryLogError), "LogError", message, ref _logError);
     }
 
+    static MethodInfo _togglePanel;
+
+    /// <summary>
+    /// Toggle the VDebug panel visibility via reflection.
+    /// </summary>
+    public static void TryToggleDebugPanel()
+    {
+        if (!TryResolveStaticMethod(nameof(TryToggleDebugPanel), "ToggleDebugPanel", ref _togglePanel, out MethodInfo method))
+        {
+            LogMissingOnce();
+            return;
+        }
+
+        try
+        {
+            method.Invoke(null, null);
+        }
+        catch (Exception ex)
+        {
+            TryLogWarning($"[VDebug] Failed invoking ToggleDebugPanel: {ex.Message}");
+        }
+    }
+
     static bool TryResolveStaticMethod(string callSite, string methodName, ref MethodInfo cache, out MethodInfo method)
         => TryResolveStaticMethod(callSite, methodName, Type.EmptyTypes, ref cache, out method, logFailures: true);
 

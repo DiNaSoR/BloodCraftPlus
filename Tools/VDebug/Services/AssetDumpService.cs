@@ -28,22 +28,22 @@ internal static class AssetDumpService
 
     public static void DumpMenuAssets()
     {
-        DumpCharacterMenuAssets();
-        DumpMainMenuAssets();
-        DumpHudMenuAssets();
+        DumpCharacterMenu();
+        DumpMainMenu();
+        DumpHudMenu();
     }
 
-    static void DumpCharacterMenuAssets()
+    public static void DumpCharacterMenu()
     {
         DumpMenuAssetsInternal(FindCharacterMenuRoot(), "CharacterMenu", "Character menu");
     }
 
-    static void DumpMainMenuAssets()
+    public static void DumpMainMenu()
     {
         DumpMenuAssetsInternal(FindMainMenuRoot(), "MainMenu", "Main menu");
     }
 
-    static void DumpHudMenuAssets()
+    public static void DumpHudMenu()
     {
         DumpMenuAssetsInternal(FindHudMenuRoot(), "HudMenu", "HUD menu");
     }

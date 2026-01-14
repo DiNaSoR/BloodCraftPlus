@@ -48,8 +48,7 @@ internal static class InputActionSystemPatch
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            DebugToolsBridge.TryDumpMenuAssets();
+            DebugToolsBridge.TryToggleDebugPanel();
         }
-
     }
 }
