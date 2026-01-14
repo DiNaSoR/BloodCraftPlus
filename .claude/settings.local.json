@@ -17,7 +17,8 @@
       "Bash($env:PATH = \"C:\\\\Users\\\\Asus\\\\.dotnet8;$env:PATH\")",
       "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release)",
       "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release \"h:\\\\My gits\\\\Eclipse\\\\Eclipse.csproj\")",
-      "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release \"h:\\\\My gits\\\\Eclipse\\\\Docs\\\\Bloodcraft\\\\Bloodcraft.csproj\")"
+      "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release \"h:\\\\My gits\\\\Eclipse\\\\Docs\\\\Bloodcraft\\\\Bloodcraft.csproj\")",
+      "Bash(\"C:\\\\Users\\\\Asus\\\\.dotnet8\\\\dotnet.exe\" build -c Release \".\\\\VDebug.csproj\")"
     ]
   }
 }

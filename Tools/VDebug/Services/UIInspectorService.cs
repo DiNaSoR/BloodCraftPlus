@@ -1,6 +1,8 @@
+using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -25,8 +27,8 @@ internal static class UIInspectorService
     static bool _initialized;
 
     // Inspector panel configuration
-    const float PanelWidth = 400f;
-    const float PanelHeight = 350f;
+    const float PanelWidth = 450f;
+    const float PanelHeight = 500f;
     const float Padding = 10f;
 
     public static bool IsActive => _inspectorActive;
@@ -218,8 +220,8 @@ internal static class UIInspectorService
         if (_infoText == null || target == null)
             return;
 
-        StringBuilder sb = new StringBuilder(8192);
-        StringBuilder plainSb = new StringBuilder(8192);  // Plain text for export
+        StringBuilder sb = new StringBuilder(16384);
+        StringBuilder plainSb = new StringBuilder(16384);  // Plain text for export
 
         // ═══════════════════════════════════════════════════════════════════
         // HIERARCHY PATH
@@ -245,6 +247,7 @@ internal static class UIInspectorService
         sb.AppendLine($"  Layer: {target.gameObject.layer} ({LayerMask.LayerToName(target.gameObject.layer)})");
         sb.AppendLine($"  Tag: {target.gameObject.tag}");
         sb.AppendLine($"  Instance ID: <color=#888888>{target.GetInstanceID()}</color>");
+        sb.AppendLine($"  Sibling Index: {target.GetSiblingIndex()}");
         sb.AppendLine();
 
         plainSb.AppendLine("══ GAMEOBJECT ══");
@@ -254,6 +257,7 @@ internal static class UIInspectorService
         plainSb.AppendLine($"  Layer: {target.gameObject.layer} ({LayerMask.LayerToName(target.gameObject.layer)})");
         plainSb.AppendLine($"  Tag: {target.gameObject.tag}");
         plainSb.AppendLine($"  Instance ID: {target.GetInstanceID()}");
+        plainSb.AppendLine($"  Sibling Index: {target.GetSiblingIndex()}");
         plainSb.AppendLine();
 
         // ═══════════════════════════════════════════════════════════════════
@@ -263,6 +267,7 @@ internal static class UIInspectorService
         sb.AppendLine($"  <color=#AAFFAA>Anchors:</color>");
         sb.AppendLine($"    Min: ({target.anchorMin.x:F3}, {target.anchorMin.y:F3})");
         sb.AppendLine($"    Max: ({target.anchorMax.x:F3}, {target.anchorMax.y:F3})");
+        sb.AppendLine($"  <color=#AAFFAA>Anchor Preset:</color> {GetAnchorPresetName(target.anchorMin, target.anchorMax)}");
         sb.AppendLine($"  <color=#AAFFAA>Pivot:</color> ({target.pivot.x:F3}, {target.pivot.y:F3})");
         sb.AppendLine($"  <color=#AAFFAA>Anchored Pos:</color> ({target.anchoredPosition.x:F2}, {target.anchoredPosition.y:F2})");
         sb.AppendLine($"  <color=#AAFFAA>Size Delta:</color> ({target.sizeDelta.x:F2}, {target.sizeDelta.y:F2})");
@@ -272,11 +277,17 @@ internal static class UIInspectorService
         sb.AppendLine($"  <color=#AAFFAA>Local Rotation:</color> ({target.localEulerAngles.x:F1}, {target.localEulerAngles.y:F1}, {target.localEulerAngles.z:F1})");
         sb.AppendLine($"  <color=#AAFFAA>Computed Rect:</color> {target.rect.width:F1} x {target.rect.height:F1}");
         sb.AppendLine($"  <color=#AAFFAA>World Position:</color> ({target.position.x:F1}, {target.position.y:F1}, {target.position.z:F1})");
+
+        // Screen position
+        Vector3[] corners = new Vector3[4];
+        target.GetWorldCorners(corners);
+        sb.AppendLine($"  <color=#AAFFAA>Screen Bounds:</color> ({corners[0].x:F0}, {corners[0].y:F0}) to ({corners[2].x:F0}, {corners[2].y:F0})");
         sb.AppendLine();
 
         plainSb.AppendLine("══ RECTTRANSFORM ══");
         plainSb.AppendLine($"  AnchorMin: ({target.anchorMin.x:F3}, {target.anchorMin.y:F3})");
         plainSb.AppendLine($"  AnchorMax: ({target.anchorMax.x:F3}, {target.anchorMax.y:F3})");
+        plainSb.AppendLine($"  AnchorPreset: {GetAnchorPresetName(target.anchorMin, target.anchorMax)}");
         plainSb.AppendLine($"  Pivot: ({target.pivot.x:F3}, {target.pivot.y:F3})");
         plainSb.AppendLine($"  AnchoredPosition: ({target.anchoredPosition.x:F2}, {target.anchoredPosition.y:F2})");
         plainSb.AppendLine($"  SizeDelta: ({target.sizeDelta.x:F2}, {target.sizeDelta.y:F2})");
@@ -284,6 +295,7 @@ internal static class UIInspectorService
         plainSb.AppendLine($"  OffsetMax: ({target.offsetMax.x:F2}, {target.offsetMax.y:F2})");
         plainSb.AppendLine($"  LocalScale: ({target.localScale.x:F3}, {target.localScale.y:F3}, {target.localScale.z:F3})");
         plainSb.AppendLine($"  Rect: {target.rect.width:F1} x {target.rect.height:F1}");
+        plainSb.AppendLine($"  ScreenBounds: ({corners[0].x:F0}, {corners[0].y:F0}) to ({corners[2].x:F0}, {corners[2].y:F0})");
         plainSb.AppendLine();
 
         // ═══════════════════════════════════════════════════════════════════
@@ -299,32 +311,37 @@ internal static class UIInspectorService
             sb.AppendLine($"  Sorting Layer: {parentCanvas.sortingLayerName}");
             sb.AppendLine($"  Pixel Perfect: {parentCanvas.pixelPerfect}");
             sb.AppendLine($"  Override Sorting: {parentCanvas.overrideSorting}");
+
+            CanvasScaler scaler = parentCanvas.GetComponent<CanvasScaler>();
+            if (scaler != null)
+            {
+                sb.AppendLine($"  <color=#AAFFAA>Scale Mode:</color> {scaler.uiScaleMode}");
+                sb.AppendLine($"  <color=#AAFFAA>Reference Res:</color> {scaler.referenceResolution.x} x {scaler.referenceResolution.y}");
+                sb.AppendLine($"  <color=#AAFFAA>Scale Factor:</color> {scaler.scaleFactor:F2}");
+            }
             sb.AppendLine();
 
             plainSb.AppendLine("══ CANVAS ══");
             plainSb.AppendLine($"  Name: {parentCanvas.name}");
             plainSb.AppendLine($"  Render Mode: {parentCanvas.renderMode}");
             plainSb.AppendLine($"  Sorting Order: {parentCanvas.sortingOrder}");
+            if (scaler != null)
+            {
+                plainSb.AppendLine($"  ScaleMode: {scaler.uiScaleMode}");
+                plainSb.AppendLine($"  ReferenceRes: {scaler.referenceResolution.x} x {scaler.referenceResolution.y}");
+            }
             plainSb.AppendLine();
         }
 
         // ═══════════════════════════════════════════════════════════════════
-        // PARENT CHAIN
+        // PARENT LAYOUT CHAIN (NEW - Smart layout detection)
         // ═══════════════════════════════════════════════════════════════════
-        sb.AppendLine("<color=#FFD700>══ PARENTS ══</color>");
-        plainSb.AppendLine("══ PARENTS ══");
-        Transform parent = target.parent;
-        int depth = 0;
-        while (parent != null && depth < 10)
-        {
-            string indent = new string(' ', (depth + 1) * 2);
-            sb.AppendLine($"{indent}↑ <color=#88AACC>{parent.name}</color>");
-            plainSb.AppendLine($"{indent}↑ {parent.name}");
-            parent = parent.parent;
-            depth++;
-        }
-        sb.AppendLine();
-        plainSb.AppendLine();
+        AppendParentLayoutChain(target, sb, plainSb);
+
+        // ═══════════════════════════════════════════════════════════════════
+        // SIBLINGS (NEW - Other children of parent)
+        // ═══════════════════════════════════════════════════════════════════
+        AppendSiblings(target, sb, plainSb);
 
         // ═══════════════════════════════════════════════════════════════════
         // CHILDREN
@@ -335,8 +352,9 @@ internal static class UIInspectorService
         {
             Transform child = target.GetChild(i);
             string activeIcon = child.gameObject.activeSelf ? "●" : "○";
-            sb.AppendLine($"  {activeIcon} <color=#AACCFF>{child.name}</color>");
-            plainSb.AppendLine($"  {activeIcon} {child.name}");
+            string childType = GetPrimaryComponentType(child.gameObject);
+            sb.AppendLine($"  {activeIcon} <color=#AACCFF>{child.name}</color> <color=#666666>[{childType}]</color>");
+            plainSb.AppendLine($"  {activeIcon} {child.name} [{childType}]");
         }
         if (target.childCount > 15)
         {
@@ -347,7 +365,7 @@ internal static class UIInspectorService
         plainSb.AppendLine();
 
         // ═══════════════════════════════════════════════════════════════════
-        // COMPONENTS (DEEP)
+        // COMPONENTS (DEEP with better type resolution)
         // ═══════════════════════════════════════════════════════════════════
         Component[] components = target.GetComponents<Component>();
         sb.AppendLine($"<color=#FFD700>══ COMPONENTS ({components.Length}) ══</color>");
@@ -356,16 +374,375 @@ internal static class UIInspectorService
         foreach (Component comp in components)
         {
             if (comp == null) continue;
-            string typeName = comp.GetType().Name;
+
+            // Better type resolution for Il2Cpp
+            string typeName = GetActualTypeName(comp);
             sb.AppendLine($"  ► <color=#CCCCFF>{typeName}</color>");
             plainSb.AppendLine($"  ► {typeName}");
 
             // Deep component info
             AppendComponentDetails(comp, sb, plainSb);
         }
+        sb.AppendLine();
+        plainSb.AppendLine();
+
+        // ═══════════════════════════════════════════════════════════════════
+        // NEARBY TEXT STYLE REFERENCE (NEW)
+        // ═══════════════════════════════════════════════════════════════════
+        AppendNearbyTextStyle(target, sb, plainSb);
+
+        // ═══════════════════════════════════════════════════════════════════
+        // SMART HINTS (NEW - Actionable suggestions)
+        // ═══════════════════════════════════════════════════════════════════
+        AppendSmartHints(target, sb, plainSb);
 
         _infoText.text = sb.ToString();
         _lastInspectionPlain = plainSb.ToString();
+    }
+
+    /// <summary>
+    /// Get the actual Il2Cpp type name, handling proxy types.
+    /// </summary>
+    static string GetActualTypeName(Component comp)
+    {
+        if (comp == null) return "null";
+
+        try
+        {
+            // Try to get the Il2Cpp type name
+            var il2cppType = comp.GetIl2CppType();
+            if (il2cppType != null)
+            {
+                string fullName = il2cppType.FullName;
+                // Extract just the type name without namespace for readability
+                int lastDot = fullName.LastIndexOf('.');
+                if (lastDot >= 0 && lastDot < fullName.Length - 1)
+                    return fullName.Substring(lastDot + 1);
+                return fullName;
+            }
+        }
+        catch { }
+
+        // Fallback to regular type name
+        return comp.GetType().Name;
+    }
+
+    /// <summary>
+    /// Get anchor preset name for common configurations.
+    /// </summary>
+    static string GetAnchorPresetName(Vector2 min, Vector2 max)
+    {
+        // Check for common presets
+        if (min == Vector2.zero && max == Vector2.one) return "Stretch-All";
+        if (min == new Vector2(0, 0) && max == new Vector2(1, 0)) return "Stretch-Bottom";
+        if (min == new Vector2(0, 1) && max == new Vector2(1, 1)) return "Stretch-Top";
+        if (min == new Vector2(0, 0) && max == new Vector2(0, 1)) return "Stretch-Left";
+        if (min == new Vector2(1, 0) && max == new Vector2(1, 1)) return "Stretch-Right";
+        if (min == new Vector2(0, 0.5f) && max == new Vector2(1, 0.5f)) return "Stretch-Middle-H";
+        if (min == new Vector2(0.5f, 0) && max == new Vector2(0.5f, 1)) return "Stretch-Middle-V";
+
+        // Point anchors
+        if (min == max)
+        {
+            if (min == new Vector2(0.5f, 0.5f)) return "Center";
+            if (min == new Vector2(0, 0)) return "Bottom-Left";
+            if (min == new Vector2(1, 0)) return "Bottom-Right";
+            if (min == new Vector2(0, 1)) return "Top-Left";
+            if (min == new Vector2(1, 1)) return "Top-Right";
+            if (min == new Vector2(0.5f, 0)) return "Bottom-Center";
+            if (min == new Vector2(0.5f, 1)) return "Top-Center";
+            if (min == new Vector2(0, 0.5f)) return "Middle-Left";
+            if (min == new Vector2(1, 0.5f)) return "Middle-Right";
+        }
+
+        return "Custom";
+    }
+
+    /// <summary>
+    /// Get the primary UI component type for quick identification.
+    /// </summary>
+    static string GetPrimaryComponentType(GameObject go)
+    {
+        if (go.GetComponent<TMP_Text>() != null) return "Text";
+        if (go.GetComponent<Button>() != null) return "Button";
+        if (go.GetComponent<Image>() != null) return "Image";
+        if (go.GetComponent<ScrollRect>() != null) return "Scroll";
+        if (go.GetComponent<InputField>() != null || go.GetComponent<TMP_InputField>() != null) return "Input";
+        if (go.GetComponent<Toggle>() != null) return "Toggle";
+        if (go.GetComponent<Slider>() != null) return "Slider";
+        if (go.GetComponent<Dropdown>() != null || go.GetComponent<TMP_Dropdown>() != null) return "Dropdown";
+        if (go.GetComponent<LayoutGroup>() != null) return "Layout";
+        if (go.GetComponent<RawImage>() != null) return "RawImage";
+        if (go.GetComponent<Mask>() != null) return "Mask";
+        return "Container";
+    }
+
+    /// <summary>
+    /// Append parent layout chain information.
+    /// </summary>
+    static void AppendParentLayoutChain(RectTransform target, StringBuilder sb, StringBuilder plainSb)
+    {
+        sb.AppendLine("<color=#FFD700>══ PARENT LAYOUT CHAIN ══</color>");
+        plainSb.AppendLine("══ PARENT LAYOUT CHAIN ══");
+
+        Transform current = target.parent;
+        int depth = 0;
+        bool foundLayout = false;
+
+        while (current != null && depth < 8)
+        {
+            LayoutGroup lg = current.GetComponent<LayoutGroup>();
+            ContentSizeFitter csf = current.GetComponent<ContentSizeFitter>();
+            LayoutElement le = target.GetComponent<LayoutElement>();
+
+            if (lg != null || csf != null)
+            {
+                foundLayout = true;
+                string indent = new string(' ', depth * 2);
+                sb.AppendLine($"{indent}<color=#88AACC>{current.name}</color>");
+                plainSb.AppendLine($"{indent}{current.name}");
+
+                if (lg is VerticalLayoutGroup vlg)
+                {
+                    sb.AppendLine($"{indent}  <color=#AAFFAA>VerticalLayoutGroup</color>");
+                    sb.AppendLine($"{indent}    Spacing: {vlg.spacing:F1}");
+                    sb.AppendLine($"{indent}    Padding: L{vlg.padding.left} R{vlg.padding.right} T{vlg.padding.top} B{vlg.padding.bottom}");
+                    sb.AppendLine($"{indent}    ChildControl: W={vlg.childControlWidth} H={vlg.childControlHeight}");
+                    sb.AppendLine($"{indent}    ChildForceExpand: W={vlg.childForceExpandWidth} H={vlg.childForceExpandHeight}");
+
+                    plainSb.AppendLine($"{indent}  VerticalLayoutGroup");
+                    plainSb.AppendLine($"{indent}    Spacing: {vlg.spacing:F1}");
+                    plainSb.AppendLine($"{indent}    Padding: L{vlg.padding.left} R{vlg.padding.right} T{vlg.padding.top} B{vlg.padding.bottom}");
+                }
+                else if (lg is HorizontalLayoutGroup hlg)
+                {
+                    sb.AppendLine($"{indent}  <color=#AAFFAA>HorizontalLayoutGroup</color>");
+                    sb.AppendLine($"{indent}    Spacing: {hlg.spacing:F1}");
+                    sb.AppendLine($"{indent}    Padding: L{hlg.padding.left} R{hlg.padding.right} T{hlg.padding.top} B{hlg.padding.bottom}");
+                    sb.AppendLine($"{indent}    ChildControl: W={hlg.childControlWidth} H={hlg.childControlHeight}");
+
+                    plainSb.AppendLine($"{indent}  HorizontalLayoutGroup");
+                    plainSb.AppendLine($"{indent}    Spacing: {hlg.spacing:F1}");
+                }
+                else if (lg is GridLayoutGroup glg)
+                {
+                    sb.AppendLine($"{indent}  <color=#AAFFAA>GridLayoutGroup</color>");
+                    sb.AppendLine($"{indent}    CellSize: ({glg.cellSize.x:F1}, {glg.cellSize.y:F1})");
+                    sb.AppendLine($"{indent}    Spacing: ({glg.spacing.x:F1}, {glg.spacing.y:F1})");
+                    sb.AppendLine($"{indent}    Constraint: {glg.constraint}");
+
+                    plainSb.AppendLine($"{indent}  GridLayoutGroup");
+                    plainSb.AppendLine($"{indent}    CellSize: ({glg.cellSize.x:F1}, {glg.cellSize.y:F1})");
+                }
+
+                if (csf != null)
+                {
+                    sb.AppendLine($"{indent}  <color=#AAFFAA>ContentSizeFitter</color>");
+                    sb.AppendLine($"{indent}    Horizontal: {csf.horizontalFit}");
+                    sb.AppendLine($"{indent}    Vertical: {csf.verticalFit}");
+
+                    plainSb.AppendLine($"{indent}  ContentSizeFitter: H={csf.horizontalFit}, V={csf.verticalFit}");
+                }
+            }
+
+            current = current.parent;
+            depth++;
+        }
+
+        if (!foundLayout)
+        {
+            sb.AppendLine("  <color=#888888>No LayoutGroup in parent chain</color>");
+            sb.AppendLine("  <color=#888888>Position manually via anchoredPosition</color>");
+            plainSb.AppendLine("  No LayoutGroup in parent chain");
+            plainSb.AppendLine("  Position manually via anchoredPosition");
+        }
+
+        sb.AppendLine();
+        plainSb.AppendLine();
+    }
+
+    /// <summary>
+    /// Append sibling elements information.
+    /// </summary>
+    static void AppendSiblings(RectTransform target, StringBuilder sb, StringBuilder plainSb)
+    {
+        if (target.parent == null) return;
+
+        Transform parent = target.parent;
+        int siblingCount = parent.childCount;
+        int myIndex = target.GetSiblingIndex();
+
+        sb.AppendLine($"<color=#FFD700>══ SIBLINGS ({siblingCount - 1} others in {parent.name}) ══</color>");
+        plainSb.AppendLine($"══ SIBLINGS ({siblingCount - 1} others in {parent.name}) ══");
+
+        for (int i = 0; i < Mathf.Min(siblingCount, 20); i++)
+        {
+            Transform sibling = parent.GetChild(i);
+            RectTransform sibRect = sibling as RectTransform;
+
+            bool isMe = (i == myIndex);
+            string marker = isMe ? "<color=#FFFF00>→</color>" : " ";
+            string activeIcon = sibling.gameObject.activeSelf ? "●" : "○";
+            string sibType = GetPrimaryComponentType(sibling.gameObject);
+
+            string posInfo = "";
+            if (sibRect != null)
+            {
+                posInfo = $"Y={sibRect.anchoredPosition.y:F0}";
+            }
+
+            if (isMe)
+            {
+                sb.AppendLine($"{marker} [{i}] {activeIcon} <color=#FFFF00>{sibling.name}</color> <color=#666666>[{sibType}]</color> <color=#888888>{posInfo}</color> <color=#FFFF00>← YOU</color>");
+                plainSb.AppendLine($"→ [{i}] {activeIcon} {sibling.name} [{sibType}] {posInfo} ← YOU");
+            }
+            else
+            {
+                sb.AppendLine($"  [{i}] {activeIcon} <color=#AACCFF>{sibling.name}</color> <color=#666666>[{sibType}]</color> <color=#888888>{posInfo}</color>");
+                plainSb.AppendLine($"  [{i}] {activeIcon} {sibling.name} [{sibType}] {posInfo}");
+            }
+        }
+
+        if (siblingCount > 20)
+        {
+            sb.AppendLine($"  <color=#888888>... and {siblingCount - 20} more</color>");
+            plainSb.AppendLine($"  ... and {siblingCount - 20} more");
+        }
+
+        sb.AppendLine();
+        plainSb.AppendLine();
+    }
+
+    /// <summary>
+    /// Find and display nearby text style for reference.
+    /// </summary>
+    static void AppendNearbyTextStyle(RectTransform target, StringBuilder sb, StringBuilder plainSb)
+    {
+        // Search for nearby TMP_Text in siblings, parent, and children
+        TMP_Text nearestText = null;
+        string location = "";
+
+        // Check self first
+        nearestText = target.GetComponent<TMP_Text>();
+        if (nearestText != null) location = "self";
+
+        // Check children
+        if (nearestText == null)
+        {
+            nearestText = target.GetComponentInChildren<TMP_Text>();
+            if (nearestText != null) location = "child";
+        }
+
+        // Check siblings
+        if (nearestText == null && target.parent != null)
+        {
+            for (int i = 0; i < target.parent.childCount && nearestText == null; i++)
+            {
+                Transform sib = target.parent.GetChild(i);
+                nearestText = sib.GetComponent<TMP_Text>();
+                if (nearestText == null)
+                    nearestText = sib.GetComponentInChildren<TMP_Text>();
+                if (nearestText != null) location = $"sibling ({sib.name})";
+            }
+        }
+
+        // Check parent hierarchy
+        if (nearestText == null)
+        {
+            nearestText = target.GetComponentInParent<TMP_Text>();
+            if (nearestText != null) location = "parent";
+        }
+
+        if (nearestText != null)
+        {
+            sb.AppendLine("<color=#FFD700>══ NEARBY TEXT STYLE REFERENCE ══</color>");
+            sb.AppendLine($"  <color=#888888>Found in: {location}</color>");
+            sb.AppendLine($"  <color=#AAFFAA>Font:</color> {nearestText.font?.name ?? "null"}");
+            sb.AppendLine($"  <color=#AAFFAA>Size:</color> {nearestText.fontSize:F1}");
+            sb.AppendLine($"  <color=#AAFFAA>Style:</color> {nearestText.fontStyle}");
+            sb.AppendLine($"  <color=#AAFFAA>Color:</color> {ColorToHex(nearestText.color)}");
+            sb.AppendLine($"  <color=#AAFFAA>Alignment:</color> {nearestText.alignment}");
+            sb.AppendLine($"  <color=#AAFFAA>Overflow:</color> {nearestText.overflowMode}");
+            sb.AppendLine($"  <color=#AAFFAA>Word Wrap:</color> {nearestText.enableWordWrapping}");
+            sb.AppendLine();
+
+            plainSb.AppendLine("══ NEARBY TEXT STYLE REFERENCE ══");
+            plainSb.AppendLine($"  Found in: {location}");
+            plainSb.AppendLine($"  Font: {nearestText.font?.name ?? "null"}");
+            plainSb.AppendLine($"  Size: {nearestText.fontSize:F1}");
+            plainSb.AppendLine($"  Style: {nearestText.fontStyle}");
+            plainSb.AppendLine($"  Color: {ColorToHex(nearestText.color)}");
+            plainSb.AppendLine($"  Alignment: {nearestText.alignment}");
+            plainSb.AppendLine();
+        }
+    }
+
+    /// <summary>
+    /// Provide smart actionable hints based on context.
+    /// </summary>
+    static void AppendSmartHints(RectTransform target, StringBuilder sb, StringBuilder plainSb)
+    {
+        sb.AppendLine("<color=#FFD700>══ SMART HINTS ══</color>");
+        plainSb.AppendLine("══ SMART HINTS ══");
+
+        Transform parent = target.parent;
+        bool hasParentLayout = parent?.GetComponent<LayoutGroup>() != null;
+        int siblingIndex = target.GetSiblingIndex();
+        int siblingCount = parent?.childCount ?? 0;
+
+        // Hint: Adding element after this one
+        sb.AppendLine("<color=#AAFFAA>► To add element AFTER this:</color>");
+        plainSb.AppendLine("► To add element AFTER this:");
+
+        if (hasParentLayout)
+        {
+            sb.AppendLine($"  <color=#88CCFF>var newGo = new GameObject(\"MyElement\");</color>");
+            sb.AppendLine($"  <color=#88CCFF>newGo.transform.SetParent(parent, false);</color>");
+            sb.AppendLine($"  <color=#88CCFF>newGo.transform.SetSiblingIndex({siblingIndex + 1});</color>");
+            sb.AppendLine($"  <color=#888888>// LayoutGroup will auto-position</color>");
+
+            plainSb.AppendLine($"  var newGo = new GameObject(\"MyElement\");");
+            plainSb.AppendLine($"  newGo.transform.SetParent(parent, false);");
+            plainSb.AppendLine($"  newGo.transform.SetSiblingIndex({siblingIndex + 1});");
+            plainSb.AppendLine($"  // LayoutGroup will auto-position");
+        }
+        else
+        {
+            float suggestedY = target.anchoredPosition.y - target.rect.height - 10f;
+            sb.AppendLine($"  <color=#88CCFF>rect.anchorMin = new Vector2({target.anchorMin.x:F1}f, {target.anchorMin.y:F1}f);</color>");
+            sb.AppendLine($"  <color=#88CCFF>rect.anchorMax = new Vector2({target.anchorMax.x:F1}f, {target.anchorMax.y:F1}f);</color>");
+            sb.AppendLine($"  <color=#88CCFF>rect.pivot = new Vector2({target.pivot.x:F1}f, {target.pivot.y:F1}f);</color>");
+            sb.AppendLine($"  <color=#88CCFF>rect.anchoredPosition = new Vector2({target.anchoredPosition.x:F1}f, {suggestedY:F1}f);</color>");
+            sb.AppendLine($"  <color=#888888>// Manual positioning (no parent layout)</color>");
+
+            plainSb.AppendLine($"  rect.anchorMin = new Vector2({target.anchorMin.x:F1}f, {target.anchorMin.y:F1}f);");
+            plainSb.AppendLine($"  rect.anchorMax = new Vector2({target.anchorMax.x:F1}f, {target.anchorMax.y:F1}f);");
+            plainSb.AppendLine($"  rect.pivot = new Vector2({target.pivot.x:F1}f, {target.pivot.y:F1}f);");
+            plainSb.AppendLine($"  rect.anchoredPosition = new Vector2({target.anchoredPosition.x:F1}f, {suggestedY:F1}f);");
+        }
+
+        sb.AppendLine();
+        plainSb.AppendLine();
+
+        // Hint: Finding this element
+        sb.AppendLine("<color=#AAFFAA>► To find this element:</color>");
+        sb.AppendLine($"  <color=#88CCFF>GameObject.Find(\"{_lastInspectionPath}\");</color>");
+        sb.AppendLine();
+
+        plainSb.AppendLine("► To find this element:");
+        plainSb.AppendLine($"  GameObject.Find(\"{_lastInspectionPath}\");");
+        plainSb.AppendLine();
+
+        // Interactivity info
+        bool isRaycastTarget = false;
+        var graphics = target.GetComponents<Graphic>();
+        foreach (var g in graphics)
+        {
+            if (g.raycastTarget) isRaycastTarget = true;
+        }
+
+        sb.AppendLine($"<color=#AAFFAA>► Interactivity:</color> {(isRaycastTarget ? "<color=#88FF88>Raycast Target (clickable)</color>" : "<color=#888888>Not a raycast target</color>")}");
+        plainSb.AppendLine($"► Interactivity: {(isRaycastTarget ? "Raycast Target (clickable)" : "Not a raycast target")}");
     }
 
     static void AppendComponentDetails(Component comp, StringBuilder sb, StringBuilder plainSb)
@@ -523,7 +900,7 @@ internal static class UIInspectorService
         scrollGo.transform.SetParent(parent, false);
 
         RectTransform scrollRect = scrollGo.AddComponent<RectTransform>();
-        scrollRect.sizeDelta = new Vector2(0, 250f);
+        scrollRect.sizeDelta = new Vector2(0, 400f);
 
         // Add mask
         Image scrollBg = scrollGo.AddComponent<Image>();
@@ -694,7 +1071,12 @@ internal static class UIInspectorService
 
     static string ColorToHex(Color color)
     {
-        return $"#{ColorUtility.ToHtmlStringRGBA(color)}";
+        // Manual implementation - ColorUtility.ToHtmlStringRGBA is stripped in Il2Cpp
+        int r = Mathf.Clamp((int)(color.r * 255), 0, 255);
+        int g = Mathf.Clamp((int)(color.g * 255), 0, 255);
+        int b = Mathf.Clamp((int)(color.b * 255), 0, 255);
+        int a = Mathf.Clamp((int)(color.a * 255), 0, 255);
+        return $"#{r:X2}{g:X2}{b:X2}{a:X2}";
     }
 
     /// <summary>
