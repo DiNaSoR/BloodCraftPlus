@@ -30,8 +30,7 @@ internal class Plugin : BasePlugin
     static ConfigEntry<bool> _professions;
     static ConfigEntry<bool> _quests;
     static ConfigEntry<bool> _shiftSlot;
-    static ConfigEntry<bool> _classUi;
-    static ConfigEntry<bool> _tabsUi;
+
     static ConfigEntry<bool> _attributeBuffs;
     static ConfigEntry<bool> _eclipsed;
     public static bool Leveling => _leveling.Value;
@@ -42,8 +41,7 @@ internal class Plugin : BasePlugin
     public static bool Professions => _professions.Value;
     public static bool Quests => _quests.Value;
     public static bool ShiftSlot => _shiftSlot.Value;
-    public static bool ClassUi => _classUi.Value;
-    public static bool TabsUi => _tabsUi.Value;
+
     public static bool AttributeBuffsEnabled => _attributeBuffs != null && _attributeBuffs.Value;
     public static bool Eclipsed => _eclipsed.Value;
     public override void Load()
@@ -78,8 +76,7 @@ internal class Plugin : BasePlugin
         _professions = InitConfigEntry("UIOptions", "Professions", true, "Enable/Disable the professions tab, requires both ClientCompanion/ProfessionSystem to be enabled in Bloodcraft.");
         _quests = InitConfigEntry("UIOptions", "QuestTrackers", true, "Enable/Disable the quest tracker, requires both ClientCompanion/QuestSystem to be enabled in Bloodcraft.");
         _shiftSlot = InitConfigEntry("UIOptions", "ShiftSlot", true, "Enable/Disable the shift slot, requires both ClientCompanion and shift slot spell to be enabled in Bloodcraft.");
-        _classUi = InitConfigEntry("UIOptions", "ClassUI", false, "Enable/Disable the class selection and spell list panels, requires both ClientCompanion/ClassSystem to be enabled in Bloodcraft.");
-        _tabsUi = InitConfigEntry("UIOptions", "TabsUI", false, "Enable/Disable the prestige leaderboard, exoform/shapeshift, and familiar battle tabs.");
+
         _attributeBuffs = InitConfigEntry("UIOptions", "AttributeBuffs", true, "Enable/Disable applying Bloodcraft stats to the Attributes tab. Disable if you see ModifiableFloat/StatType errors on newer game versions.");
 
         _eclipsed = InitConfigEntry("UIOptions", "Eclipsed", true, "Set to false for slower update intervals (0.1s -> 1s) if performance is negatively impacted.");

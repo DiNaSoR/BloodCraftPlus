@@ -31,8 +31,6 @@ internal static class HudConfigureManager
     public static readonly bool ProfessionBarsEnabled = Plugin.Professions;
     public static readonly bool QuestTrackerEnabled = Plugin.Quests;
     public static readonly bool ShiftSlotEnabled = Plugin.ShiftSlot;
-    public static readonly bool ClassUiEnabled = Plugin.ClassUi;
-    public static readonly bool TabsUiEnabled = Plugin.TabsUi;
 
     #endregion
 

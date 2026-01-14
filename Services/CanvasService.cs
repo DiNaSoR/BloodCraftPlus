@@ -231,28 +231,8 @@ internal class CanvasService
                     Core.Log.LogError($"Error updating professions(2): {e}");
                 }
             }
-            if (_classUi)
-            {
-                try
-                {
-                    UpdateClassPanels();
-                }
-                catch (Exception e)
-                {
-                    Core.Log.LogError($"Error updating class panels: {e}");
-                }
-            }
-            if (_tabsUi)
-            {
-                try
-                {
-                    UpdateTabPanels();
-                }
-                catch (Exception e)
-                {
-                    Core.Log.LogError($"Error updating tabs panel: {e}");
-                }
-            }
+
+
             try
             {
                 CharacterMenuService.Update();
@@ -392,37 +372,7 @@ internal class CanvasService
 
         Sprites.Clear();
 
-        _classListObject = null;
-        _classListHeader = null;
-        _classListSubHeader = null;
-        _classListEntriesRoot = null;
-        _classListEntryTemplate = null;
-        _classListEntries.Clear();
-        _classListEntryButtons.Clear();
 
-        _classSpellsObject = null;
-        _classSpellsHeader = null;
-        _classSpellsSubHeader = null;
-        _classSpellsEntriesRoot = null;
-        _classSpellsEntryTemplate = null;
-        _classSpellsEntries.Clear();
-        _classSpellsEntryButtons.Clear();
-
-        _tabsNavObject = null;
-        _tabsNavHeader = null;
-        _tabsNavSubHeader = null;
-        _tabsNavEntriesRoot = null;
-        _tabsNavEntryTemplate = null;
-        _tabsNavEntries.Clear();
-        _tabsNavEntryButtons.Clear();
-
-        _tabsContentObject = null;
-        _tabsContentHeader = null;
-        _tabsContentSubHeader = null;
-        _tabsContentEntriesRoot = null;
-        _tabsContentEntryTemplate = null;
-        _tabsContentEntries.Clear();
-        _tabsContentEntryButtons.Clear();
     }
     public static class InitializeHUD
     {
@@ -504,27 +454,7 @@ internal class CanvasService
                 ConfigureVerticalProgressBar(ref _woodcuttingBarGameObject, ref _woodcuttingProgressFill, ref _woodcuttingFill, ref _woodcuttingLevelText, Profession.Woodcutting);
             }
 
-            if (_classUi)
-            {
-                ConfigureClassWindow(ref _classListObject, "Classes.List", "Classes", Color.white,
-                    new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(40f, 210f),
-                    ref _classListHeader, ref _classListSubHeader, ref _classListEntriesRoot, ref _classListEntryTemplate);
 
-                ConfigureClassWindow(ref _classSpellsObject, "Classes.Spells", "Class Spells", Color.white,
-                    new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(40f, 410f),
-                    ref _classSpellsHeader, ref _classSpellsSubHeader, ref _classSpellsEntriesRoot, ref _classSpellsEntryTemplate);
-            }
-
-            if (_tabsUi)
-            {
-                ConfigureClassWindow(ref _tabsNavObject, "Tabs.Nav", "Eclipse", Color.white,
-                    TabsNavAnchor, TabsNavPivot, TabsNavPosition,
-                    ref _tabsNavHeader, ref _tabsNavSubHeader, ref _tabsNavEntriesRoot, ref _tabsNavEntryTemplate);
-
-                ConfigureClassWindow(ref _tabsContentObject, "Tabs.Content", "Prestige", Color.white,
-                    TabsContentAnchor, TabsContentPivot, TabsContentPosition,
-                    ref _tabsContentHeader, ref _tabsContentSubHeader, ref _tabsContentEntriesRoot, ref _tabsContentEntryTemplate);
-            }
 
             if (_shiftSlot)
             {
@@ -934,60 +864,6 @@ internal class CanvasService
         public static string _weeklyTarget = "";
         public static bool _weeklyVBlood = false;
 
-        public static GameObject _classListObject;
-        public static LocalizedText _classListHeader;
-        public static LocalizedText _classListSubHeader;
-        public static Transform _classListEntriesRoot;
-        public static GameObject _classListEntryTemplate;
-        public static readonly List<LocalizedText> _classListEntries = [];
-        public static readonly List<SimpleStunButton> _classListEntryButtons = [];
-
-        public static GameObject _classSpellsObject;
-        public static LocalizedText _classSpellsHeader;
-        public static LocalizedText _classSpellsSubHeader;
-        public static Transform _classSpellsEntriesRoot;
-        public static GameObject _classSpellsEntryTemplate;
-        public static readonly List<LocalizedText> _classSpellsEntries = [];
-        public static readonly List<SimpleStunButton> _classSpellsEntryButtons = [];
-
-        public enum TabType
-        {
-            Prestige,
-            Exoform,
-            Battles
-        }
-
-        public static readonly List<TabType> TabOrder =
-        [
-            TabType.Prestige,
-            TabType.Exoform,
-            TabType.Battles
-        ];
-
-        public static readonly Dictionary<TabType, string> TabLabels = new()
-        {
-            { TabType.Prestige, "Prestige" },
-            { TabType.Exoform, "Exoform" },
-            { TabType.Battles, "Familiar Battles" }
-        };
-
-        public static TabType _activeTab = TabType.Prestige;
-
-        public static GameObject _tabsNavObject;
-        public static LocalizedText _tabsNavHeader;
-        public static LocalizedText _tabsNavSubHeader;
-        public static Transform _tabsNavEntriesRoot;
-        public static GameObject _tabsNavEntryTemplate;
-        public static readonly List<LocalizedText> _tabsNavEntries = [];
-        public static readonly List<SimpleStunButton> _tabsNavEntryButtons = [];
-
-        public static GameObject _tabsContentObject;
-        public static LocalizedText _tabsContentHeader;
-        public static LocalizedText _tabsContentSubHeader;
-        public static Transform _tabsContentEntriesRoot;
-        public static GameObject _tabsContentEntryTemplate;
-        public static readonly List<LocalizedText> _tabsContentEntries = [];
-        public static readonly List<SimpleStunButton> _tabsContentEntryButtons = [];
 
         public static PrefabGUID _abilityGroupPrefabGUID;
 
@@ -1118,10 +994,6 @@ internal class CanvasService
         public static void UpdateProfessions(float progress, int level, LocalizedText levelText,
             Image progressFill, Image fill, Profession profession)
             => HudUpdateManager.UpdateProfessions(progress, level, levelText, progressFill, fill, profession);
-        public static void UpdateClassPanels()
-            => HudUpdateManager.UpdateClassPanels();
-        public static void UpdateTabPanels()
-            => HudUpdateManager.UpdateTabPanels();
         public static void UpdateBar(float progress, int level, int maxLevel,
             int prestiges, LocalizedText levelText, LocalizedText barHeader,
             Image fill, UIElement element, string type = "")
@@ -1175,8 +1047,6 @@ internal class CanvasService
         public static readonly bool _professionBars = Plugin.Professions;
         public static readonly bool _questTracker = Plugin.Quests;
         public static readonly bool _shiftSlot = Plugin.ShiftSlot;
-        public static readonly bool _classUi = Plugin.ClassUi;
-        public static readonly bool _tabsUi = Plugin.TabsUi;
         /// <summary>
         /// Configures the shift slot ability bar entry. Delegates to ShiftSlotConfigurator.
         /// </summary>
