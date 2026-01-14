@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="Docs/Images/banner.png" alt="BloodCraft PLUS" width="900">
+</p>
 <div align="center">
 
 # 🧛 BloodCraftPlus
