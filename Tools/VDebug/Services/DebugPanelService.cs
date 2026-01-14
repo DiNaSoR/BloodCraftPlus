@@ -20,7 +20,8 @@ internal static class DebugPanelService
 
     // Panel configuration
     const float PanelWidth = 200f;
-    const float PanelHeight = 180f;
+    const float PanelHeight = 280f;  // Increased to fit inspector section
+
     const float ButtonHeight = 28f;
     const float Padding = 8f;
     const float Spacing = 4f;
@@ -138,14 +139,27 @@ internal static class DebugPanelService
         // Create header
         CreateHeader(_panelObject.transform, "VDebug Panel");
 
-        // Create buttons
+        // Create separator
+        CreateSeparator(_panelObject.transform, "Asset Dumps");
+
+        // Create dump buttons
         CreateButton(_panelObject.transform, "Dump All Menus", () => AssetDumpService.DumpMenuAssets());
         CreateButton(_panelObject.transform, "Dump Character Menu", () => AssetDumpService.DumpCharacterMenu());
         CreateButton(_panelObject.transform, "Dump HUD Menu", () => AssetDumpService.DumpHudMenu());
         CreateButton(_panelObject.transform, "Dump Main Menu", () => AssetDumpService.DumpMainMenu());
 
+        // Inspector section
+        CreateSeparator(_panelObject.transform, "Inspector Tools");
+        CreateButton(_panelObject.transform, "🔍 UI Inspector", () => {
+            UIInspectorService.Initialize(canvas);
+            UIInspectorService.Toggle();
+        });
+
         // Make it draggable
         AddDragHandler(_panelObject);
+
+        // Initialize inspector
+        UIInspectorService.Initialize(canvas);
 
         // Note: DontDestroyOnLoad is called on the canvas, which persists the panel
         VDebugLog.Log.LogInfo($"[VDebug] Panel created and active: {_panelObject.activeSelf}");
@@ -251,6 +265,62 @@ internal static class DebugPanelService
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.enableWordWrapping = false;
     }
+
+    static void CreateSeparator(Transform parent, string label)
+    {
+        // Container for the separator
+        GameObject sepGo = new GameObject($"Separator_{label}");
+        sepGo.transform.SetParent(parent, false);
+
+        RectTransform sepRect = sepGo.AddComponent<RectTransform>();
+        sepRect.sizeDelta = new Vector2(0, 18f);
+
+        // Horizontal layout
+        HorizontalLayoutGroup hlg = sepGo.AddComponent<HorizontalLayoutGroup>();
+        hlg.spacing = 4f;
+        hlg.childAlignment = TextAnchor.MiddleCenter;
+        hlg.childControlWidth = true;
+        hlg.childControlHeight = false;
+        hlg.childForceExpandWidth = true;
+        hlg.childForceExpandHeight = false;
+
+        // Left line
+        GameObject leftLine = new GameObject("LeftLine");
+        leftLine.transform.SetParent(sepGo.transform, false);
+        RectTransform leftRect = leftLine.AddComponent<RectTransform>();
+        leftRect.sizeDelta = new Vector2(0, 1);
+        LayoutElement leftLE = leftLine.AddComponent<LayoutElement>();
+        leftLE.flexibleWidth = 1;
+        leftLE.preferredHeight = 1;
+        Image leftImg = leftLine.AddComponent<Image>();
+        leftImg.color = new Color(0.4f, 0.4f, 0.5f, 0.6f);
+
+        // Label
+        GameObject labelGo = new GameObject("Label");
+        labelGo.transform.SetParent(sepGo.transform, false);
+        RectTransform labelRect = labelGo.AddComponent<RectTransform>();
+        labelRect.sizeDelta = new Vector2(0, 18f);
+        LayoutElement labelLE = labelGo.AddComponent<LayoutElement>();
+        labelLE.preferredWidth = 80;
+        TextMeshProUGUI labelTmp = labelGo.AddComponent<TextMeshProUGUI>();
+        labelTmp.text = label;
+        labelTmp.fontSize = 9;
+        labelTmp.color = new Color(0.6f, 0.6f, 0.65f);
+        labelTmp.alignment = TextAlignmentOptions.Center;
+        labelTmp.enableWordWrapping = false;
+
+        // Right line
+        GameObject rightLine = new GameObject("RightLine");
+        rightLine.transform.SetParent(sepGo.transform, false);
+        RectTransform rightRect = rightLine.AddComponent<RectTransform>();
+        rightRect.sizeDelta = new Vector2(0, 1);
+        LayoutElement rightLE = rightLine.AddComponent<LayoutElement>();
+        rightLE.flexibleWidth = 1;
+        rightLE.preferredHeight = 1;
+        Image rightImg = rightLine.AddComponent<Image>();
+        rightImg.color = new Color(0.4f, 0.4f, 0.5f, 0.6f);
+    }
+
 
     static void AddDragHandler(GameObject panel)
     {
