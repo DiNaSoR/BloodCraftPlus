@@ -12,7 +12,7 @@ namespace Eclipse.Services;
 
 internal static class LayoutService
 {
-    const string WindowTitle = "Eclipse Layout";
+    const string WindowTitle = "EclipsePLUS Layout";
     const string LayoutFileName = "layout.json";
 
     static readonly string LayoutPath = Path.Combine(Paths.ConfigPath, $"{MyPluginInfo.PLUGIN_GUID}.{LayoutFileName}");
@@ -717,26 +717,57 @@ internal static class LayoutService
                 if (rect == null || !rect.gameObject.activeInHierarchy)
                     continue;
 
-                if (!TryGetCanvasRelativeBoundsRect(rect, out RectTransform canvasRect, out Camera cam, out Rect boundsRect))
-                    continue;
+                Camera cam = GetCanvasCamera(rect);
 
-                Vector2 localMouse;
-                if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, mousePos, cam, out localMouse))
-                    continue;
-
-                // Slight padding so zero/edge cases are still selectable.
-                const float padding = 4f;
-                boundsRect.xMin -= padding;
-                boundsRect.yMin -= padding;
-                boundsRect.xMax += padding;
-                boundsRect.yMax += padding;
-
-                if (boundsRect.Contains(localMouse))
+                // Try bounds-based detection first
+                if (TryGetCanvasRelativeBoundsRect(rect, out RectTransform canvasRect, out Camera boundsCamera, out Rect boundsRect))
                 {
-                    float area = boundsRect.width * boundsRect.height;
+                    Vector2 localMouse;
+                    if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, mousePos, boundsCamera, out localMouse))
+                    {
+                        // Slight padding so zero/edge cases are still selectable.
+                        const float padding = 4f;
+                        boundsRect.xMin -= padding;
+                        boundsRect.yMin -= padding;
+                        boundsRect.xMax += padding;
+                        boundsRect.yMax += padding;
+
+                        if (boundsRect.Contains(localMouse))
+                        {
+                            float area = boundsRect.width * boundsRect.height;
+                            if (area < hoveredArea)
+                            {
+                                hoveredArea = area;
+                                hoveredKey = kvp.Key;
+                            }
+                            continue;
+                        }
+                    }
+                }
+
+                // Fallback: Use RectangleContainsScreenPoint which works for stretch-anchored elements
+                if (RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos, cam))
+                {
+                    // Estimate area from the rect's actual rendered size
+                    Rect localRect = rect.rect;
+                    float area = localRect.width * localRect.height * rect.lossyScale.x * rect.lossyScale.y;
+                    if (area <= 0.01f)
+                        area = 10000f; // Default area for zero-sized containers
+                    
                     if (area < hoveredArea)
                     {
                         hoveredArea = area;
+                        hoveredKey = kvp.Key;
+                    }
+                    continue;
+                }
+
+                // Final fallback: Check if mouse is inside any child graphics
+                if (TryHoverOnChildren(rect, mousePos, cam, out float childArea))
+                {
+                    if (childArea < hoveredArea)
+                    {
+                        hoveredArea = childArea;
                         hoveredKey = kvp.Key;
                     }
                 }
@@ -744,6 +775,33 @@ internal static class LayoutService
 
             _hoveredKey = hoveredKey;
         }
+
+        bool TryHoverOnChildren(RectTransform parent, Vector2 mousePos, Camera cam, out float area)
+        {
+            area = float.MaxValue;
+            var graphics = parent.GetComponentsInChildren<Graphic>(false);
+            
+            foreach (var graphic in graphics)
+            {
+                if (graphic == null || !graphic.enabled)
+                    continue;
+                
+                var childRect = graphic.rectTransform;
+                if (childRect == null)
+                    continue;
+                
+                if (RectTransformUtility.RectangleContainsScreenPoint(childRect, mousePos, cam))
+                {
+                    Rect localRect = childRect.rect;
+                    float childArea = localRect.width * localRect.height;
+                    if (childArea > 1f && childArea < area)
+                        area = childArea;
+                }
+            }
+            
+            return area < float.MaxValue;
+        }
+
 
         Camera GetCanvasCamera(RectTransform rect)
         {
