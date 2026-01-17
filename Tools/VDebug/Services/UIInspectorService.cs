@@ -1181,8 +1181,8 @@ internal static class UIInspectorService
             if (!_inspectorActive)
                 return;
 
-            // Right-click to exit inspector mode
-            if (Input.GetMouseButtonDown(1))
+            // Escape key to exit inspector mode
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Disable();
                 return;
