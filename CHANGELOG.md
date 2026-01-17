@@ -120,10 +120,9 @@
 - **Server-side persistence** with per-familiar talent data storage
 
 #### ⚔️ Gear Level Mirage System
-- **Dynamic gear level display** calculated as Player Level + Weapon Expertise
-- **Armor level hidden** (set to 0) to emphasize weapon mastery
-- **Real-time updates** when switching weapons or gaining expertise
-- Creates an immersive "power fantasy" where weapon mastery affects perceived strength
+- **Equipment Tab “Gear Level” repurposed** to reflect **Exp level** (leveling system)
+- **Armor level hidden** (set to 0)
+- Expertise/class are shown separately in EclipsePlus (and “Gear Level” no longer implies weapon expertise)
 
 ### 🔧 Improved
 
@@ -216,7 +215,7 @@
 - **Expertise System** - Weapon mastery
 - **Legacy System** - Blood type bonuses
 - **Familiar System** - Pet companions with **Talent Trees**
-- **Gear Level Mirage** - Display level = Player Level + Weapon Expertise
+- **Gear Level (Equipment Tab)** - Shows Exp level; armor level hidden; expertise/class shown separately in EclipsePlus
 - **Profession System** - Crafting and gathering bonuses
 - **Quest System** - Daily and weekly objectives
 

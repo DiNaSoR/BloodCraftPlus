@@ -11,6 +11,7 @@ export function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
+  const isChangelogPage = currentPath === '/reference/changelog';
 
   const topLevelAccordionKeys = useMemo(() => {
     // Only top-level items with a route path and children participate in the accordion.
@@ -143,7 +144,9 @@ export function Layout({ children }: LayoutProps) {
 
         {/* Main content */}
         <main className="main">
-          <article className="content">{children}</article>
+          <article className={`content ${isChangelogPage ? 'content-fullwidth' : ''}`}>
+            <div className={isChangelogPage ? 'changelog-codebox' : undefined}>{children}</div>
+          </article>
         </main>
       </div>
     </div>

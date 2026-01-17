@@ -1,4 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
+import { useLocation } from 'react-router-dom';
 import { CodeBlock } from './CodeBlock';
 import { Callout } from './Callout';
 import { PortraitShotPlaceholder } from './PortraitShotPlaceholder';
@@ -30,18 +31,45 @@ export const mdxComponents: MDXComponents = {
   ChangelogSection,
 
   // Style overrides for headings with anchor links
-  h2: ({ children, id, ...props }) => (
-    <h2 id={id} {...props}>
-      <a href={`#${id}`} className="anchor-link">
-        {children}
-      </a>
-    </h2>
-  ),
-  h3: ({ children, id, ...props }) => (
-    <h3 id={id} {...props}>
-      <a href={`#${id}`} className="anchor-link">
-        {children}
-      </a>
-    </h3>
-  ),
+  h2: ({ children, id, ...props }) => {
+    const location = useLocation();
+    const isChangelogPage = location.pathname === '/reference/changelog';
+
+    // Don’t make date/version headings clickable on the changelog page.
+    if (isChangelogPage || !id) {
+      return (
+        <h2 id={id} {...props}>
+          {children}
+        </h2>
+      );
+    }
+
+    return (
+      <h2 id={id} {...props}>
+        <a href={`#${id}`} className="anchor-link">
+          {children}
+        </a>
+      </h2>
+    );
+  },
+  h3: ({ children, id, ...props }) => {
+    const location = useLocation();
+    const isChangelogPage = location.pathname === '/reference/changelog';
+
+    if (isChangelogPage || !id) {
+      return (
+        <h3 id={id} {...props}>
+          {children}
+        </h3>
+      );
+    }
+
+    return (
+      <h3 id={id} {...props}>
+        <a href={`#${id}`} className="anchor-link">
+          {children}
+        </a>
+      </h3>
+    );
+  },
 };

@@ -24,7 +24,7 @@ This is a **monorepo** containing three projects:
 | Project | Type | Location | Description |
 |---------|------|----------|-------------|
 | **EclipsePlus** | 🖥️ Client | `Client/EclipsePlus/` | Beautiful UI overlay for players |
-| **Bloodcraftplus** | 🖧 Server | `Server/Bloodcraft/` | Core RPG systems and game logic |
+| **Bloodcraftplus** | 🖧 Server | `Server/Bloodcraftplus/` | Core RPG systems and game logic |
 | **VDebug** | 🛠️ Tool | `Tools/VDebug/` | Optional debug & asset inspection |
 
 > ⚡ **EclipsePlus + Bloodcraftplus are required** - The server mod provides the features, and the client mod displays them!
@@ -42,7 +42,7 @@ This is a **monorepo** containing three projects:
 - **Weapon Expertise** - Master each weapon type
 - **Blood Legacies** - Gain power from feeding
 - **Prestige System** - Reset and grow stronger
-- **Gear Level Mirage** - Display = Level + Expertise
+- **Gear Level (Equipment Tab)** - Shows Exp level; armor level hidden; expertise/class shown separately in EclipsePlus
 
 </td>
 <td width="50%">

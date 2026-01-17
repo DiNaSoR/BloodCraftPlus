@@ -2,188 +2,220 @@
 
 All notable changes to BloodCraftPlus are documented here.
 
-<div className="changelog-current">
+Current versions:
 
-| Mod | Version | Type |
-|-----|---------|------|
-| **EclipsePlus** | `1.4.0` | 🖥️ Client |
-| **Bloodcraftplus** | `1.12.21` | 🗄️ Server |
+- **EclipsePlus**: `1.4.0` (Client)
+- **Bloodcraftplus**: `1.12.21` (Server)
+- **VDebug**: `0.1.0` (Tool)
 
+---
+
+<div className="changelog-plugin-header changelog-plugin-header--eclipse">EclipsePlus (Client)</div>
+
+<div className="changelog-entry-header changelog-entry-header--eclipse">
+  <span className="changelog-entry-version">v1.4.0</span>
+  <span className="changelog-entry-title">Sync & Familiar UI Fixes</span>
 </div>
 
----
+<div className="changelog-entry-date">January 17, 2026</div>
 
-<ChangelogSection version="v1.4.0 / v1.12.21" date="January 17, 2026" title="Gear Level UI & Rift/Familiar Fixes" defaultOpen={true}>
+- **Changed**
+  - **Protocol**: bumped Eclipse sync to `1.4.x` (update client + server together).
+- **Fixed**
+  - **Familiar stats display**: HP/PP/SP no longer mis-parses when values exceed old fixed-width limits.
 
-### 🖥️ EclipsePlus (Client)
+<div className="changelog-entry-header changelog-entry-header--eclipse">
+  <span className="changelog-entry-version">v1.3.15</span>
+  <span className="changelog-entry-title">Character Menu & Talents</span>
+</div>
 
-#### Changed
-- **Protocol**: bumped Eclipse sync to `1.4.x` (update client + server together).
+<div className="changelog-entry-date">January 15, 2026</div>
 
-#### Fixed
-- **Familiar stats display**: HP/PP/SP no longer mis-parses when values exceed old fixed-width limits.
+- **Added**
+  - **Character Menu System**
+    - **Class Tab** — View and select player classes with stat previews
+    - **Exoform Tab** — Manage exoform abilities and transformations
+    - **Familiars Tab** — Complete familiar management with sub-panels:
+      - Battles Panel — Familiar combat and battle management
+      - Talents Panel — Visual talent tree with Speed/Power/Vitality paths
+      - Overflow Panel — Manage excess familiars
+      - Settings Panel — Per-familiar configuration options
+    - **Prestige Tab** — Track and purchase prestige upgrades
+    - **Professions Tab** — View profession levels and bonuses
+    - **Progression Tab** — Combined class and profession overview
+    - **Stat Bonuses Tab** — Detailed stat breakdown and bonuses
+  - **HUD Components**
+    - Experience Bar — Real-time XP progress display
+    - Expertise Bar — Weapon mastery progress tracking
+    - Familiar Bar — Familiar health and level display
+    - Legacy Bar — Blood legacy progress indicator
+    - Quest Tracker — Active quest objectives overlay
+  - **Layout Service**
+    - LayoutService for managing UI element positions with save/load
+    - In-game layout editing mode for real-time UI adjustments
+    - Canvas-relative bounds calculations for hit-testing
+    - Enhanced drag/hover functionality with zero-size rect handling
+- **Improved**
+  - Renamed Professions tab to Progression for consistency
+  - Modular CSS structure split into separate files for maintainability
+  - Updated icons for better representation
+- **Fixed**
+  - Fixed compilation issues with Professions → Progression references
+  - Improved logging framework across multiple services and patches
 
----
+<div className="changelog-entry-header changelog-entry-header--eclipse">
+  <span className="changelog-entry-version">v1.3.14</span>
+  <span className="changelog-entry-title">Layout Improvements</span>
+</div>
 
-### 🗄️ Bloodcraftplus (Server)
+<div className="changelog-entry-date">January 14, 2026</div>
 
-#### Changed
-- **Equipment Tab Gear Level**: now shows **Exp level only** (no longer adds weapon expertise and no hidden +1).
-#### Fixed
-- **Primal rifts**: `RiftFrequency <= 0` now disables rift scheduling (prevents 0-interval spam).
-- **Familiar stats sync**: Familiar HP/PP/SP now sent as `hp|pp|sp` to avoid overflow/misalignment.
-- **Documentation**: clarified that some config options (e.g., `ElitePrimalRifts`) are cached at startup and require a server restart.
+- **Added**
+  - VDebug integration bridge for development tools
+  - Layout editor with drag-and-drop positioning
+  - Enhanced canvas service for UI management
+- **Improved**
+  - Better error handling in data synchronization
+  - Optimized HUD rendering performance
+- **Fixed**
+  - Fixed layout persistence across game sessions
+  - Resolved UI element overlap issues
 
-</ChangelogSection>
+<div className="changelog-entry-header changelog-entry-header--eclipse">
+  <span className="changelog-entry-version">v1.3.13</span>
+  <span className="changelog-entry-title">Cleanup & Stabilization</span>
+</div>
 
-<ChangelogSection version="v1.3.15 / v1.12.20" date="January 15, 2026" title="Character Menu & Talents">
+<div className="changelog-entry-date">January 13, 2026</div>
 
-### 🖥️ EclipsePlus (Client)
-
-#### Added
-
-**Character Menu System**
-- **Class Tab** — View and select player classes with stat previews
-- **Exoform Tab** — Manage exoform abilities and transformations
-- **Familiars Tab** — Complete familiar management with sub-panels:
-  - Battles Panel — Familiar combat and battle management
-  - Talents Panel — Visual talent tree with Speed/Power/Vitality paths
-  - Overflow Panel — Manage excess familiars
-  - Settings Panel — Per-familiar configuration options
-- **Prestige Tab** — Track and purchase prestige upgrades
-- **Professions Tab** — View profession levels and bonuses
-- **Progression Tab** — Combined class and profession overview
-- **Stat Bonuses Tab** — Detailed stat breakdown and bonuses
-
-**HUD Components**
-- Experience Bar — Real-time XP progress display
-- Expertise Bar — Weapon mastery progress tracking
-- Familiar Bar — Familiar health and level display
-- Legacy Bar — Blood legacy progress indicator
-- Quest Tracker — Active quest objectives overlay
-
-**VDebug Toolkit**
-- New VDebug plugin with asset dumping and UI inspection
-- UI Inspector Service with layout, sibling, and style info
-- Export functionality for capturing UI component details
-- Font Loading Service supporting asset bundles and in-game resources
-
-**Layout Service**
-- LayoutService for managing UI element positions with save/load
-- In-game layout editing mode for real-time UI adjustments
-- Canvas-relative bounds calculations for hit-testing
-- Enhanced drag/hover functionality with zero-size rect handling
-
-#### Improved
-- Renamed Professions tab to Progression for consistency
-- Modular CSS structure split into separate files for maintainability
-- Updated icons for better representation
-
-#### Fixed
-- Fixed compilation issues with Professions → Progression references
-- Improved logging framework across multiple services and patches
-
----
-
-### 🗄️ Bloodcraftplus (Server)
-
-#### Added
-
-**Familiar Talent System**
-- Full Talent Tree UI with three paths: Speed, Power, and Vitality
-- Talent allocation with prerequisites and keystone abilities
-- Stat bonuses including Physical Power, Spell Power, Attack Speed, Movement Speed, Max Health, and Damage Reduction
-- Visual buff effects for allocated keystones
-- Talent reset functionality for respeccing familiar builds
-- Server-side persistence with per-familiar talent data storage
-
-**Gear Level Mirage System**
-- Dynamic gear level display calculated as Player Level + Weapon Expertise
-- Armor level hidden (set to 0) to emphasize weapon mastery
-- Real-time updates when switching weapons or gaining expertise
-
-#### Improved
-- Standardized naming convention for Bloodcraftplus across all files
-- GitHub Actions workflows standardized and updated
-- BuildToServer target with SkipServerCopy variable for build flexibility
-- Post-build targets refactored for builds without local dependencies
-
-#### Fixed
-- **Familiar Catch-Up Speed** — Dynamic speed boost when familiar is far from player (15+ units away), 2x speed multiplier with hysteresis system
-- Fixed GitHub Actions to use bracket notation for secrets
-- Fixed build output paths for release artifacts
-
-</ChangelogSection>
-
-<ChangelogSection version="v1.3.14 / v1.12.19" date="January 14, 2026" title="VDebug & Layout Improvements">
-
-### 🖥️ EclipsePlus (Client)
-
-#### Added
-- VDebug integration bridge for development tools
-- Layout editor with drag-and-drop positioning
-- Enhanced canvas service for UI management
-
-#### Improved
-- Better error handling in data synchronization
-- Optimized HUD rendering performance
-
-#### Fixed
-- Fixed layout persistence across game sessions
-- Resolved UI element overlap issues
+- **Improved**
+  - Code cleanup and refactoring
+  - Removed deprecated components
+  - Improved type safety throughout
+- **Fixed**
+  - Various minor UI fixes
+  - Memory leak in HUD components resolved
 
 ---
 
-### 🗄️ Bloodcraftplus (Server)
+<div className="changelog-plugin-header changelog-plugin-header--bloodcraft">Bloodcraftplus (Server)</div>
 
-#### Improved
-- Enhanced familiar AI behavior
-- Better quest tracking accuracy
+<div className="changelog-entry-header changelog-entry-header--bloodcraft">
+  <span className="changelog-entry-version">v1.12.21</span>
+  <span className="changelog-entry-title">Gear Level & Rift/Familiar Fixes</span>
+</div>
 
-#### Fixed
-- Fixed edge case in prestige calculations
-- Resolved rare crash during familiar summoning
+<div className="changelog-entry-date">January 17, 2026</div>
 
-</ChangelogSection>
-
-<ChangelogSection version="v1.3.13 / v1.12.18" date="January 13, 2026" title="Cleanup & Stabilization">
-
-### 🖥️ EclipsePlus (Client)
-
-#### Improved
-- Code cleanup and refactoring
-- Removed deprecated components
-- Improved type safety throughout
-
-#### Fixed
-- Various minor UI fixes
-- Memory leak in HUD components resolved
+- **Changed**
+  - **Equipment Tab Gear Level**: now shows **Exp level only** (no longer adds weapon expertise and no hidden +1).
+- **Fixed**
+  - **Primal rifts**: `RiftFrequency <= 0` now disables rift scheduling (prevents 0-interval spam).
+  - **Familiar stats sync**: Familiar HP/PP/SP now sent as `hp|pp|sp` to avoid overflow/misalignment.
+  - **Documentation**: clarified that some config options (e.g., `ElitePrimalRifts`) are cached at startup and require a server restart.
 
 ---
 
-### 🗄️ Bloodcraftplus (Server)
+<div className="changelog-entry-header changelog-entry-header--bloodcraft">
+  <span className="changelog-entry-version">v1.12.20</span>
+  <span className="changelog-entry-title">Familiar Talents & Gear Level</span>
+</div>
 
-#### Improved
-- Database query optimizations
-- Reduced server tick overhead
+<div className="changelog-entry-date">January 15, 2026</div>
 
-#### Fixed
-- Fixed rare desync in familiar stats
-- Corrected experience calculation edge cases
+- **Added**
+  - **Familiar Talent System**
+    - Full talent tree UI with three paths: Speed, Power, and Vitality
+    - Talent allocation with prerequisites and keystone abilities
+    - Talent node types: Minor / Notable / Keystone (keystones cost 3 points)
+    - Talent points: 1 point per 10 familiar levels + 2 points per familiar prestige
+    - Stat bonuses (what they do):
+      - Physical Power: increases the familiar’s physical damage output
+      - Spell Power: increases the familiar’s spell/magic damage output
+      - Attack Speed: makes the familiar attack faster (more attacks per second)
+      - Movement Speed: makes the familiar move faster (better uptime/repositioning)
+      - Max Health: increases the familiar’s maximum HP
+      - Damage Reduction: reduces incoming damage taken by the familiar
+      - Crit Chance: increases how often the familiar lands critical hits
+      - Crit Damage: increases how hard the familiar’s critical hits deal damage
+    - Visual buff effects for allocated keystones
+    - Talent reset functionality for respeccing familiar builds
+    - Server-side persistence: stored per SteamID + familiarId in JSON
+    - Commands:
+      - Allocate: `.fam talent allocate <id>` (shortcut: `.fam ta <id>`)
+      - Reset: `.fam talent reset` (shortcut: `.fam tr`)
+      - Sync/list: `.fam talent list` (shortcut: `.fam tl`, returns `TALENTS:...` for client sync)
+  - **Gear Level (Equipment Tab)**
+    - Equipment Tab “Gear Level” repurposed to reflect Exp level (leveling system)
+    - Armor level hidden (set to 0)
+    - Expertise/class are shown separately in EclipsePlus (and “Gear Level” no longer implies weapon expertise)
+- **Improved**
+  - Standardized naming convention for Bloodcraftplus across all files
+  - GitHub Actions workflows standardized and updated
+  - BuildToServer target with SkipServerCopy variable for build flexibility
+  - Post-build targets refactored for builds without local dependencies
+- **Fixed**
+  - **Familiar Catch-Up Speed** — Dynamic speed boost when familiar is far from player (15+ units away), 2x speed multiplier with hysteresis system
+  - Fixed GitHub Actions to use bracket notation for secrets
+  - Fixed build output paths for release artifacts
 
-</ChangelogSection>
+---
+
+<div className="changelog-entry-header changelog-entry-header--bloodcraft">
+  <span className="changelog-entry-version">v1.12.19</span>
+  <span className="changelog-entry-title">Familiar/Quest/Prestige Fixes</span>
+</div>
+
+<div className="changelog-entry-date">January 14, 2026</div>
+
+- **Improved**
+  - Enhanced familiar AI behavior
+  - Better quest tracking accuracy
+- **Fixed**
+  - Fixed edge case in prestige calculations
+  - Resolved rare crash during familiar summoning
+
+---
+
+<div className="changelog-entry-header changelog-entry-header--bloodcraft">
+  <span className="changelog-entry-version">v1.12.18</span>
+  <span className="changelog-entry-title">Cleanup & Stabilization</span>
+</div>
+
+<div className="changelog-entry-date">January 13, 2026</div>
+
+- **Improved**
+  - Database query optimizations
+  - Reduced server tick overhead
+- **Fixed**
+  - Fixed rare desync in familiar stats
+  - Corrected experience calculation edge cases
+
+---
+
+<div className="changelog-plugin-header changelog-plugin-header--vdebug">VDebug (Tool)</div>
+
+<div className="changelog-entry-header changelog-entry-header--vdebug">
+  <span className="changelog-entry-version">v0.1.0</span>
+</div>
+
+<div className="changelog-entry-date">January 15, 2026</div>
+
+- **Added**
+  - New VDebug plugin with asset dumping and UI inspection
+  - UI Inspector Service with layout, sibling, and style info
+  - Export functionality for capturing UI component details
+  - Font Loading Service supporting asset bundles and in-game resources
 
 ---
 
 ## Build & Infrastructure
 
-| Change | Description |
-|--------|-------------|
-| GitHub Actions | Updated to use `dotnet build` instead of `dotnet build -t:Compile` |
-| Thunderstore | Added build configuration with proper output directories |
-| Secrets | Fixed bracket notation for accessing secrets |
-| Versioning | Synchronized thunderstore.toml versions across projects |
-| Documentation | Added Vite/React documentation site with GitHub Pages deployment |
+- **GitHub Actions**: Updated to use `dotnet build` instead of `dotnet build -t:Compile`
+- **Thunderstore**: Added build configuration with proper output directories
+- **Secrets**: Fixed bracket notation for accessing secrets
+- **Versioning**: Synchronized thunderstore.toml versions across projects
+- **Documentation**: Added Vite/React documentation site with GitHub Pages deployment
 
 ---
 
