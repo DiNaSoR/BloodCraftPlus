@@ -376,6 +376,16 @@ internal static class CharacterMenuService
         int classLevel = (int)_classType;
         int expLevel = _experienceLevel;
 
+        if (_eclipseSyncDisabled)
+        {
+            return string.IsNullOrWhiteSpace(_eclipseSyncStatus) ? "Sync: Disabled" : _eclipseSyncStatus;
+        }
+
+        if (!string.IsNullOrWhiteSpace(_eclipseSyncStatus))
+        {
+            return _eclipseSyncStatus;
+        }
+
         return $"WP:{weaponLevel} | Cl:{classLevel} | Exp:{expLevel}";
     }
 

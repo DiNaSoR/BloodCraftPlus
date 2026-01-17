@@ -725,6 +725,9 @@ internal class CanvasService
         public static Canvas _bottomBarCanvas;
         public static Canvas _targetInfoPanelCanvas;
         public static string _version = string.Empty;
+        // Eclipse sync status (server ↔ client). Shown in Equipment tab summary.
+        public static string _eclipseSyncStatus = string.Empty;
+        public static bool _eclipseSyncDisabled = false;
 
         public static GameObject _experienceBarGameObject;
         public static GameObject _experienceInformationPanel;

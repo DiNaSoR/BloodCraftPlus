@@ -1,4 +1,4 @@
-﻿using Bloodcraft.Interfaces;
+using Bloodcraft.Interfaces;
 using Bloodcraft.Services;
 using Bloodcraft.Systems.Expertise;
 using Bloodcraft.Systems.Familiars;
@@ -412,33 +412,17 @@ internal static class LevelingSystem
 
         if (steamId.TryGetPlayerExperience(out var xpData) && playerCharacter.Has<Equipment>())
         {
-            int playerLevel = xpData.Key;
+            int expLevel = xpData.Key;
 
-            PlayerProgressionCacheManager.UpdatePlayerProgressionLevel(steamId, playerLevel);
-            HandleExtraLevel(playerCharacter, ref playerLevel);
-
-            Bloodcraft.Interfaces.WeaponType weaponType = WeaponManager.GetCurrentWeaponType(playerCharacter);
-            IWeaponExpertise handler = WeaponExpertiseFactory.GetExpertise(weaponType);
-
-            if (handler != null)
-            {
-                var expertiseData = handler.GetExpertiseData(steamId);
-                playerLevel += expertiseData.Key;
-            }
+            PlayerProgressionCacheManager.UpdatePlayerProgressionLevel(steamId, expLevel);
 
             playerCharacter.With((ref Equipment equipment) =>
             {
                 equipment.ArmorLevel._Value = 0f;
                 equipment.SpellLevel._Value = 0f;
-                equipment.WeaponLevel._Value = playerLevel;
+                // Equipment tab “Gear Level” should reflect Exp level only (no expertise, no hidden +1).
+                equipment.WeaponLevel._Value = expLevel;
             });
-        }
-    }
-    static void HandleExtraLevel(Entity playerCharacter, ref int playerLevel)
-    {
-        if (EnablePrefabEffects && ExtraGearLevelBuffs.Any(buff => playerCharacter.HasBuff(buff)))
-        {
-            playerLevel++;
         }
     }
     public static void UpdateMaxRestedXP(ulong steamId, KeyValuePair<int, float> expData)

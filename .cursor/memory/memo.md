@@ -1,4 +1,4 @@
-﻿# Project Memo
+# Project Memo
 
 Last updated: 2026-01-17 (Docs site added)
 
@@ -46,8 +46,9 @@ BloodCraftPlus/
 
 ## V Rising Mod – Gear Level Mirage (current truth)
 
-- Display Level = Player Level + Weapon Expertise
+- Equipment tab “Gear Level” = Exp Level (leveling system)
 - Armor level hidden (set to 0)
+- Expertise/class are shown separately in EclipsePlus UI; they no longer inflate Gear Level
 - Implementation: `Server/Bloodcraftplus/Systems/Leveling/LevelingSystem.cs` → `SetLevel()`
 
 ---

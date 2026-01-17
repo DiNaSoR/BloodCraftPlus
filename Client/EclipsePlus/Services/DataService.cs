@@ -367,7 +367,54 @@ internal static class DataService
         public int Level { get; set; } = int.TryParse(level, out int parsedLevel) && parsedLevel > 0 ? parsedLevel : 1;
         public int Prestige { get; set; } = int.Parse(prestige, CultureInfo.InvariantCulture);
         public string FamiliarName { get; set; } = !string.IsNullOrEmpty(familiarName) ? familiarName : "Familiar";
-        public List<string> FamiliarStats { get; set; } = !string.IsNullOrEmpty(familiarStats) ? [..new List<string> { familiarStats[..4], familiarStats[4..7], familiarStats[7..] }.Select(stat => int.Parse(stat, CultureInfo.InvariantCulture).ToString())] : ["", "", ""];
+        public List<string> FamiliarStats { get; set; } = ParseFamiliarStats(familiarStats);
+
+        static List<string> ParseFamiliarStats(string stats)
+        {
+            if (string.IsNullOrWhiteSpace(stats))
+            {
+                return ["", "", ""];
+            }
+
+            // New format (v1.4+): "hp|pp|sp" (variable width, no overflow misalignment).
+            if (stats.Contains('|'))
+            {
+                string[] parts = stats.Split('|');
+                string hp = parts.Length > 0 && int.TryParse(parts[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedHp)
+                    ? parsedHp.ToString(CultureInfo.InvariantCulture)
+                    : string.Empty;
+                string pp = parts.Length > 1 && int.TryParse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedPp)
+                    ? parsedPp.ToString(CultureInfo.InvariantCulture)
+                    : string.Empty;
+                string sp = parts.Length > 2 && int.TryParse(parts[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedSp)
+                    ? parsedSp.ToString(CultureInfo.InvariantCulture)
+                    : string.Empty;
+
+                return [hp, pp, sp];
+            }
+
+            // Legacy format (<= v1.3): D4 + D3 + D3 (10 chars total).
+            if (stats.Length >= 10)
+            {
+                string hpRaw = stats[..4];
+                string ppRaw = stats[4..7];
+                string spRaw = stats[7..10];
+
+                string hp = int.TryParse(hpRaw, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedHp)
+                    ? parsedHp.ToString(CultureInfo.InvariantCulture)
+                    : string.Empty;
+                string pp = int.TryParse(ppRaw, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedPp)
+                    ? parsedPp.ToString(CultureInfo.InvariantCulture)
+                    : string.Empty;
+                string sp = int.TryParse(spRaw, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedSp)
+                    ? parsedSp.ToString(CultureInfo.InvariantCulture)
+                    : string.Empty;
+
+                return [hp, pp, sp];
+            }
+
+            return ["", "", ""];
+        }
     }
     public class FamiliarBoxEntryData(int slotIndex, string name, int level, int prestige, bool isShiny)
     {
@@ -1401,6 +1448,46 @@ internal static class DataService
 
         ShiftSpellData shiftSpellData = new(playerData[index]);
         _shiftSpellIndex = shiftSpellData.ShiftSpellIndex;
+    }
+
+    /// <summary>
+    /// Parses a lightweight server status payload to drive UI messaging when sync is disabled.
+    /// Expected format: "disabled,<reason>" or "enabled".
+    /// </summary>
+    public static void ParseEclipseSyncStatus(string data)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                _eclipseSyncDisabled = false;
+                _eclipseSyncStatus = string.Empty;
+                return;
+            }
+
+            string[] parts = data.Split(',', 2);
+            string state = parts[0].Trim();
+            string reason = parts.Length > 1 ? parts[1].Trim() : string.Empty;
+
+            if (state.Equals("disabled", StringComparison.OrdinalIgnoreCase))
+            {
+                _eclipseSyncDisabled = true;
+                _eclipseSyncStatus = reason switch
+                {
+                    "server-config" => "Sync: Disabled (server config)",
+                    _ => "Sync: Disabled"
+                };
+            }
+            else
+            {
+                _eclipseSyncDisabled = false;
+                _eclipseSyncStatus = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            DebugToolsBridge.TryLogWarning($"Failed to parse Eclipse sync status: {ex}");
+        }
     }
 
 }

@@ -4,6 +4,7 @@ using BepInEx.Unity.IL2CPP;
 using UnityEngine;
 
 using BepInEx.Configuration;
+using VDebug.Services;
 
 namespace VDebug;
 
@@ -13,6 +14,7 @@ internal class Plugin : BasePlugin
     internal static Plugin Instance { get; private set; }
     internal static ManualLogSource LogInstance => Instance.Log;
     public static ConfigEntry<string> CustomFontName;
+    internal static ConfigEntry<bool> EnableAnsiColors;
 
     public override void Load()
     {
@@ -20,10 +22,22 @@ internal class Plugin : BasePlugin
         VDebugLog.SetLog(Log);
 
         CustomFontName = Config.Bind("General", "CustomFontName", "NotoSansMono-Regular", "Name of the font to use. Can be a font in vdebug.bundle or an in-game font.");
+        EnableAnsiColors = Config.Bind("Logging", "EnableAnsiColors", true, "If true, VDebug will prefix its logs with ANSI color codes for easier scanning (client/server + warning/error). Disable if your console/log viewer shows escape codes.");
+        if (EnableAnsiColors.Value)
+        {
+            ConsoleAnsiSupport.TryEnable();
+            if (!ConsoleAnsiSupport.IsEnabled)
+            {
+                // Avoid printing raw escape codes in consoles that don't support ANSI.
+                EnableAnsiColors.Value = false;
+                Log.LogInfo("[VDebug] ANSI color output disabled (console does not support VT/ANSI).");
+            }
+        }
 
         if (Application.productName == "VRisingServer")
         {
-            Log.LogInfo($"{MyPluginInfo.PLUGIN_NAME}[{MyPluginInfo.PLUGIN_VERSION}] is a client debug plugin; skipping on {Application.productName}.");
+            // Server mode: keep the API + logging available, but skip any UI/panel initialization.
+            Log.LogInfo($"{MyPluginInfo.PLUGIN_NAME}[{MyPluginInfo.PLUGIN_VERSION}] loaded (server mode). UI/panel features are disabled on {Application.productName}.");
             return;
         }
 

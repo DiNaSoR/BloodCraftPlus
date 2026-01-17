@@ -44,7 +44,7 @@ internal static class ClientChatSystemPatch
         IsDebugEvent = false,
     };
 
-    public const string V1_3 = "1.3";
+    public const string V1_4 = "1.4";
     public const string VERSION = MyPluginInfo.PLUGIN_VERSION;
     public enum NetworkEventSubType
     {
@@ -55,7 +55,8 @@ internal static class ClientChatSystemPatch
         PrestigeLeaderboardToClient,
         ExoFormDataToClient,
         FamiliarBattleDataToClient,
-        WeaponStatBonusDataToClient
+        WeaponStatBonusDataToClient,
+        StatusToClient
     }
 
     public static BufferLookup<ModifyUnitStatBuff_DOTS> ModifyUnitStatBuffLookup => _modifyUnitStatBuffLookup;
@@ -141,7 +142,7 @@ internal static class ClientChatSystemPatch
         string intermediateMessage = $"[ECLIPSE][{(int)subType}]:{message}";
         string messageWithMAC = modVersion switch
         {
-            _ when modVersion.StartsWith(V1_3) => $"{intermediateMessage};mac{GenerateMACV1_3(intermediateMessage)}",
+            _ when modVersion.StartsWith(V1_4) => $"{intermediateMessage};mac{GenerateMACV1_3(intermediateMessage)}",
             _ => string.Empty
         };
 
@@ -160,6 +161,9 @@ internal static class ClientChatSystemPatch
         networkEntity.Write(chatMessageEvent);
 
         DebugToolsBridge.TryLogInfo($"Registration payload sent to server ({DateTime.Now}) - {messageWithMAC}");
+        // Allow UI to show connection state until we receive ConfigsToClient / StatusToClient.
+        CanvasService.DataHUD._eclipseSyncDisabled = false;
+        CanvasService.DataHUD._eclipseSyncStatus = "Sync: Connecting...";
     }
     static void HandleServerMessage(string message)
     {
@@ -191,7 +195,12 @@ internal static class ClientChatSystemPatch
                         List<string> configData = DataService.ParseMessageString(_regexExtract.Replace(message, ""));
                         DataService.ParseConfigData(configData);
                         _userRegistered = true;
+                        CanvasService.DataHUD._eclipseSyncDisabled = false;
+                        CanvasService.DataHUD._eclipseSyncStatus = string.Empty;
 
+                        break;
+                    case (int)NetworkEventSubType.StatusToClient:
+                        DataService.ParseEclipseSyncStatus(_regexExtract.Replace(message, ""));
                         break;
                     case (int)NetworkEventSubType.ClassDataToClient:
                         DataService.ParseClassData(_regexExtract.Replace(message, ""));

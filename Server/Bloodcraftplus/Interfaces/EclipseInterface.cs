@@ -1,4 +1,4 @@
-﻿using Bloodcraft.Patches;
+using Bloodcraft.Patches;
 using Bloodcraft.Services;
 using Bloodcraft.Utilities;
 using Bloodcraft.Systems.Familiars;
@@ -121,13 +121,13 @@ internal interface IVersionHandler<TProgressData>
 }
 internal static class VersionHandler
 {
-    const string VERSION_1_3 = "1.3";
+    const string VERSION_1_4 = "1.4";
 
     public static readonly Dictionary<string, object> VersionHandlers = new()
     {
         // { "1.1.2", new VersionHandler_1_1_2() },
         // { "1.2.2", new VersionHandler_1_2_2() },
-        { VERSION_1_3, new VersionHandler_1_3() }
+        { VERSION_1_4, new VersionHandler_1_4() }
     };
 
 #nullable enable
@@ -143,7 +143,7 @@ internal static class VersionHandler
 
 #nullable disable
 }
-internal class VersionHandler_1_3 : IVersionHandler<ProgressDataV1_3>
+internal class VersionHandler_1_4 : IVersionHandler<ProgressDataV1_3>
 {
     public void SendClientConfig(User user)
     {

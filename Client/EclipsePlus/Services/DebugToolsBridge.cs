@@ -13,6 +13,7 @@ internal static class DebugToolsBridge
 {
     const string DebugToolsAssemblyName = "VDebug";
     const string DebugToolsApiTypeName = "VDebug.VDebugApi";
+    const string ClientLogSource = "VDebug - Client";
 
     static bool _loggedMissing;
     static MethodInfo _dumpMenuAssets;
@@ -40,17 +41,17 @@ internal static class DebugToolsBridge
 
     public static void TryLogInfo(string message)
     {
-        TryLog(nameof(TryLogInfo), "LogInfo", message, ref _logInfo);
+        TryLogWithSource(nameof(TryLogInfo), "LogInfo", message, ClientLogSource, ref _logInfo);
     }
 
     public static void TryLogWarning(string message)
     {
-        TryLog(nameof(TryLogWarning), "LogWarning", message, ref _logWarning);
+        TryLogWithSource(nameof(TryLogWarning), "LogWarning", message, ClientLogSource, ref _logWarning);
     }
 
     public static void TryLogError(string message)
     {
-        TryLog(nameof(TryLogError), "LogError", message, ref _logError);
+        TryLogWithSource(nameof(TryLogError), "LogError", message, ClientLogSource, ref _logError);
     }
 
     static MethodInfo _togglePanel;
@@ -79,21 +80,37 @@ internal static class DebugToolsBridge
     static bool TryResolveStaticMethod(string callSite, string methodName, ref MethodInfo cache, out MethodInfo method)
         => TryResolveStaticMethod(callSite, methodName, Type.EmptyTypes, ref cache, out method, logFailures: true);
 
-    static void TryLog(string callSite, string methodName, string message, ref MethodInfo cache)
+    static void TryLogWithSource(string callSite, string methodName, string message, string source, ref MethodInfo cache)
     {
         if (string.IsNullOrWhiteSpace(message))
         {
             return;
         }
 
-        if (!TryResolveStaticMethod(callSite, methodName, new[] { typeof(string) }, ref cache, out MethodInfo method, logFailures: false))
+        // Prefer newer API: LogX(string source, string message). Fall back to legacy LogX(string message).
+        if (!TryResolveStaticMethod(callSite, methodName, new[] { typeof(string), typeof(string) }, ref cache, out MethodInfo method, logFailures: false))
         {
+            MethodInfo legacy = null;
+            if (!TryResolveStaticMethod(callSite, methodName, new[] { typeof(string) }, ref legacy, out MethodInfo legacyMethod, logFailures: false))
+            {
+                return;
+            }
+
+            try
+            {
+                legacyMethod.Invoke(null, new object[] { message });
+            }
+            catch
+            {
+                // Swallow logging failures to keep VDebug optional and silent.
+            }
+
             return;
         }
 
         try
         {
-            method.Invoke(null, new object[] { message });
+            method.Invoke(null, new object[] { source, message });
         }
         catch
         {

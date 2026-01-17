@@ -3,8 +3,9 @@
 	<PropertyGroup>	
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>Bloodcraft</RootNamespace>
 		<AssemblyName>Bloodcraftplus</AssemblyName>
-		<Version>1.12.20</Version>
+		<Version>1.12.21</Version>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<RestoreSources>
 			https://api.nuget.org/v3/index.json;

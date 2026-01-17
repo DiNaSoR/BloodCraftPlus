@@ -74,9 +74,13 @@ internal static class Core
     static readonly bool _expertise = ConfigService.ExpertiseSystem;
     static readonly bool _classes = ConfigService.ClassSystem;
     static readonly bool _familiars = ConfigService.FamiliarSystem;
+    static readonly bool _prestige = ConfigService.PrestigeSystem;
+    static readonly bool _professions = ConfigService.ProfessionSystem;
+    static readonly bool _quests = ConfigService.QuestSystem;
     static readonly bool _resetShardBearers = ConfigService.EliteShardBearers;
     static readonly bool _shouldApplyBonusStats = _legacies || _expertise || _classes || _familiars;
-    public static bool Eclipsed { get; } = _leveling || _legacies || _expertise || _classes || _familiars;
+    // Eclipse sync should be active if any client-synced systems are enabled.
+    public static bool Eclipsed { get; } = _leveling || _legacies || _expertise || _classes || _familiars || _prestige || _professions || _quests;
     public static IReadOnlySet<WeaponType> BleedingEdge => _bleedingEdge;
     static HashSet<WeaponType> _bleedingEdge = [];
     public static IReadOnlySet<Profession> DisabledProfessions => _disabledProfessions;
@@ -99,7 +103,14 @@ internal static class Core
 
         _ = new PlayerService();
         _ = new LocalizationService();
-        if (Eclipsed) _ = new EclipseService();
+        if (Eclipsed)
+        {
+            _ = new EclipseService();
+        }
+        else
+        {
+            DebugToolsBridge.TryLogInfo("Eclipse sync inactive: no client-synced systems enabled (Leveling/Legacies/Expertise/Classes/Familiars/Prestige/Professions/Quests).");
+        }
 
         if (ConfigService.ExtraRecipes) Recipes.ModifyRecipes();
 

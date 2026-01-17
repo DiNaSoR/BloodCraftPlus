@@ -21,6 +21,18 @@ public static class VDebugApi
         VDebugLog.Log.LogInfo(message);
     }
 
+    public static void LogInfo(string source, string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        // Use the main VDebug logger name to avoid duplicate tags like:
+        //   [Info :VDebug - Client] [Client] ...
+        // and instead produce:
+        //   [Info :VDebug] [Client] ...
+        VDebugLog.Log.LogInfo(Format(source, AnsiColors.VLevel.Info, message));
+    }
+
     public static void LogWarning(string message)
     {
         if (string.IsNullOrWhiteSpace(message))
@@ -29,12 +41,28 @@ public static class VDebugApi
         VDebugLog.Log.LogWarning(message);
     }
 
+    public static void LogWarning(string source, string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        VDebugLog.Log.LogWarning(Format(source, AnsiColors.VLevel.Warning, message));
+    }
+
     public static void LogError(string message)
     {
         if (string.IsNullOrWhiteSpace(message))
             return;
 
         VDebugLog.Log.LogError(message);
+    }
+
+    public static void LogError(string source, string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        VDebugLog.Log.LogError(Format(source, AnsiColors.VLevel.Error, message));
     }
 
     #endregion
@@ -141,4 +169,24 @@ public static class VDebugApi
     }
 
     #endregion
+
+    static string Format(string source, AnsiColors.VLevel level, string message)
+    {
+        try
+        {
+            if (Plugin.EnableAnsiColors != null && Plugin.EnableAnsiColors.Value && ConsoleAnsiSupport.IsEnabled)
+            {
+                string prefix = AnsiColors.FormatPrefix(source);
+                string body = AnsiColors.FormatMessage(level, message);
+                return $"{prefix} {body}";
+            }
+        }
+        catch
+        {
+            // Fall back to plain text if anything goes wrong (VDebug must never crash other plugins).
+        }
+
+        // Plain fallback
+        return string.IsNullOrWhiteSpace(source) ? message : $"[{source}] {message}";
+    }
 }

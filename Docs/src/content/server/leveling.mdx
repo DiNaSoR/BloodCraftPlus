@@ -7,7 +7,7 @@ The leveling system provides experience-based progression for players.
 - Gain experience (XP) primarily from slaying enemies
 - Level up to increase your power
 - Rested XP accumulates while logged out in coffins
-- Works with the Gear Level Mirage system
+- Gear Level UI is repurposed to show Exp level
 
 ---
 
@@ -44,15 +44,14 @@ When enabled, players accumulate bonus XP while logged out:
 
 ## Gear Level Mirage
 
-BloodCraftPlus implements a "Gear Level Mirage" system:
+BloodCraftPlus repurposes the vanilla **Equipment tab** “Gear Level” display:
 
 ```
-Display Level = Player Level + Weapon Expertise
+Gear Level (Equipment Tab) = Exp Level
 ```
 
-- Your displayed gear level combines your actual level with weapon mastery
-- Armor level is hidden (set to 0) to emphasize weapon expertise
-- Creates an immersive "power fantasy" where weapon skill matters
+- The big “Gear Level” number now reflects your **Exp level** (the leveling system).
+- Weapon expertise and class are shown separately in the EclipsePlus UI (e.g. the summary text under Gear Level and the Expertise bar/tab).
 
 ---
 

@@ -1,4 +1,4 @@
-﻿using Bloodcraft.Interfaces;
+using Bloodcraft.Interfaces;
 using Bloodcraft.Patches;
 using Bloodcraft.Systems;
 using Bloodcraft.Systems.Expertise;
@@ -42,7 +42,7 @@ internal class EclipseService
     static readonly bool _elitePrimalRifts = ConfigService.ElitePrimalRifts;
 
     static readonly WaitForSeconds _delay = CreateDelay();
-    const string V1_3 = "1.3";
+    const string V1_4 = "1.4";
 
     static readonly Regex _regex = new(@"^\[ECLIPSE\]\[(\d+)\]:(\d+\.\d+\.\d+);(\d+)$");
     public static IReadOnlyDictionary<ulong, string> PendingRegistration => _pendingRegistration;
@@ -83,7 +83,7 @@ internal class EclipseService
 
             if (!ulong.TryParse(match.Groups[3].Value, out ulong steamId))
             {
-                Core.Log.LogWarning($"Couldn't parse steamId for Eclipse[{V1_3}]!");
+                Core.Log.LogWarning($"Couldn't parse steamId for Eclipse[{V1_4}]!");
                 return;
             }
 
@@ -94,14 +94,14 @@ internal class EclipseService
                     RegisterUser(steamId, modVersion);
                     break;
                 default:
-                    Core.Log.LogError($"Unknown networkEventSubtype in Eclipse message: {eventType}");
+                    Core.Log.LogError($"Unknown networkEventSubtype in Eclipse message: {eventType} (steamId={steamId}, version={modVersion})");
                     break;
             }
 
             return;
         }
 
-        Core.Log.LogWarning("Failed to parse client registration message from Eclipse!");
+        DebugToolsBridge.TryLogWarning($"Failed to parse client Eclipse message. Raw='{message}'");
     }
     static void RegisterUser(ulong steamId, string version)
     {
@@ -125,7 +125,7 @@ internal class EclipseService
     }
     public static void HandlePreRegistration(ulong steamId)
     {
-        _pendingRegistration.TryAdd(steamId, V1_3);
+        _pendingRegistration.TryAdd(steamId, V1_4);
     }
     public static void TryRemovePreRegistration(ulong steamId)
     {
@@ -141,16 +141,16 @@ internal class EclipseService
                 switch (version)
                 {
                     default:
-                        if (IsVersion1_3(version))
+                        if (IsVersion1_4(version))
                         {
                             // Core.Log.LogWarning($"[EclipseService.HandleRegistration] - {version}");
-                            IVersionHandler<ProgressDataV1_3> versionHandler13X = VersionHandler.GetHandler<ProgressDataV1_3>(V1_3);
-                            versionHandler13X?.SendClientConfig(playerInfo.User);
-                            versionHandler13X?.SendClientProgress(playerInfo.CharEntity, playerInfo.User.PlatformId);
-                            versionHandler13X?.SendClientClassData(playerInfo.User);
-                            versionHandler13X?.SendClientPrestigeLeaderboard(playerInfo.User);
-                            versionHandler13X?.SendClientExoFormData(playerInfo.CharEntity, playerInfo.User, playerInfo.User.PlatformId);
-                            versionHandler13X?.SendClientFamiliarBattleData(playerInfo.User, playerInfo.User.PlatformId);
+                            IVersionHandler<ProgressDataV1_3> versionHandler14X = VersionHandler.GetHandler<ProgressDataV1_3>(V1_4);
+                            versionHandler14X?.SendClientConfig(playerInfo.User);
+                            versionHandler14X?.SendClientProgress(playerInfo.CharEntity, playerInfo.User.PlatformId);
+                            versionHandler14X?.SendClientClassData(playerInfo.User);
+                            versionHandler14X?.SendClientPrestigeLeaderboard(playerInfo.User);
+                            versionHandler14X?.SendClientExoFormData(playerInfo.CharEntity, playerInfo.User, playerInfo.User.PlatformId);
+                            versionHandler14X?.SendClientFamiliarBattleData(playerInfo.User, playerInfo.User.PlatformId);
                             _pendingRegistration.TryRemove(steamId, out var _);
                             return true;
                         }
@@ -210,29 +210,29 @@ internal class EclipseService
                                 break;
                             */
                             default:
-                                if (IsVersion1_3(version))
+                                if (IsVersion1_4(version))
                                 {
                                     if ((_legacies || _expertise || _classes) && !playerInfo.CharEntity.HasBuff(Buffs.BonusStatsBuff)) playerInfo.CharEntity.TryApplyBuff(Buffs.BonusStatsBuff);
-                                    IVersionHandler<ProgressDataV1_3> versionHandler13X = VersionHandler.GetHandler<ProgressDataV1_3>(V1_3);
-                                    versionHandler13X?.SendClientProgress(playerInfo.CharEntity, playerInfo.User.PlatformId);
+                                    IVersionHandler<ProgressDataV1_3> versionHandler14X = VersionHandler.GetHandler<ProgressDataV1_3>(V1_4);
+                                    versionHandler14X?.SendClientProgress(playerInfo.CharEntity, playerInfo.User.PlatformId);
                                     if (ShouldSync(_lastLeaderboardSync, steamId, _leaderboardSyncInterval))
                                     {
-                                        versionHandler13X?.SendClientPrestigeLeaderboard(playerInfo.User);
+                                        versionHandler14X?.SendClientPrestigeLeaderboard(playerInfo.User);
                                     }
 
                                     if (ShouldSync(_lastExoFormSync, steamId, _exoFormSyncInterval))
                                     {
-                                        versionHandler13X?.SendClientExoFormData(playerInfo.CharEntity, playerInfo.User, steamId);
+                                        versionHandler14X?.SendClientExoFormData(playerInfo.CharEntity, playerInfo.User, steamId);
                                     }
 
                                     if (ShouldSync(_lastBattleSync, steamId, _battleSyncInterval))
                                     {
-                                        versionHandler13X?.SendClientFamiliarBattleData(playerInfo.User, steamId);
+                                        versionHandler14X?.SendClientFamiliarBattleData(playerInfo.User, steamId);
                                     }
 
                                     if (ShouldSync(_lastWeaponStatSync, steamId, _weaponStatSyncInterval))
                                     {
-                                        versionHandler13X?.SendClientWeaponStatBonusData(playerInfo.CharEntity, playerInfo.User, steamId);
+                                        versionHandler14X?.SendClientWeaponStatBonusData(playerInfo.CharEntity, playerInfo.User, steamId);
                                     }
                                     break;
                                 }
@@ -264,7 +264,7 @@ internal class EclipseService
             }
         }
     }
-    static bool IsVersion1_3(string version) => version.StartsWith("1.3");
+    static bool IsVersion1_4(string version) => version.StartsWith("1.4");
     /// <summary>
     /// Checks whether enough time has elapsed to send a periodic payload for a user and updates the last sync timestamp.
     /// </summary>
@@ -467,7 +467,13 @@ internal class EclipseService
             int physicalPower = (int)unitStats.PhysicalPower._Value;
             int spellPower = (int)unitStats.SpellPower._Value;
 
-            familiarStats = string.Concat(maxHealth.ToString("D4"), physicalPower.ToString("D3"), spellPower.ToString("D3"));
+            // v1.4+: use delimiter format to avoid fixed-width overflow misparsing on the client.
+            familiarStats = string.Concat(
+                maxHealth.ToString(CultureInfo.InvariantCulture),
+                "|",
+                physicalPower.ToString(CultureInfo.InvariantCulture),
+                "|",
+                spellPower.ToString(CultureInfo.InvariantCulture));
         }
 
         return (familiarPercent, familiarLevel, familiarPrestige, familiarName, familiarStats);
