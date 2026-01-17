@@ -1,0 +1,157 @@
+.config-table {
+  margin: var(--space-4) 0;
+}
+
+.config-search {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
+
+.config-search-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg1);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--fg0);
+  font-size: var(--text-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.config-search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.config-search-input::placeholder {
+  color: var(--fg2);
+}
+
+.config-search-clear {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--fg2);
+  font-size: var(--text-xl);
+  cursor: pointer;
+  padding: var(--space-2);
+  line-height: 1;
+}
+
+.config-search-clear:hover {
+  color: var(--fg0);
+}
+
+.config-section {
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.config-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg2);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--fg0);
+  transition: background var(--transition-fast);
+}
+
+.config-section-header:hover {
+  background: var(--bg3);
+}
+
+.config-section-toggle {
+  color: var(--accent);
+  font-size: var(--text-xs);
+}
+
+.config-section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  flex: 1;
+}
+
+.config-section-count {
+  font-size: var(--text-sm);
+  color: var(--fg2);
+}
+
+.config-entries {
+  background: var(--bg1);
+}
+
+.config-entry {
+  padding: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.config-entry:first-child {
+  border-top: none;
+}
+
+.config-entry-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.config-key {
+  font-size: var(--text-sm);
+  color: var(--accent);
+  background: var(--accent-muted);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+.config-type {
+  font-size: var(--text-xs);
+  color: var(--purple);
+  background: var(--accent2-muted);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.config-default {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
+}
+
+.config-label {
+  color: var(--fg2);
+  font-weight: 500;
+}
+
+.config-default code {
+  color: var(--green);
+  background: var(--bg2);
+}
+
+.config-desc {
+  font-size: var(--text-sm);
+  color: var(--fg1);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.config-empty {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--fg2);
+  background: var(--bg1);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}

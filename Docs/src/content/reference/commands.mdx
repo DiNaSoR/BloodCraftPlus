@@ -1,0 +1,178 @@
+# Chat Commands Reference
+
+Complete list of BloodCraftPlus chat commands organized by category.
+
+<Callout type="info">
+  Commands marked with 🔒 require admin privileges.
+</Callout>
+
+---
+
+## Level Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.level get` | `.lvl get` | Display current leveling progress |
+| `.level log` | `.lvl log` | Toggle leveling progress logging |
+| `.level set [Player] [Level]` 🔒 | `.lvl set` | Set player level |
+| `.level ignoresharedexperience [Player]` 🔒 | `.lvl ignore` | Toggle shared XP eligibility |
+
+---
+
+## Blood Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.blood get [BloodType]` | `.bl get` | Display current blood legacy details |
+| `.blood log` | `.bl log` | Toggle Legacy progress logging |
+| `.blood list` | `.bl l` | List blood legacies available |
+| `.blood liststats` | `.bl lst` | List blood stats available |
+| `.blood choosestat [Blood] [Stat]` | `.bl cst` | Choose/toggle bonus stat |
+| `.blood resetstats` | `.bl rst` | Reset stats for current blood |
+| `.blood set [Player] [Blood] [Level]` 🔒 | `.bl set` | Set player blood legacy level |
+
+---
+
+## Weapon Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.weapon get` | `.wep get` | Display current weapon expertise |
+| `.weapon log` | `.wep log` | Toggle expertise logging |
+| `.weapon list` | `.wep l` | List weapon expertises available |
+| `.weapon liststats` | `.wep lst` | List weapon stats available |
+| `.weapon choosestat [Weapon] [Stat]` | `.wep cst` | Choose bonus stat |
+| `.weapon resetstats` | `.wep rst` | Reset stats for current weapon |
+| `.weapon lockspells` | `.wep locksp` | Lock spells for unarmed slots |
+| `.weapon set [Player] [Weapon] [Level]` 🔒 | `.wep set` | Set player expertise level |
+| `.weapon setspells [Player] [Slot] [Prefab] [Radius]` 🔒 | `.wep spell` | Set spells for testing |
+
+---
+
+## Class Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.class list` | `.class l` | List available classes |
+| `.class select [Class]` | `.class s` | Select a class (free) |
+| `.class change [Class]` | `.class c` | Change class (costs items) |
+| `.class listspells [Class]` | `.class lsp` | Show class spells |
+| `.class liststats [Class]` | `.class lst` | List class synergies |
+| `.class choosespell [#]` | `.class csp` | Set shift spell |
+| `.class lockshift` | `.class shift` | Toggle shift spell |
+
+---
+
+## Familiar Commands
+
+### Basic Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.familiar list` | `.fam l` | List familiars in current box |
+| `.familiar bind [#]` | `.fam b` | Bind familiar by slot |
+| `.familiar unbind` | `.fam ub` | Unbind current familiar |
+| `.familiar toggle` | `.fam t` | Call/dismiss familiar |
+| `.familiar togglecombat` | `.fam c` | Toggle familiar combat |
+| `.familiar getlevel` | `.fam gl` | Display familiar level |
+| `.familiar prestige` | `.fam pr` | Prestige familiar |
+
+### Box Management
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.familiar listboxes` | `.fam boxes` | Show available boxes |
+| `.familiar choosebox [Name]` | `.fam cb` | Set active box |
+| `.familiar addbox [Name]` | `.fam ab` | Create new box |
+| `.familiar renamebox [Old] [New]` | `.fam rb` | Rename a box |
+| `.familiar deletebox [Name]` | `.fam db` | Delete empty box |
+| `.familiar movebox [Name]` | `.fam mb` | Move familiar to box |
+
+### Search & Actions
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.familiar search [Name]` | `.fam s` | Search for familiar |
+| `.familiar smartbind [Name]` | `.fam sb` | Search and bind |
+| `.familiar remove [#]` | `.fam r` | Permanently remove familiar |
+| `.familiar reset` | `.fam reset` | Reset familiar state |
+| `.familiar shinybuff [School]` | `.fam shiny` | Apply shiny buff |
+| `.familiar emotes` | `.fam e` | Toggle emote actions |
+| `.familiar emoteactions` | `.fam actions` | Show emote actions |
+| `.familiar toggleoption [Setting]` | `.fam option` | Toggle familiar settings |
+
+### Battle Groups
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.familiar listbattlegroups` | `.fam bgs` | List battle groups |
+| `.familiar listbattlegroup [Group]` | `.fam bg` | Show group details |
+| `.familiar addbattlegroup [Name]` | `.fam abg` | Create battle group |
+| `.familiar choosebattlegroup [Name]` | `.fam cbg` | Set active group |
+| `.familiar deletebattlegroup [Name]` | `.fam dbg` | Delete battle group |
+| `.familiar slotbattlegroup [Group] [Slot]` | `.fam sbg` | Assign to slot |
+| `.familiar challenge [Player]` | `.fam challenge` | Challenge player |
+| `.familiar echoes [VBlood]` | `.fam echoes` | Purchase VBlood |
+
+### Admin Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.familiar add [Player] [Prefab]` 🔒 | `.fam a` | Add familiar |
+| `.familiar setlevel [Player] [Level]` 🔒 | `.fam sl` | Set familiar level |
+| `.familiar setbattlearena` 🔒 | `.fam sba` | Set battle arena |
+
+---
+
+## Prestige Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.prestige get [Type]` | `.prestige get` | Show prestige status |
+| `.prestige list` | `.prestige l` | List prestige types |
+| `.prestige self [Type]` | `.prestige me` | Prestige yourself |
+| `.prestige leaderboard [Type]` | `.prestige lb` | View leaderboard |
+| `.prestige exoform` | `.prestige exoform` | Toggle taunt exoform |
+| `.prestige selectform [Form]` | `.prestige sf` | Select exoform |
+| `.prestige permashroud` | `.prestige shroud` | Toggle permanent shroud |
+| `.prestige syncbuffs` | `.prestige sb` | Reapply prestige buffs |
+| `.prestige set [Player] [Type] [Level]` 🔒 | `.prestige set` | Set prestige level |
+| `.prestige reset [Player] [Type]` 🔒 | `.prestige r` | Reset prestige |
+| `.prestige ignoreleaderboard [Player]` 🔒 | `.prestige ignore` | Toggle leaderboard |
+
+---
+
+## Profession Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.profession get [Type]` | `.prof get` | Display profession progress |
+| `.profession list` | `.prof l` | List professions |
+| `.profession log` | `.prof log` | Toggle XP logging |
+| `.profession set [Player] [Type] [Level]` 🔒 | `.prof set` | Set profession level |
+
+---
+
+## Quest Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.quest progress [Type]` | `.quest p` | Display quest progress |
+| `.quest log` | `.quest log` | Toggle quest logging |
+| `.quest track [Type]` | `.quest t` | Track quest target |
+| `.quest reroll [Type]` | `.quest r` | Reroll quest |
+| `.quest complete [Player] [Type]` 🔒 | `.quest c` | Complete quest |
+| `.quest refresh [Player]` 🔒 | `.quest rf` | Refresh quests |
+
+---
+
+## Miscellaneous Commands
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| `.miscellaneous userstats` | `.misc userstats` | Show player stats |
+| `.miscellaneous starterkit` | `.misc kitme` | Get starter kit |
+| `.miscellaneous prepareforthehunt` | `.misc prepare` | Complete tutorial |
+| `.miscellaneous reminders` | `.misc remindme` | Toggle reminders |
+| `.miscellaneous sct [Type]` | `.misc sct` | Toggle scrolling text |
+| `.miscellaneous silence` | `.misc silence` | Reset combat music |

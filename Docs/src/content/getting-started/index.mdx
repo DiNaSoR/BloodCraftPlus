@@ -1,0 +1,92 @@
+# Getting Started
+
+<Callout type="info">
+  BloodCraftPlus requires **both** the client mod (EclipsePlus) and server mod (Bloodcraftplus) to be installed for the full experience.
+</Callout>
+
+## Overview
+
+BloodCraftPlus is a comprehensive RPG mod system for V Rising that adds:
+
+- **Experience & Leveling** — Progress your character
+- **Weapon Expertise** — Master different weapon types
+- **Blood Legacies** — Gain power from blood types
+- **Classes** — Choose unique playstyles with abilities
+- **Familiars** — Capture and summon defeated enemies
+- **Quests** — Daily and weekly objectives
+- **Professions** — Gathering and crafting bonuses
+- **Prestige** — Endgame progression loop
+
+---
+
+## Requirements
+
+### V Rising Version
+- V Rising **1.1+** (Gloomrot update or later)
+
+### BepInEx
+- **BepInEx 6.x** for IL2CPP
+
+<Callout type="warning">
+  Make sure you're using the correct BepInEx version for V Rising (IL2CPP, not Mono).
+</Callout>
+
+---
+
+## Installation Overview
+
+### Client Setup (EclipsePlus)
+
+The client mod provides the in-game UI overlay:
+
+```
+📁 V Rising/BepInEx/plugins/
+   └── EclipsePlus.dll
+```
+
+1. Download `EclipsePlus.dll` from [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/) or [GitHub](https://github.com/DiNaSoR/BloodCraftPlus/releases)
+2. Place in your BepInEx plugins folder
+3. Launch the game
+
+### Server Setup (Bloodcraftplus)
+
+The server mod provides all the RPG systems:
+
+```
+📁 VRisingServer/BepInEx/plugins/
+   └── Bloodcraftplus.dll
+```
+
+1. Download `Bloodcraftplus.dll` from [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/) or [GitHub](https://github.com/DiNaSoR/BloodCraftPlus/releases)
+2. Place in your server's BepInEx plugins folder
+3. Restart the server
+
+---
+
+## First Run Checklist
+
+After installing both mods:
+
+1. **Connect to the server** — Make sure the server has Bloodcraftplus installed
+2. **Press F8** — Opens the Character Menu (default keybind)
+3. **Check your level** — Use `.lvl get` in chat
+4. **Choose a class** — Use `.class l` to list classes, then `.class s [ClassName]`
+5. **Start playing!** — Kill enemies to gain experience and unlock familiars
+
+---
+
+## Default Keybinds
+
+| Key | Action |
+|-----|--------|
+| `F8` | Toggle Character Menu |
+| `F9` | Toggle Layout Editor (Developer) |
+
+---
+
+## Next Steps
+
+- [Detailed Installation Guide](/getting-started/installation)
+- [Troubleshooting Common Issues](/getting-started/troubleshooting)
+- [Server Features Overview](/server)
+- [Client UI Overview](/client)

@@ -1,0 +1,80 @@
+.callout {
+  margin: var(--space-4) 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.callout-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.callout-icon {
+  font-size: var(--text-lg);
+}
+
+.callout-content {
+  padding: var(--space-3) var(--space-4);
+  padding-top: 0;
+  font-size: var(--text-sm);
+  color: var(--fg1);
+}
+
+.callout-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Info (Cyan) */
+.callout-info {
+  background: rgba(139, 233, 253, 0.08);
+  border-color: rgba(139, 233, 253, 0.3);
+}
+
+.callout-info .callout-header {
+  color: var(--cyan);
+}
+
+/* Warning (Orange) */
+.callout-warning {
+  background: rgba(255, 184, 108, 0.08);
+  border-color: rgba(255, 184, 108, 0.3);
+}
+
+.callout-warning .callout-header {
+  color: var(--orange);
+}
+
+/* Danger (Red) */
+.callout-danger {
+  background: rgba(255, 85, 85, 0.08);
+  border-color: rgba(255, 85, 85, 0.3);
+}
+
+.callout-danger .callout-header {
+  color: var(--danger);
+}
+
+/* Tip (Green) */
+.callout-tip {
+  background: rgba(80, 250, 123, 0.08);
+  border-color: rgba(80, 250, 123, 0.3);
+}
+
+.callout-tip .callout-header {
+  color: var(--green);
+}
+
+/* Note (Purple) */
+.callout-note {
+  background: rgba(189, 147, 249, 0.08);
+  border-color: rgba(189, 147, 249, 0.3);
+}
+
+.callout-note .callout-header {
+  color: var(--purple);
+}

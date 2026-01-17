@@ -1,0 +1,156 @@
+# Troubleshooting
+
+Common issues and their solutions when using BloodCraftPlus.
+
+## Client Issues
+
+### Character Menu doesn't open (F8)
+
+**Symptoms:** Pressing F8 does nothing, or shows an error.
+
+**Solutions:**
+1. Make sure you're connected to a server running **Bloodcraftplus**
+2. Check that `EclipsePlus.dll` is in the correct plugins folder
+3. Look for errors in `BepInEx/LogOutput.log`
+4. Try restarting the game
+
+### UI elements are missing or invisible
+
+**Symptoms:** Parts of the Character Menu are blank or not rendering.
+
+**Solutions:**
+1. Ensure both client and server mod versions match
+2. Wait for the server to sync data (can take a few seconds after connecting)
+3. Try closing and reopening the Character Menu
+
+### HUD bars not showing
+
+**Symptoms:** Experience bar, expertise bar, etc. are not visible.
+
+**Solutions:**
+1. Press `F9` to enter Layout Mode and check if bars are positioned off-screen
+2. Reset HUD layout by deleting the layout config file
+3. Verify the corresponding system is enabled on the server
+
+---
+
+## Server Issues
+
+### "Command not found" for mod commands
+
+**Symptoms:** Using `.lvl`, `.class`, etc. returns "Command not found".
+
+**Solutions:**
+1. Verify `Bloodcraftplus.dll` is in the server's plugins folder
+2. Check server logs for initialization errors
+3. Ensure VampireCommandFramework (VCF) is installed
+4. Restart the server
+
+### Server fails to start
+
+**Symptoms:** Server crashes or hangs on startup with BloodCraftPlus.
+
+**Solutions:**
+1. Check `BepInEx/LogOutput.log` for errors
+2. Verify you're using **BepInEx 6.x IL2CPP** (not Mono)
+3. Look for `TypeInitializationException` errors — may indicate load order issues
+4. Try removing other mods to isolate the issue
+
+<Callout type="warning" title="IL2CPP Constraints">
+  Some C# patterns don't work in IL2CPP. If you're developing, see the project's `lessons.md` for known pitfalls.
+</Callout>
+
+### Config file not generating
+
+**Symptoms:** No config file appears in `BepInEx/config/`.
+
+**Solutions:**
+1. Run the server at least once with Bloodcraftplus installed
+2. Check folder permissions
+3. Look for errors during initialization in logs
+
+---
+
+## Progression Issues
+
+### Not gaining experience
+
+**Symptoms:** Killing enemies doesn't give XP.
+
+**Solutions:**
+1. Check if leveling is enabled: look for `LevelingSystem = true` in config
+2. Use `.lvl log` to enable XP gain logging
+3. Verify you're killing level-appropriate enemies
+4. Check for level scaling multiplier settings
+
+### Class abilities not working
+
+**Symptoms:** On-hit effects or shift spells don't activate.
+
+**Solutions:**
+1. Ensure `ClassSystem = true` in config
+2. Verify your prestige level unlocks the spell
+3. Use `.class csp [#]` to select your shift spell
+4. Check `ClassOnHitEffects` is enabled for on-hit procs
+
+### Familiars not unlocking
+
+**Symptoms:** Killing enemies never unlocks them as familiars.
+
+**Solutions:**
+1. Ensure `FamiliarSystem = true` in config
+2. Check unlock chance settings (`UnitUnlockChance`, `VBloodUnlockChance`)
+3. Some unit types may be banned — check `BannedUnits` and `BannedTypes`
+4. VBloods require `AllowVBloods = true`
+
+---
+
+## Data Issues
+
+### Progress not saving
+
+**Symptoms:** Progress resets after server restart.
+
+**Solutions:**
+1. Check server has write permissions to data folders
+2. Verify the server shutdown cleanly (not force-killed)
+3. Look for save errors in logs
+4. Check disk space
+
+### Corrupted character data
+
+**Symptoms:** Unexpected values or errors loading character.
+
+**Solutions:**
+1. Character data is stored per-SteamID in the Bloodcraftplus data folder
+2. Backup and delete the problematic character's data file
+3. Character will start fresh with default values
+
+---
+
+## Performance Issues
+
+### Server lag spikes
+
+**Symptoms:** Periodic lag when using mod features.
+
+**Solutions:**
+1. Reduce `Eclipsed` sync frequency (set to `false` for slower 2.5s updates)
+2. Check if familiar battles are causing issues
+3. Monitor server resource usage
+4. Consider disabling unused systems
+
+---
+
+## Getting Help
+
+If you can't resolve your issue:
+
+1. **Check the logs** — `BepInEx/LogOutput.log` contains valuable debug info
+2. **Search existing issues** — [GitHub Issues](https://github.com/DiNaSoR/BloodCraftPlus/issues)
+3. **Ask in the community** — V Rising modding Discord servers
+4. **Report a bug** — Create a GitHub issue with:
+   - Your mod versions
+   - Server/client logs
+   - Steps to reproduce
+   - Expected vs actual behavior

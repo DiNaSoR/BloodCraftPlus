@@ -1,0 +1,203 @@
+# Contributing
+
+Guidelines for contributing to BloodCraftPlus.
+
+## Overview
+
+BloodCraftPlus is a monorepo containing:
+- **Server mod** — `Server/Bloodcraftplus/`
+- **Client mod** — `Client/EclipsePlus/`
+- **Debug tools** — `Tools/VDebug/`
+- **Documentation** — `Docs/`
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **.NET 6 SDK** — For building the mods
+- **Node.js 20+** — For building the docs site
+- **V Rising** — For testing
+- **BepInEx 6.x** — IL2CPP version
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/DiNaSoR/BloodCraftPlus.git
+cd BloodCraftPlus
+```
+
+### Build the Mods
+
+```bash
+# Client mod
+dotnet build Client/EclipsePlus/EclipsePlus.csproj -c Release
+
+# Server mod
+dotnet build Server/Bloodcraftplus/Bloodcraftplus.csproj -c Release
+
+# Debug tools
+dotnet build Tools/VDebug/VDebug.csproj -c Release
+```
+
+### Build the Docs
+
+```bash
+cd Docs
+npm install
+npm run dev      # Development server
+npm run build    # Production build
+```
+
+---
+
+## Project Memory System
+
+This project uses a **memory system** to prevent regressions and track decisions.
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `.cursor/memory/memo.md` | Current system state and invariants |
+| `.cursor/memory/lessons.md` | Hard rules from past mistakes |
+| `.cursor/memory/journal/` | Change history (monthly) |
+| `.cursor/memory/hot-rules.md` | Critical do-not-break rules |
+
+### Before Making Changes
+
+1. Read `hot-rules.md` — Critical constraints
+2. Read `memo.md` — Current architecture
+3. Read `lessons.md` — Past mistakes to avoid
+4. Check `journal/` — Recent changes
+
+### After Making Changes
+
+1. Add journal entry — What changed and why
+2. Update `memo.md` if architecture changed
+3. Add to `lessons.md` if you discovered a pitfall
+
+---
+
+## Code Guidelines
+
+### General Principles
+
+- **Don't duplicate** — Check for existing patterns first
+- **Prefer existing helpers** — Use shared modules
+- **Small changes** — Incremental, reviewable PRs
+- **Explicit intent** — Code should explain what and why
+
+### IL2CPP Constraints
+
+V Rising mods run in IL2CPP. Key rules:
+
+```csharp
+// DON'T: RectOffset constructor
+new RectOffset(1, 2, 3, 4)  // Fails in IL2CPP
+
+// DO: Property assignment
+var offset = new RectOffset();
+offset.left = 1;
+offset.right = 2;
+offset.top = 3;
+offset.bottom = 4;
+```
+
+```csharp
+// DON'T: Ambiguous Object.Destroy
+Object.Destroy(gameObject);  // Ambiguous
+
+// DO: Fully qualified
+UnityEngine.Object.Destroy(gameObject);
+```
+
+See `lessons.md` for complete list of IL2CPP pitfalls.
+
+---
+
+## Architecture Notes
+
+### Server (Bloodcraftplus)
+
+- **Systems** handle game mechanics
+- **Services** provide shared functionality
+- **Commands** define chat interface
+- **Patches** intercept game events
+
+### Client (EclipsePlus)
+
+- **HUD** — On-screen progress bars
+- **CharacterMenu** — Tabbed UI panels
+- **DataService** — Server data ingestion
+- **Patches** — Game integration
+
+### Communication
+
+Server → Client via chat protocol:
+- Encoded progression data
+- Intercepted by client patches
+- Parsed by DataService
+- Rendered by UI components
+
+---
+
+## Pull Request Process
+
+1. **Fork** the repository
+2. **Create branch** from `main`
+3. **Make changes** following guidelines
+4. **Test** with both client and server
+5. **Update docs** if needed
+6. **Submit PR** with clear description
+
+### PR Checklist
+
+- [ ] Builds without errors
+- [ ] Tested in-game
+- [ ] Follows existing code style
+- [ ] Memory files updated (if applicable)
+- [ ] No regressions in `lessons.md`
+
+---
+
+## Reporting Issues
+
+### Bug Reports
+
+Include:
+- Mod versions (client and server)
+- Steps to reproduce
+- Expected vs actual behavior
+- Log files (`BepInEx/LogOutput.log`)
+
+### Feature Requests
+
+Include:
+- Clear description of the feature
+- Use cases
+- Potential implementation approach (optional)
+
+---
+
+## Resources
+
+- [GitHub Repository](https://github.com/DiNaSoR/BloodCraftPlus)
+- [V Rising Modding Discord](https://discord.gg/vrising)
+- [BepInEx Documentation](https://docs.bepinex.dev/)
+
+---
+
+## Credits
+
+| Role | Credit |
+|------|--------|
+| **Original Creator** | [mfoltz](https://github.com/mfoltz) |
+| **Fork Maintainer** | [DiNaSoR](https://github.com/DiNaSoR) |
+
+---
+
+## License
+
+This project is licensed under **CC BY-NC 4.0** (Creative Commons Attribution-NonCommercial 4.0 International).

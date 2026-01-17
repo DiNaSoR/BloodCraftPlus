@@ -1,6 +1,6 @@
 ﻿# Project Memo
 
-Last updated: 2026-01-17
+Last updated: 2026-01-17 (Docs site added)
 
 ## Project Structure (current truth)
 
@@ -74,10 +74,30 @@ BloodCraftPlus/
 
 ## Build & CI/CD (current truth)
 
-- GitHub Actions: `.github/workflows/build.yml`
+- GitHub Actions:
+  - `.github/workflows/build.yml` — Build + release mods
+  - `.github/workflows/docs.yml` — Build + deploy docs to GitHub Pages
 - Thunderstore configs:
   - `Client/EclipsePlus/thunderstore.toml`
   - `Server/Bloodcraftplus/thunderstore.toml`
+
+---
+
+## Documentation Site (current truth)
+
+- Location: `Docs/`
+- Tech: Vite + React + TypeScript + MDX
+- Theme: Dracula-vibes (dark, vampiric red accents, gothic typography)
+- Deployment: GitHub Pages via Actions (auto-deploy on push to main)
+- URL: `https://dinasor.github.io/BloodCraftPlus/`
+- Navigation config: `Docs/src/docs.config.ts`
+- Content: `Docs/src/content/**/*.mdx`
+- Key components:
+  - `Docs/src/components/Layout.tsx` — Sidebar + header
+  - `Docs/src/components/Callout.tsx` — Info/warning boxes
+  - `Docs/src/components/CodeBlock.tsx` — Syntax highlighting
+  - `Docs/src/components/CommandCard.tsx` — Command reference cards
+  - `Docs/src/components/ConfigTable.tsx` — Searchable config table
 
 ---
 

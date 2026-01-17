@@ -1,0 +1,175 @@
+# Character Menu
+
+The Character Menu is the main UI for viewing and managing your BloodCraftPlus progression.
+
+## Overview
+
+Press **F8** to open the Character Menu. It provides:
+- Tabbed navigation between systems
+- Detailed progression views
+- Interactive actions (no chat typing needed)
+
+---
+
+## Available Tabs
+
+### Class Tab
+
+View and select player classes:
+- Class list with themes
+- Stat synergies preview
+- Shift spell selection
+- On-hit effect info
+
+### Exoform Tab
+
+Manage exoform transformations:
+- Current form display
+- Exo prestige count
+- Energy charge meter
+- Available forms list
+- Abilities preview
+
+### Familiars Tab
+
+Complete familiar management:
+
+**Familiars Mode:**
+- Active familiar card
+- Box management
+- Bind/unbind actions
+- Overflow handling
+- Shiny options
+
+**Battle Groups Mode:**
+- Battle group management
+- Slot assignments
+- Challenge system
+
+### Prestige Tab
+
+Prestige leaderboards:
+- Type selector dropdown
+- Top players ranking
+- Your current position
+
+### Professions Tab
+
+Profession progress:
+- All profession levels
+- Progress bars
+- Bonus previews
+
+### Progression Tab
+
+Combined overview:
+- Class info
+- Profession summary
+- Quick stats
+
+### Stat Bonuses Tab
+
+Detailed stat management:
+
+**Weapon Expertise View:**
+- Current weapon stats
+- Available stat choices
+- Click to toggle selection
+
+**Blood Legacies View:**
+- Current blood stats
+- Available stat choices
+- Click to toggle selection
+
+---
+
+## Navigation
+
+### Main Tabs
+
+The top row shows major sections:
+- Click to switch between tabs
+- Active tab is highlighted
+
+### Sub-Panels
+
+Some tabs have internal modes:
+- **Stat Bonuses:** Weapon / Blood toggle
+- **Familiars:** Familiars / Battle Groups toggle
+
+---
+
+## Interactions
+
+### Click Actions
+
+Most interactions are click-based:
+- Select items from lists
+- Toggle options on/off
+- Confirm actions
+
+<Callout type="tip">
+  Hover over elements to see tooltips and additional info.
+</Callout>
+
+### Chat Commands
+
+Some actions still require chat (for safety):
+- Prestige actions
+- Permanent deletions
+- Admin commands
+
+---
+
+## Implementation
+
+### Architecture
+
+```
+Services/CharacterMenu/
+├── Tabs/
+│   ├── ClassTab.cs
+│   ├── ExoformTab.cs
+│   ├── FamiliarsTab.cs          # Main file
+│   ├── FamiliarsTab.Battles.cs  # Battle groups partial
+│   ├── FamiliarsTab.Overflow.cs # Overflow partial
+│   ├── FamiliarsTab.Settings.cs # Settings partial
+│   ├── FamiliarsTab.Talents.cs  # Talents partial
+│   ├── PrestigeTab.cs
+│   ├── ProfessionsTab.cs
+│   ├── ProgressionTab.cs
+│   └── StatBonusesTab.cs
+├── Shared/
+│   └── UIFactory.cs             # Shared UI builders
+├── Base/
+│   └── CharacterMenuTabBase.cs  # Tab base class
+└── CharacterMenuIntegration.cs  # Tab registration
+```
+
+### Tab Registration
+
+Tabs implement `ICharacterMenuTab` interface:
+- `Build()` — Create UI structure
+- `Update()` — Refresh data
+- `SetActive()` — Show/hide handling
+
+---
+
+## Data Binding
+
+Character Menu reads from `DataService`:
+- Cached server data
+- Parsed progression states
+- Real-time updates on sync
+
+---
+
+## Styling
+
+UI follows V Rising's visual style:
+- Dark backgrounds
+- Gothic typography
+- Red accent colors
+- Game-native sprites
+
+See `Services/CharacterMenu/Shared/UIFactory.cs` for style implementations.

@@ -1,0 +1,137 @@
+# Installation Guide
+
+This guide walks you through installing BloodCraftPlus for both clients and servers.
+
+## Prerequisites
+
+### BepInEx Installation
+
+BloodCraftPlus requires BepInEx 6.x (IL2CPP version). If you don't have BepInEx installed:
+
+1. Download **BepInEx 6.x** for IL2CPP from the [BepInEx releases](https://github.com/BepInEx/BepInEx/releases)
+2. Extract to your V Rising or V Rising Server folder
+3. Run the game once to generate the `BepInEx/plugins` folder
+
+<Callout type="danger">
+  Do NOT use BepInEx 5.x (Mono) — V Rising requires the IL2CPP version!
+</Callout>
+
+---
+
+## Client Installation (EclipsePlus)
+
+EclipsePlus provides the beautiful in-game UI for viewing your progression.
+
+### Step 1: Download
+
+Get `EclipsePlus.dll` from one of these sources:
+- [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/)
+- [GitHub Releases](https://github.com/DiNaSoR/BloodCraftPlus/releases)
+
+### Step 2: Install
+
+Copy `EclipsePlus.dll` to your plugins folder:
+
+```
+📁 V Rising/
+├── 📁 BepInEx/
+│   └── 📁 plugins/
+│       └── 📄 EclipsePlus.dll  ← Place here
+├── 📄 VRising.exe
+└── ...
+```
+
+### Step 3: Verify
+
+1. Launch V Rising
+2. Press `F8` to open the Character Menu
+3. If the menu appears, installation is successful!
+
+---
+
+## Server Installation (Bloodcraftplus)
+
+Bloodcraftplus provides all the RPG systems and progression mechanics.
+
+### Step 1: Download
+
+Get `Bloodcraftplus.dll` from one of these sources:
+- [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/)
+- [GitHub Releases](https://github.com/DiNaSoR/BloodCraftPlus/releases)
+
+### Step 2: Install
+
+Copy `Bloodcraftplus.dll` to your server's plugins folder:
+
+```
+📁 VRisingServer/
+├── 📁 BepInEx/
+│   └── 📁 plugins/
+│       └── 📄 Bloodcraftplus.dll  ← Place here
+├── 📄 VRisingServer.exe
+└── ...
+```
+
+### Step 3: Configure
+
+On first run, Bloodcraftplus generates a configuration file at:
+
+```
+📁 BepInEx/config/com.dinasor.bloodcraftplus.cfg
+```
+
+Edit this file to customize the mod behavior. See the [Configuration Reference](/reference/config) for all options.
+
+### Step 4: Restart
+
+Restart your server to apply the changes.
+
+---
+
+## Optional: VDebug (Developer Tool)
+
+VDebug is an optional plugin for modders and developers:
+
+```
+📁 V Rising/BepInEx/plugins/
+   └── VDebug.dll
+```
+
+Features:
+- Asset dumping
+- UI inspection
+- Layout editing
+- Debug logging
+
+See the [VDebug documentation](/tools/vdebug) for details.
+
+---
+
+## Version Compatibility
+
+| EclipsePlus | Bloodcraftplus | V Rising |
+|-------------|----------------|----------|
+| 1.3.x | 1.12.x | 1.1+ |
+
+<Callout type="warning">
+  Always use matching versions of EclipsePlus and Bloodcraftplus!
+</Callout>
+
+---
+
+## Updating
+
+To update BloodCraftPlus:
+
+1. **Backup your config** — Save `com.dinasor.bloodcraftplus.cfg`
+2. **Replace the DLLs** — Download new versions and overwrite old files
+3. **Restart** — Restart the server and reconnect clients
+4. **Check config** — New options may be added; review and adjust as needed
+
+---
+
+## Next Steps
+
+- [Troubleshooting](/getting-started/troubleshooting) — Common issues and solutions
+- [Configuration Reference](/reference/config) — All server configuration options
+- [Chat Commands](/reference/commands) — Full command list

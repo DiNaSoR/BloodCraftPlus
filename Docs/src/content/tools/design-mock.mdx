@@ -1,0 +1,174 @@
+# Design Mock
+
+The Design Mock is an HTML/CSS prototype of the BloodCraftPlus UI, used for designing and testing UI layouts before implementation.
+
+## Overview
+
+Located at `Tools/DesignMock/`, this tool provides:
+- Visual mockup of Character Menu tabs
+- CSS tokens matching in-game styling
+- Interactive prototyping
+- Reference for Unity UI implementation
+
+---
+
+## Purpose
+
+### Design Before Code
+
+The mock allows rapid iteration on UI designs:
+1. Design in HTML/CSS (fast iteration)
+2. Test layouts and interactions
+3. Get approval on visuals
+4. Implement in Unity (guided by mock)
+
+### Reference Implementation
+
+The CSS tokens and structure serve as documentation:
+- Color palette definitions
+- Spacing and sizing values
+- Component patterns
+- Typography guidelines
+
+---
+
+## Structure
+
+```
+Tools/DesignMock/
+├── index.html                    # Main mockup page
+├── design-mock.css               # Import entrypoint
+├── design-mock.tokens.css        # Design tokens
+├── design-mock.core.css          # Core styles
+├── design-mock.familiars.css     # Familiars tab styles
+├── design-mock.progression.css   # Progression tab styles
+├── design-mock.stat-bonuses.css  # Stat bonuses styles
+├── design-mock.equipment.css     # Equipment styles
+├── design-mock.js                # Interactive behavior
+├── build.ps1                     # Build script
+├── src/
+│   ├── index.template.html       # Template source
+│   └── partials/                 # Reusable HTML partials
+└── assets/
+    ├── fonts/                    # Font atlases
+    └── sprites/                  # UI sprites from game
+```
+
+---
+
+## Using the Mock
+
+### Viewing
+
+Open `Tools/DesignMock/index.html` in a browser to see the mockup.
+
+### Editing
+
+1. Edit files in `src/` directory
+2. Run `build.ps1` to regenerate `index.html`
+3. Refresh browser to see changes
+
+### CSS Tokens
+
+The token file defines reusable values:
+
+```css
+:root {
+  /* Dimensions */
+  --panel-width: 596px;
+  --panel-height: 698px;
+  --header-height: 80px;
+  
+  /* Typography */
+  --title-font: "Cinzel", serif;
+  --body-font: "Cinzel", serif;
+  
+  /* Colors */
+  --accent: rgba(128, 12, 16, 0.45);
+  --header-tint: rgba(26, 26, 31, 0.95);
+  
+  /* ...more tokens */
+}
+```
+
+---
+
+## Assets
+
+### Sprites
+
+Game sprites are extracted to `assets/sprites/`:
+- Window backgrounds
+- Tab buttons
+- Icons and decorations
+- Dividers and frames
+
+### Fonts
+
+Font atlases from the game:
+- Nocturne Serif (titles)
+- Liberation Sans (body)
+
+---
+
+## Tabs in Mock
+
+The mockup includes all Character Menu tabs:
+
+| Tab | Description |
+|-----|-------------|
+| Professions | Profession levels and bonuses |
+| Stat Bonuses | Weapon/Blood stat selection |
+| Familiars | Full familiar management |
+| Exoform | Transformation UI |
+| Prestige | Leaderboards |
+| Class | Class selection |
+
+---
+
+## Build Script
+
+The `build.ps1` PowerShell script:
+1. Reads `src/index.template.html`
+2. Injects partials from `src/partials/`
+3. Outputs to `index.html`
+
+Usage:
+```powershell
+./build.ps1           # Build
+./build.ps1 -Check    # Validate without building
+```
+
+---
+
+## Translation to Unity
+
+When implementing in Unity, translate:
+
+| CSS Concept | Unity Equivalent |
+|-------------|------------------|
+| `width/height` | `RectTransform` sizeDelta |
+| `padding` | `LayoutGroup` padding |
+| `gap` | `LayoutGroup` spacing |
+| `background-image` | `Image` sprite |
+| `color` | `Image.color` / `TMP_Text.color` |
+| `font-size` | `TMP_Text.fontSize` |
+
+---
+
+## Notes
+
+### Not a Live Preview
+
+The mock is a **design reference**, not a live preview:
+- Some game-specific behaviors aren't replicated
+- Unity layout may need adjustments
+- Use as guidance, not specification
+
+### Keeping in Sync
+
+When updating UI:
+1. Update mock first
+2. Get design approval
+3. Implement in Unity
+4. Update mock if implementation differs

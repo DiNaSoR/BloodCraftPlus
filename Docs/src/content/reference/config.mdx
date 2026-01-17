@@ -1,0 +1,220 @@
+# Configuration Reference
+
+All server configuration options for Bloodcraftplus.
+
+<Callout type="info">
+  Configuration file location: `BepInEx/config/com.dinasor.bloodcraftplus.cfg`
+</Callout>
+
+---
+
+## General
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `LanguageLocalization` | string | `"English"` | Language for prefab names. Options: Brazilian, English, French, German, Hungarian, Italian, Japanese, Koreana, Latam, Polish, Russian, SimplifiedChinese, Spanish, TraditionalChinese, Thai, Turkish, Vietnamese |
+| `Eclipsed` | bool | `false` | Controls sync frequency. true = fast (0.1s), false = slow (2.5s) |
+| `ElitePrimalRifts` | bool | `false` | Enable elite primal rifts |
+| `RiftFrequency` | int | `6` | Rifts per day (max 24) |
+| `EliteShardBearers` | bool | `false` | Enable elite shard bearers |
+| `ShardBearerLevel` | int | `0` | Shard bearer level (0 = no effect) |
+| `PotionStacking` | bool | `false` | Allow t01/t02 potion effects together |
+| `BearFormDash` | bool | `false` | Enable bear form dash |
+| `BleedingEdge` | string | `""` | Weapon-specific changes (Slashers, Crossbow, Pistols, TwinBlades, Daggers) |
+| `TwilightArsenal` | bool | `false` | Experimental shadow weapon abilities |
+| `PrimalJewelCost` | int | `-77477508` | Item prefab for primal jewel crafting |
+
+---
+
+## StarterKit
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `StarterKit` | bool | `false` | Enable starter kit |
+| `KitPrefabs` | string | `"862477668,..."` | Item PrefabGUIDs |
+| `KitQuantities` | string | `"500,1000,..."` | Item quantities |
+| `KitFamiliar` | int | `1107541186` | Familiar PrefabGUID (0 = none) |
+
+---
+
+## Quests
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `QuestSystem` | bool | `false` | Enable quests |
+| `InfiniteDailies` | bool | `false` | Allow unlimited daily completions |
+| `DailyPerfectChance` | float | `0.1` | Perfect gem chance on daily |
+| `QuestRewards` | string | `"28358550,..."` | Reward item PrefabGUIDs |
+| `QuestRewardAmounts` | string | `"50,250,50"` | Reward amounts |
+| `RerollDailyPrefab` | int | `-949672483` | Daily reroll item |
+| `RerollDailyAmount` | int | `50` | Daily reroll cost |
+| `RerollWeeklyPrefab` | int | `-949672483` | Weekly reroll item |
+| `RerollWeeklyAmount` | int | `50` | Weekly reroll cost |
+
+---
+
+## Leveling
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `LevelingSystem` | bool | `false` | Enable leveling |
+| `RestedXPSystem` | bool | `false` | Enable rested XP |
+| `RestedXPRate` | float | `0.05` | Rested XP per tick |
+| `RestedXPMax` | int | `5` | Max levels of rested XP |
+| `RestedXPTickRate` | float | `120` | Minutes per tick |
+| `MaxLevel` | int | `90` | Maximum player level |
+| `StartingLevel` | int | `10` | Starting level |
+| `UnitLevelingMultiplier` | float | `7.5` | Unit XP multiplier |
+| `VBloodLevelingMultiplier` | float | `15` | VBlood XP multiplier |
+| `DocileUnitMultiplier` | float | `0.15` | Docile unit multiplier |
+| `WarEventMultiplier` | float | `0.2` | War event multiplier |
+| `UnitSpawnerMultiplier` | float | `0` | Spawner XP multiplier |
+| `GroupLevelingMultiplier` | float | `1` | Group kill multiplier |
+| `LevelScalingMultiplier` | float | `0.05` | Level gap reduction |
+| `ExpShare` | bool | `true` | Share XP with nearby players |
+| `ExpShareLevelRange` | int | `10` | Max level diff for sharing |
+| `ExpShareDistance` | float | `25` | XP share range |
+
+---
+
+## Prestige
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PrestigeSystem` | bool | `false` | Enable prestige |
+| `PrestigeBuffs` | string | `"1504279833,..."` | Buff PrefabGUIDs |
+| `PrestigeLevelsToUnlockClassSpells` | string | `"0,1,2,3,4,5"` | Spell unlock levels |
+| `MaxLevelingPrestiges` | int | `10` | Max leveling prestiges |
+| `LevelingPrestigeReducer` | float | `0.05` | XP reduction per prestige |
+| `PrestigeRatesReducer` | float | `0.10` | Rate reduction |
+| `PrestigeStatMultiplier` | float | `0.10` | Stat increase per prestige |
+| `PrestigeRateMultiplier` | float | `0.10` | Rate increase |
+| `ExoPrestiging` | bool | `false` | Enable exo prestiges |
+| `ExoPrestigeReward` | int | `28358550` | Exo reward item |
+| `ExoPrestigeRewardQuantity` | int | `500` | Exo reward amount |
+| `TrueImmortal` | bool | `false` | Immortal blood in exoform |
+| `Leaderboard` | bool | `true` | Enable leaderboards |
+
+---
+
+## Expertise
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ExpertiseSystem` | bool | `false` | Enable expertise |
+| `MaxExpertisePrestiges` | int | `10` | Max expertise prestiges |
+| `UnarmedSlots` | bool | `false` | Enable unarmed spell slots |
+| `Duality` | bool | `true` | Both unarmed slots |
+| `ShiftSlot` | bool | `false` | Class spell on shift |
+| `MaxExpertiseLevel` | int | `100` | Max expertise level |
+| `UnitExpertiseMultiplier` | float | `2` | Unit XP multiplier |
+| `VBloodExpertiseMultiplier` | float | `5` | VBlood XP multiplier |
+| `UnitSpawnerExpertiseFactor` | float | `1` | Spawner XP factor |
+| `ExpertiseStatChoices` | int | `3` | Max stat choices |
+| `ResetExpertiseItem` | int | `576389135` | Reset item |
+| `ResetExpertiseItemQuantity` | int | `500` | Reset cost |
+
+### Expertise Stat Caps
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `MaxHealth` | `250` | HP cap |
+| `MovementSpeed` | `0.25` | Speed cap |
+| `PrimaryAttackSpeed` | `0.10` | Attack speed cap |
+| `PhysicalLifeLeech` | `0.10` | Physical leech cap |
+| `SpellLifeLeech` | `0.10` | Spell leech cap |
+| `PrimaryLifeLeech` | `0.15` | Primary leech cap |
+| `PhysicalPower` | `20` | Physical power cap |
+| `SpellPower` | `10` | Spell power cap |
+| `PhysicalCritChance` | `0.10` | Physical crit cap |
+| `PhysicalCritDamage` | `0.50` | Physical crit damage cap |
+| `SpellCritChance` | `0.10` | Spell crit cap |
+| `SpellCritDamage` | `0.50` | Spell crit damage cap |
+
+---
+
+## Legacies
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `LegacySystem` | bool | `false` | Enable legacies |
+| `MaxLegacyPrestiges` | int | `10` | Max legacy prestiges |
+| `MaxBloodLevel` | int | `100` | Max legacy level |
+| `UnitLegacyMultiplier` | float | `1` | Unit XP multiplier |
+| `VBloodLegacyMultiplier` | float | `5` | VBlood XP multiplier |
+| `LegacyStatChoices` | int | `3` | Max stat choices |
+| `ResetLegacyItem` | int | `576389135` | Reset item |
+| `ResetLegacyItemQuantity` | int | `500` | Reset cost |
+
+### Legacy Stat Caps
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `HealingReceived` | `0.15` | Healing cap |
+| `DamageReduction` | `0.05` | Damage reduction cap |
+| `PhysicalResistance` | `0.10` | Physical resist cap |
+| `SpellResistance` | `0.10` | Spell resist cap |
+| `ResourceYield` | `0.25` | Resource yield cap |
+| `ReducedBloodDrain` | `0.50` | Blood drain cap |
+| `SpellCooldownRecoveryRate` | `0.10` | Spell CD cap |
+| `WeaponCooldownRecoveryRate` | `0.10` | Weapon CD cap |
+| `UltimateCooldownRecoveryRate` | `0.20` | Ultimate CD cap |
+| `MinionDamage` | `0.25` | Minion damage cap |
+| `AbilityAttackSpeed` | `0.10` | Ability speed cap |
+| `CorruptionDamageReduction` | `0.10` | Corruption resist cap |
+
+---
+
+## Professions
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ProfessionSystem` | bool | `false` | Enable professions |
+| `ProfessionFactor` | float | `1` | XP multiplier |
+| `DisabledProfessions` | string | `""` | Disabled professions |
+| `ExtraRecipes` | bool | `false` | Enable extra recipes |
+
+---
+
+## Familiars
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `FamiliarSystem` | bool | `false` | Enable familiars |
+| `ShareUnlocks` | bool | `false` | Share unlocks with party |
+| `FamiliarCombat` | bool | `true` | Enable familiar combat |
+| `FamiliarPvP` | bool | `true` | Allow familiars in PvP |
+| `FamiliarBattles` | bool | `false` | Enable battle system |
+| `FamiliarPrestige` | bool | `false` | Enable familiar prestige |
+| `MaxFamiliarPrestiges` | int | `10` | Max familiar prestiges |
+| `FamiliarPrestigeStatMultiplier` | float | `0.10` | Prestige stat multiplier |
+| `MaxFamiliarLevel` | int | `90` | Max familiar level |
+| `AllowVBloods` | bool | `false` | Allow VBlood familiars |
+| `AllowMinions` | bool | `false` | Allow minion familiars |
+| `BannedUnits` | string | `""` | Banned unit PrefabGUIDs |
+| `BannedTypes` | string | `""` | Banned unit types |
+| `EquipmentOnly` | bool | `false` | Equipment slots only |
+| `UnitFamiliarMultiplier` | float | `7.5` | Unit XP multiplier |
+| `VBloodFamiliarMultiplier` | float | `15` | VBlood XP multiplier |
+| `UnitUnlockChance` | float | `0.05` | Unit unlock chance |
+| `VBloodUnlockChance` | float | `0.01` | VBlood unlock chance |
+| `PrimalEchoes` | bool | `false` | Enable VBlood purchasing |
+| `EchoesFactor` | int | `1` | Purchase cost multiplier |
+| `ShinyChance` | float | `0.2` | Shiny chance on unlock |
+| `ShinyCostItemQuantity` | int | `100` | Vampiric dust cost |
+| `PrestigeCostItemQuantity` | int | `1000` | Prestige cost |
+
+---
+
+## Classes
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ClassSystem` | bool | `false` | Enable classes |
+| `ChangeClassItem` | int | `576389135` | Change class item |
+| `ChangeClassQuantity` | int | `750` | Change class cost |
+| `ClassOnHitEffects` | bool | `true` | Enable on-hit procs |
+| `OnHitProcChance` | float | `0.075` | Proc chance (7.5%) |
+| `SynergyMultiplier` | float | `1.5` | Synergy stat multiplier |
+
+See the config file for class-specific synergy and spell configurations.

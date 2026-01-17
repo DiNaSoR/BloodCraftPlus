@@ -1,0 +1,111 @@
+/*
+ * BloodCraftPlus Docs – Design Tokens
+ * "Dracula vibes": dark, vampiric, gothic with red accents
+ */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════════
+     BACKGROUND LAYERS (dark to darker)
+     ═══════════════════════════════════════════════════════════════ */
+  --bg0: #0d0d10;          /* Deepest background (body) */
+  --bg1: #14141a;          /* Sidebar, cards */
+  --bg2: #1a1a22;          /* Elevated surfaces, hover states */
+  --bg3: #22222c;          /* Borders, dividers */
+
+  /* ═══════════════════════════════════════════════════════════════
+     FOREGROUND / TEXT
+     ═══════════════════════════════════════════════════════════════ */
+  --fg0: #f4f0ec;          /* Primary text (high contrast) */
+  --fg1: #d7d0c6;          /* Secondary text */
+  --fg2: #9a9490;          /* Muted / placeholder text */
+
+  /* ═══════════════════════════════════════════════════════════════
+     ACCENT PALETTE – Vampiric Reds + Dracula-ish tones
+     ═══════════════════════════════════════════════════════════════ */
+  --accent: #c41e3a;       /* Primary accent – Blood red */
+  --accent-hover: #e02848; /* Accent hover state */
+  --accent-muted: rgba(196, 30, 58, 0.15);
+
+  --accent2: #8b5cf6;      /* Secondary accent – Violet (Dracula purple) */
+  --accent2-muted: rgba(139, 92, 246, 0.15);
+
+  --cyan: #8be9fd;         /* Dracula cyan */
+  --green: #50fa7b;        /* Dracula green */
+  --orange: #ffb86c;       /* Dracula orange */
+  --pink: #ff79c6;         /* Dracula pink */
+  --purple: #bd93f9;       /* Dracula purple */
+  --yellow: #f1fa8c;       /* Dracula yellow */
+
+  /* Semantic colors */
+  --danger: #ff5555;       /* Dracula red */
+  --warning: #ffb86c;      /* Dracula orange */
+  --success: #50fa7b;      /* Dracula green */
+  --info: #8be9fd;         /* Dracula cyan */
+
+  /* ═══════════════════════════════════════════════════════════════
+     TYPOGRAPHY
+     ═══════════════════════════════════════════════════════════════ */
+  --font-display: 'Cinzel', 'Palatino Linotype', 'Book Antiqua', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SPACING
+     ═══════════════════════════════════════════════════════════════ */
+  --space-1: 0.25rem;      /* 4px */
+  --space-2: 0.5rem;       /* 8px */
+  --space-3: 0.75rem;      /* 12px */
+  --space-4: 1rem;         /* 16px */
+  --space-5: 1.25rem;      /* 20px */
+  --space-6: 1.5rem;       /* 24px */
+  --space-8: 2rem;         /* 32px */
+  --space-10: 2.5rem;      /* 40px */
+  --space-12: 3rem;        /* 48px */
+  --space-16: 4rem;        /* 64px */
+
+  /* ═══════════════════════════════════════════════════════════════
+     LAYOUT
+     ═══════════════════════════════════════════════════════════════ */
+  --sidebar-width: 280px;
+  --content-max-width: 900px;
+  --header-height: 64px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDERS & RADIUS
+     ═══════════════════════════════════════════════════════════════ */
+  --border-color: var(--bg3);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SHADOWS
+     ═══════════════════════════════════════════════════════════════ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(196, 30, 58, 0.3);
+
+  /* ═══════════════════════════════════════════════════════════════
+     TRANSITIONS
+     ═══════════════════════════════════════════════════════════════ */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+}
