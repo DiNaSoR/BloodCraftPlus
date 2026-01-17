@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════════════════════
+   CHANGELOG SECTION — Modern Expand/Collapse
+   ═══════════════════════════════════════════════════════════════ */
+
+.changelog-section {
+  margin-bottom: var(--space-2);
+}
+
+.changelog-section + .changelog-section {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-2);
+}
+
+/* Header (clickable) */
+.changelog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4) var(--space-2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast);
+  border-radius: var(--radius-md);
+}
+
+.changelog-header:hover {
+  background: var(--bg2);
+}
+
+.changelog-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.changelog-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* Version badge */
+.changelog-version {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-muted);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+/* Title */
+.changelog-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--fg0);
+}
+
+/* Date */
+.changelog-date {
+  font-size: var(--text-sm);
+  color: var(--fg2);
+  white-space: nowrap;
+}
+
+/* Chevron */
+.changelog-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg2);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.changelog-section.is-open .changelog-chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+/* Body wrapper for animation */
+.changelog-body-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease-out;
+}
+
+.changelog-section.is-open .changelog-body-wrapper {
+  grid-template-rows: 1fr;
+}
+
+/* Body content */
+.changelog-body {
+  overflow: hidden;
+  padding: 0 var(--space-2);
+}
+
+.changelog-section.is-open .changelog-body {
+  padding-bottom: var(--space-6);
+}
+
+/* Inner content styling */
+.changelog-body h3 {
+  font-size: var(--text-lg);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+  color: var(--fg0);
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.changelog-body h3:first-child {
+  margin-top: var(--space-4);
+}
+
+.changelog-body h4 {
+  font-size: var(--text-base);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+  color: var(--cyan);
+}
+
+.changelog-body ul {
+  margin-bottom: var(--space-3);
+}
+
+.changelog-body li {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+}
+
+/* Change type badges */
+.changelog-body h3 code {
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  margin-left: var(--space-2);
+  vertical-align: middle;
+}
+
+/* Current version header styling */
+.changelog-current {
+  margin-bottom: var(--space-4);
+}
+
+.changelog-current table {
+  max-width: 400px;
+  margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .changelog-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .changelog-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .changelog-title {
+    font-size: var(--text-base);
+  }
+}
