@@ -12,6 +12,18 @@ export function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const topLevelAccordionKeys = useMemo(() => {
+    // Only top-level items with a route path and children participate in the accordion.
+    // (Label-only groups like "Reference" / "Tools" are not part of the accordion.)
+    const keys = new Set<string>();
+    for (const item of docsConfig.nav) {
+      if (item.path && item.children?.length) {
+        keys.add(getNavKey(item));
+      }
+    }
+    return keys;
+  }, []);
+
   const activeExpandKeys = useMemo(() => {
     const keys = new Set<string>();
     for (const item of docsConfig.nav) {
@@ -42,12 +54,29 @@ export function Layout({ children }: LayoutProps) {
   useEffect(() => {
     setExpanded((prev) => {
       const next = { ...prev };
-      for (const key of activeExpandKeys) {
-        next[key] = true;
+
+      // Accordion behavior for top-level routed sections:
+      // if a top-level section becomes active, open it and close other top-level sections.
+      let hasActiveTopLevel = false;
+      for (const k of topLevelAccordionKeys) {
+        if (activeExpandKeys.has(k)) {
+          hasActiveTopLevel = true;
+          break;
+        }
       }
+
+      if (hasActiveTopLevel) {
+        for (const k of topLevelAccordionKeys) {
+          next[k] = activeExpandKeys.has(k);
+        }
+      }
+
+      // Always open active branch keys (covers nested expansions).
+      for (const key of activeExpandKeys) next[key] = true;
+
       return next;
     });
-  }, [activeExpandKeys]);
+  }, [activeExpandKeys, topLevelAccordionKeys]);
 
   return (
     <div className="layout">
@@ -98,6 +127,7 @@ export function Layout({ children }: LayoutProps) {
                 onNavigate={() => setSidebarOpen(false)}
                 expanded={expanded}
                 setExpanded={setExpanded}
+                topLevelAccordionKeys={topLevelAccordionKeys}
               />
             ))}
           </nav>
@@ -126,6 +156,7 @@ interface NavSectionProps {
   onNavigate: () => void;
   expanded: Record<string, boolean>;
   setExpanded: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  topLevelAccordionKeys: Set<string>;
   depth?: number;
 }
 
@@ -135,6 +166,7 @@ function NavSection({
   onNavigate,
   expanded,
   setExpanded,
+  topLevelAccordionKeys,
   depth = 0,
 }: NavSectionProps) {
   const isActive = item.path === currentPath;
@@ -149,7 +181,21 @@ function NavSection({
 
   const toggleOpen = () => {
     if (!hasChildren) return;
-    setExpanded((prev) => ({ ...prev, [navKey]: !prev[navKey] }));
+    setExpanded((prev) => {
+      const next = { ...prev };
+      const nextOpen = !prev[navKey];
+
+      // Accordion: if this is a top-level routed section, opening it closes other top-level sections.
+      if (depth === 0 && topLevelAccordionKeys.has(navKey) && nextOpen) {
+        for (const k of topLevelAccordionKeys) {
+          next[k] = k === navKey;
+        }
+      } else {
+        next[navKey] = nextOpen;
+      }
+
+      return next;
+    });
   };
 
   return (
@@ -205,6 +251,7 @@ function NavSection({
               onNavigate={onNavigate}
               expanded={expanded}
               setExpanded={setExpanded}
+              topLevelAccordionKeys={topLevelAccordionKeys}
               depth={depth + 1}
             />
           ))}

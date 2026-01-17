@@ -232,6 +232,38 @@ img {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   DOC LAYOUT HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+
+.tab-split {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  margin: var(--space-4) 0 var(--space-8);
+}
+
+.tab-split-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tab-split-media {
+  flex: 0 0 auto;
+  width: min(380px, 100%);
+}
+
+@media (max-width: 900px) {
+  .tab-split {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .tab-split-media {
+    width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    UTILITY CLASSES
    ═══════════════════════════════════════════════════════════════ */
 
