@@ -1,0 +1,49 @@
+:root {
+      /* Dimensions from Unity manifest.txt (rectW/rectH) */
+      --ui-scale: 1;
+      --panel-width: 596px;
+      /* BloodcraftTab Scroll View Viewport width */
+      --panel-height: 698px;
+      /* Viewport height: 698.01 */
+      --panel-padding-x: 24px;
+      /* BloodcraftBodyRoot offset from edge */
+      --panel-padding-top: 24px;
+      /* BloodcraftContentRoot padding-top */
+      --header-height: 80px;
+      /* HUDPanelBackground height */
+      --main-tab-width: var(--subtab-width);
+      /* Match subtab width */
+      --main-tab-height: var(--subtab-height);
+      /* Match subtab height */
+      --subtab-width: 137px;
+      /* BloodcraftSubTab_* width */
+      --subtab-height: 36px;
+      /* BloodcraftSubTab_* height */
+      --subtab-gap: 0px;
+      /* Tabs are adjacent (no gap) */
+      --content-width: 548px;
+      /* BloodcraftBodyRoot inner width */
+      --row-height: 30px;
+      /* ProfessionRow height */
+      --title-font: "Cinzel", "Palatino Linotype", "Book Antiqua", serif;
+      --body-font: "Cinzel", "Palatino Linotype", "Book Antiqua", serif;
+      --title-size: 26px;
+      --subtitle-size: 18px;
+      --tab-size: 16px;
+      --tab-color: #d7d0c6;
+      --tab-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      --accent: rgba(128, 12, 16, 0.45);
+      --divider: rgba(255, 255, 255, 0.2);
+      --progress-bg: rgba(255, 255, 255, 0.1);
+      --progress-fill: linear-gradient(90deg, #3fbf44, #9be64c);
+      /* Match in-game Familiars/StatBonuses dark header tint (Unity Image.color). */
+      --header-tint: rgba(26, 26, 31, 0.95);
+      --familiar-accent: rgba(152, 52, 24, 0.6);
+      --familiar-ember: rgba(214, 156, 98, 0.55);
+      --familiar-ink: rgba(6, 6, 8, 0.7);
+      --familiar-line: rgba(255, 255, 255, 0.12);
+      --familiar-header-size: 11px;
+      --familiar-subheader-size: 9px;
+      --familiar-detail-size: 10px;
+      --familiar-icon-size: 18px;
+    }

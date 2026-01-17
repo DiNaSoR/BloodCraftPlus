@@ -1,14 +1,15 @@
 # Design Mock
 
-The Design Mock is an HTML/CSS prototype of the BloodCraftPlus UI, used for designing and testing UI layouts before implementation.
+The Design Mock is a Vite + React + TypeScript prototype of the BloodCraftPlus UI, used for designing and testing UI layouts before implementation.
 
 ## Overview
 
 Located at `Tools/DesignMock/`, this tool provides:
 - Visual mockup of Character Menu tabs
 - CSS tokens matching in-game styling
-- Interactive prototyping
+- Interactive prototyping with React state
 - Reference for Unity UI implementation
+- Modular component architecture
 
 ---
 
@@ -17,14 +18,14 @@ Located at `Tools/DesignMock/`, this tool provides:
 ### Design Before Code
 
 The mock allows rapid iteration on UI designs:
-1. Design in HTML/CSS (fast iteration)
+1. Design in React components (fast iteration with hot reload)
 2. Test layouts and interactions
 3. Get approval on visuals
 4. Implement in Unity (guided by mock)
 
 ### Reference Implementation
 
-The CSS tokens and structure serve as documentation:
+The CSS tokens and component structure serve as documentation:
 - Color palette definitions
 - Spacing and sizing values
 - Component patterns
@@ -32,41 +33,84 @@ The CSS tokens and structure serve as documentation:
 
 ---
 
+## Quick Start
+
+```bash
+cd Tools/DesignMock
+npm install
+npm run dev
+```
+
+This starts a local dev server with hot module replacement. Open the URL shown in the terminal (typically `http://localhost:5173`).
+
+### Build for Distribution
+
+```bash
+npm run build
+```
+
+Output is written to `Tools/DesignMock/dist/`. To preview the built version:
+
+```bash
+npm run preview
+```
+
+---
+
 ## Structure
 
 ```
 Tools/DesignMock/
-├── index.html                    # Main mockup page
-├── design-mock.css               # Import entrypoint
-├── design-mock.tokens.css        # Design tokens
-├── design-mock.core.css          # Core styles
-├── design-mock.familiars.css     # Familiars tab styles
-├── design-mock.progression.css   # Progression tab styles
-├── design-mock.stat-bonuses.css  # Stat bonuses styles
-├── design-mock.equipment.css     # Equipment styles
-├── design-mock.js                # Interactive behavior
-├── build.ps1                     # Build script
+├── index.html                    # Vite entry HTML
+├── package.json                  # Dependencies and scripts
+├── vite.config.ts                # Vite configuration
+├── tsconfig.json                 # TypeScript configuration
 ├── src/
-│   ├── index.template.html       # Template source
-│   └── partials/                 # Reusable HTML partials
-└── assets/
-    ├── fonts/                    # Font atlases
-    └── sprites/                  # UI sprites from game
+│   ├── main.tsx                  # React entry point
+│   ├── App.tsx                   # Main app component
+│   ├── features/
+│   │   ├── equipment/            # Equipment panel
+│   │   └── bloodcraft/           # Bloodcraft panel and tabs
+│   │       ├── BloodcraftPanel.tsx
+│   │       └── tabs/
+│   │           ├── Prestige/
+│   │           ├── Exoform/
+│   │           ├── StatBonuses/
+│   │           ├── Progression/
+│   │           └── Familiars/
+│   ├── shared/
+│   │   ├── components/           # Reusable UI components
+│   │   └── types/                # TypeScript types
+│   └── mock-data/                # Sample data for the mock
+├── styles/
+│   ├── design-mock.css           # CSS import entrypoint
+│   ├── design-mock.tokens.css    # Design tokens
+│   ├── design-mock.base.css      # Base styles
+│   ├── design-mock.core.css      # Core styles
+│   └── design-mock.*.css         # Feature-specific styles
+├── public/
+│   └── assets/
+│       └── sprites/              # UI sprites from game
+└── legacy/                       # Archived original HTML/JS version
 ```
 
 ---
 
 ## Using the Mock
 
-### Viewing
+### Development
 
-Open `Tools/DesignMock/index.html` in a browser to see the mockup.
+1. Run `npm run dev` to start the dev server
+2. Edit React components in `src/features/`
+3. Changes hot-reload automatically
+4. CSS changes also hot-reload
 
-### Editing
+### Adding New UI
 
-1. Edit files in `src/` directory
-2. Run `build.ps1` to regenerate `index.html`
-3. Refresh browser to see changes
+1. Create a new component in the appropriate `features/` directory
+2. Use existing shared components from `shared/components/`
+3. Add mock data to `mock-data/index.ts` if needed
+4. Import and render in the parent component
 
 ### CSS Tokens
 
@@ -93,11 +137,34 @@ The token file defines reusable values:
 
 ---
 
+## Component Architecture
+
+The mock uses a modular component structure:
+
+- **App** - Main container with main tab state
+- **EquipmentPanel** - Equipment tab content
+- **BloodcraftPanel** - Bloodcraft tab with sub-tab navigation
+  - **PrestigeTab** - Leaderboard UI
+  - **ExoformTab** - Transformation UI
+  - **StatBonusesTab** - Weapon/Blood stat selection
+  - **ProgressionTab** - Professions and Class modes
+  - **FamiliarsTab** - Familiar management, battles, talents
+
+### Shared Components
+
+- `Card` / `CardHeader` - Panel cards with headers
+- `Select` - Dropdown selects
+- `Divider` - Horizontal dividers
+- `ActionRow` - Clickable action rows
+- `ChipGrid` - Selectable chip buttons
+
+---
+
 ## Assets
 
 ### Sprites
 
-Game sprites are extracted to `assets/sprites/`:
+Game sprites are located at `public/assets/sprites/`:
 - Window backgrounds
 - Tab buttons
 - Icons and decorations
@@ -105,9 +172,8 @@ Game sprites are extracted to `assets/sprites/`:
 
 ### Fonts
 
-Font atlases from the game:
-- Nocturne Serif (titles)
-- Liberation Sans (body)
+The mock uses web fonts that approximate the game fonts:
+- Cinzel (titles and body)
 
 ---
 
@@ -117,27 +183,13 @@ The mockup includes all Character Menu tabs:
 
 | Tab | Description |
 |-----|-------------|
-| Professions | Profession levels and bonuses |
-| Stat Bonuses | Weapon/Blood stat selection |
-| Familiars | Full familiar management |
-| Exoform | Transformation UI |
-| Prestige | Leaderboards |
-| Class | Class selection |
-
----
-
-## Build Script
-
-The `build.ps1` PowerShell script:
-1. Reads `src/index.template.html`
-2. Injects partials from `src/partials/`
-3. Outputs to `index.html`
-
-Usage:
-```powershell
-./build.ps1           # Build
-./build.ps1 -Check    # Validate without building
-```
+| Equipment | Gear slots and inventory |
+| Bloodcraft | RPG systems hub |
+| - Prestige | Leaderboards |
+| - Exoform | Transformation UI |
+| - Stat Bonuses | Weapon/Blood stat selection |
+| - Progression | Professions and Class |
+| - Familiars | Full familiar management |
 
 ---
 
@@ -145,14 +197,16 @@ Usage:
 
 When implementing in Unity, translate:
 
-| CSS Concept | Unity Equivalent |
-|-------------|------------------|
+| React/CSS Concept | Unity Equivalent |
+|-------------------|------------------|
 | `width/height` | `RectTransform` sizeDelta |
 | `padding` | `LayoutGroup` padding |
 | `gap` | `LayoutGroup` spacing |
 | `background-image` | `Image` sprite |
 | `color` | `Image.color` / `TMP_Text.color` |
 | `font-size` | `TMP_Text.fontSize` |
+| `useState` | Component state / service data |
+| `onClick` | `SimpleStunButton` or event handlers |
 
 ---
 
@@ -172,3 +226,7 @@ When updating UI:
 2. Get design approval
 3. Implement in Unity
 4. Update mock if implementation differs
+
+### Legacy Version
+
+The original static HTML/CSS/JS implementation is archived in `Tools/DesignMock/legacy/` for reference.
