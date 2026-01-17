@@ -34,11 +34,7 @@
 		<EmbeddedResource Include="Resources\Localization\English.json" />
 	</ItemGroup>
 
-        <ItemGroup>
-                <Compile Remove="Docs\**\*.cs" />
-				<Compile Remove="Server\**\*.cs" />
-				<Compile Remove="Tools\**\*.cs" />
-        </ItemGroup>
+	
 	
 	<ItemGroup>
 		<PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />

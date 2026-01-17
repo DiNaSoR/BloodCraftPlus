@@ -1,117 +1,87 @@
 ﻿# Project Memo
 
-Last updated: 2026-01-14
+Last updated: 2026-01-17
+
+## Project Structure (current truth)
+
+This is a **monorepo** with three main projects:
+
+```
+BloodCraftPlus/
+├── Client/EclipsePlus/    # Client mod (UI overlay)
+│   ├── EclipsePlus.csproj
+│   ├── Services/CharacterMenu/
+│   ├── Services/HUD/
+│   └── Patches/
+├── Server/Bloodcraftplus/     # Server mod (RPG systems)
+│   ├── Bloodcraftplus.csproj
+│   ├── Systems/
+│   ├── Interfaces/
+│   └── Commands/
+├── Tools/VDebug/          # Optional debug plugin
+│   └── VDebug.csproj
+└── Docs/                  # Documentation
+```
+
+---
 
 ## V Rising Mod – Familiars (current truth)
 
 - Ownership:
-  - UI: `Services/CharacterMenu/Tabs/FamiliarsTab.cs` (created/updated via `Services/CharacterMenuService.cs`)
-  - Box/chat updates: `Services/DataService.cs` + `Patches/ClientChatSystemPatch.cs`
-  - Sprite allowlist: `Services/HUD/Shared/HudData.cs`
+  - UI: `Client/EclipsePlus/Services/CharacterMenu/Tabs/FamiliarsTab.cs`
+  - Sub-panels: Battles, Talents, Overflow, Settings
+  - Box/chat updates: `Client/EclipsePlus/Services/DataService.cs` + `Client/EclipsePlus/Patches/ClientChatSystemPatch.cs`
+  - Sprite allowlist: `Client/EclipsePlus/Services/HUD/Shared/HudData.cs`
 
-- Familiars UI is owned by `Services/CharacterMenu/Tabs/FamiliarsTab.cs` (single owner; avoid parallel UI implementations).
+- Familiar Talents:
+  - Client UI: `Client/EclipsePlus/Services/CharacterMenu/Tabs/FamiliarsTab.Talents.cs`
+  - Server logic: `Server/Bloodcraftplus/Systems/Familiars/FamiliarTalentSystem.cs`
+  - Three paths: Speed, Power, Vitality with keystones
 
-- Familiars box live updates are driven by chat parsing:
-  - Parsing: `Services/DataService.cs`
-  - Hook/wiring: `Patches/ClientChatSystemPatch.cs`
-
-- The Current Box list is intentionally fixed to 10 slots:
-  - Always render 10 rows
-  - Empty rows are disabled placeholders (consistent layout)
-
-- Icon/sprite stability rules:
-  - Use manifest-backed sprite names where possible
-  - If a sprite fails to resolve, hide the icon to avoid white placeholder boxes
-  - HUD sprite allowlist must include required sprites for headers/dividers/icons:
-    - `Services/HUD/Shared/HudData.cs`
-
-- Binding must be slot-based (not name-based) to avoid ambiguity:
-  - Prefer `.fam b #` with delayed unbind→bind routine when needed
+- Familiar catch-up speed:
+  - Service: `Server/Bloodcraftplus/Services/FamiliarService.cs`
+  - 2x speed boost at 15+ units, returns to normal at 8 units
 
 ---
 
-## V Rising Mod – Stat Bonuses (current truth)
+## V Rising Mod – Gear Level Mirage (current truth)
 
-- Ownership:
-  - UI: `Services/CharacterMenu/Tabs/StatBonusesTab.cs` (created/updated via `Services/CharacterMenuService.cs`)
-  - Data payload + parsing:
-    - Weapon Expertise stats: `Server/Bloodcraft/Interfaces/EclipseInterface.cs` → `Patches/ClientChatSystemPatch.cs` → `Services/DataService.cs` (`ParseWeaponStatBonusData`)
-    - Blood Legacies stats: `Server/Bloodcraft/Interfaces/EclipseInterface.cs` (ProgressToClient / LegacyData) → `Patches/ClientChatSystemPatch.cs` → `Services/DataService.cs` (`ParsePlayerData`) → `Services/CanvasService.cs` (`DataHUD._legacy*`)
-  - Sprite allowlist: `Services/HUD/Shared/HudData.cs`
-
-- Stat Bonuses UI is owned by `Services/CharacterMenu/Tabs/StatBonusesTab.cs` (single owner; avoid parallel UI implementations).
-- Stat Bonuses panel supports two modes:
-  - Weapon Expertise (interactive via `.wep cst …`)
-  - Blood Legacies (interactive via `.bl cst …`)
-    - Requires Bloodcraft server behavior that supports toggling selections off (clicking an already-selected stat removes it). If the server is on older behavior (add-only), unselect will not work without `.bl rst`.
-
----
-
-## V Rising Mod – Exoform (current truth)
-
-- Ownership:
-  - UI: `Services/CharacterMenu/Tabs/ExoformTab.cs` (panel-based; created/updated via `Services/CharacterMenuService.cs`)
-  - Data payload + parsing: `Server/Bloodcraft/Interfaces/EclipseInterface.cs` (`ExoFormDataToClient`) → `Patches/ClientChatSystemPatch.cs` → `Services/DataService.cs` (`ParseExoFormData`)
-  - Sprite allowlist: `Services/HUD/Shared/HudData.cs`
-
-- Notes:
-  - Exoform UI no longer uses the legacy text-entry list (`BuildEntries()`).
-  - UI is click-only:
-    - Toggle Taunt-to-Exoform: `.prestige exoform`
-    - Select active form: `.prestige sf <FormName>`
-  - Ability names are resolved via prefab localization with safe fallback.
-
----
-
-## V Rising Mod – Prestige (current truth)
-
-- Ownership:
-  - UI: `Services/CharacterMenu/Tabs/PrestigeTab.cs` (panel-based; created/updated via `Services/CharacterMenuService.cs`)
-  - Data payload + parsing: `Server/Bloodcraft/Interfaces/EclipseInterface.cs` (`PrestigeLeaderboardToClient`) → `Patches/ClientChatSystemPatch.cs` → `Services/DataService.cs` (`ParsePrestigeLeaderboardData`)
-
-- Notes:
-  - Prestige tab is now click-only and panel-based (no legacy text-entry rendering).
-  - Type selection uses a dropdown list populated from `_prestigeLeaderboardOrder`.
-
----
-
-## V Rising Mod – Professions (current truth)
-
-- Ownership:
-  - UI: `Services/CharacterMenu/Tabs/ProfessionsTab.cs` (panel-based; created/updated via `Services/CharacterMenuService.cs`)
-  - Data source: `Services/DataService.cs` (`ParsePlayerData` → `_enchanting*`, `_alchemy*`, etc.)
-
-- Notes:
-  - When `Plugin.Professions` is disabled, the tab shows “Profession UI disabled.”
+- Display Level = Player Level + Weapon Expertise
+- Armor level hidden (set to 0)
+- Implementation: `Server/Bloodcraftplus/Systems/Leveling/LevelingSystem.cs` → `SetLevel()`
 
 ---
 
 ## Eclipse modular architecture (current truth)
 
 - Ownership:
-  - HUD subsystem: `Services/HUD/*`
-  - Character menu subsystem: `Services/CharacterMenu/*`
-  - Shared UI factory: `Services/CharacterMenu/Shared/UIFactory.cs`
+  - HUD subsystem: `Client/EclipsePlus/Services/HUD/*`
+  - Character menu subsystem: `Client/EclipsePlus/Services/CharacterMenu/*`
+  - Shared UI factory: `Client/EclipsePlus/Services/CharacterMenu/Shared/UIFactory.cs`
 
-- HUD subsystem lives under `Services/HUD/*` with clear ownership boundaries:
-  - Interfaces (`Interfaces/*`), base classes (`Base/*`), managers/orchestrator/integration, shared utilities/config/data, and concrete components.
+- Character Menu Tabs:
+  - Class, Exoform, Familiars, Prestige, Professions, Progression, StatBonuses
 
-- Character menu subsystem lives under `Services/CharacterMenu/*`:
-  - Tabs implement `ICharacterMenuTab` and typically derive from `CharacterMenuTabBase`.
-  - Shared UI creation helpers live in `Services/CharacterMenu/Shared/UIFactory.cs`.
-  - Orchestrator + integration manage lifecycle and wiring.
-
-- Backwards compatibility policy:
-  - Public APIs remain stable; legacy nested static classes delegate to extracted manager classes.
+- HUD Components:
+  - Experience Bar, Expertise Bar, Familiar Bar, Legacy Bar, Quest Tracker
 
 - Optional debug tooling lives in a separate plugin:
   - Debug plugin: `Tools/VDebug` (GUID: `com.dinasor.vdebug`)
-  - EclipsePlus calls it via reflection: `Services/DebugToolsBridge.cs` (safe no-op when not installed)
-  - All EclipsePlus logs route to VDebug (Info/Warning/Error) and are silent without it
+  - EclipsePlus calls it via reflection: `Client/EclipsePlus/Services/DebugToolsBridge.cs`
+  - All EclipsePlus logs route to VDebug (silent without it)
 
-- Il2Cpp constraints to remember:
-  - Avoid ambiguous `Object.Destroy()` → prefer `UnityEngine.Object.Destroy()`. 
-  - Avoid `new RectOffset(left,right,top,bottom)`; set properties explicitly.   
+---
 
-- Old monolithic sources are archived at:
-  - `Docs/Archive/OldServices/*`
+## Build & CI/CD (current truth)
+
+- GitHub Actions: `.github/workflows/build.yml`
+- Thunderstore configs:
+  - `Client/EclipsePlus/thunderstore.toml`
+  - `Server/Bloodcraftplus/thunderstore.toml`
+
+---
+
+## Il2Cpp constraints to remember
+
+- Avoid ambiguous `Object.Destroy()` → prefer `UnityEngine.Object.Destroy()`. 
+- Avoid `new RectOffset(left,right,top,bottom)`; set properties explicitly.

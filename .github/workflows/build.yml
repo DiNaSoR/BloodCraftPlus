@@ -28,22 +28,22 @@ jobs:
       - name: Extract versions from .csproj
         id: extract_versions
         run: |
-          eclipse_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Eclipse.csproj")
-          bloodcraft_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Server/Bloodcraft/Bloodcraft.csproj")
+          eclipse_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Client/EclipsePlus/EclipsePlus.csproj")
+          bloodcraft_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Server/Bloodcraftplus/Bloodcraftplus.csproj")
 
           echo "eclipse_version=$eclipse_version" >> $GITHUB_OUTPUT
           echo "bloodcraft_version=$bloodcraft_version" >> $GITHUB_OUTPUT
 
       - name: Update thunderstore.toml versions
         run: |
-          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.eclipse_version }}\"/" thunderstore.toml
-          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.bloodcraft_version }}\"/" Server/Bloodcraft/thunderstore.toml
+          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.eclipse_version }}\"/" Client/EclipsePlus/thunderstore.toml
+          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.bloodcraft_version }}\"/" Server/Bloodcraftplus/thunderstore.toml
 
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          if [ -n "$(git status --porcelain thunderstore.toml Server/Bloodcraft/thunderstore.toml)" ]; then
-            git add thunderstore.toml Server/Bloodcraft/thunderstore.toml
+          if [ -n "$(git status --porcelain Client/EclipsePlus/thunderstore.toml Server/Bloodcraftplus/thunderstore.toml)" ]; then
+            git add Client/EclipsePlus/thunderstore.toml Server/Bloodcraftplus/thunderstore.toml
             git commit -m "chore: sync thunderstore.toml versions (EclipsePlus ${{ steps.extract_versions.outputs.eclipse_version }}, Bloodcraftplus ${{ steps.extract_versions.outputs.bloodcraft_version }})"
             git push
           else
@@ -52,15 +52,15 @@ jobs:
           
       - name: Create secrets.json
         run: |
-          mkdir -p "${{ github.workspace }}/Resources"
-          mkdir -p "${{ github.workspace }}/Server/Bloodcraft/Resources"
-          cat > "${{ github.workspace }}/Resources/secrets.json" <<EOF
+          mkdir -p "${{ github.workspace }}/Client/EclipsePlus/Resources"
+          mkdir -p "${{ github.workspace }}/Server/Bloodcraftplus/Resources"
+          cat > "${{ github.workspace }}/Client/EclipsePlus/Resources/secrets.json" <<EOF
           {
             "NEW_SHARED_KEY": "${NEW_SHARED_KEY}"
           }
           EOF
 
-          cat > "${{ github.workspace }}/Server/Bloodcraft/Resources/secrets.json" <<EOF
+          cat > "${{ github.workspace }}/Server/Bloodcraftplus/Resources/secrets.json" <<EOF
           {
             "NEW_SHARED_KEY": "${NEW_SHARED_KEY}"
           }
@@ -68,14 +68,14 @@ jobs:
 
       - name: Restore
         run: |
-          dotnet restore Eclipse.csproj
-          dotnet restore Server/Bloodcraft/Bloodcraft.csproj
+          dotnet restore Client/EclipsePlus/EclipsePlus.csproj
+          dotnet restore Server/Bloodcraftplus/Bloodcraftplus.csproj
           
       - name: Build EclipsePlus (Release)
-        run: dotnet build Eclipse.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.eclipse_version }} -p:RunGenerateREADME=false
+        run: dotnet build Client/EclipsePlus/EclipsePlus.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.eclipse_version }} -p:RunGenerateREADME=false
 
       - name: Build Bloodcraftplus (Release)
-        run: dotnet build Server/Bloodcraft/Bloodcraft.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.bloodcraft_version }} -p:RunGenerateREADME=false
+        run: dotnet build Server/Bloodcraftplus/Bloodcraftplus.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.bloodcraft_version }} -p:RunGenerateREADME=false
 
       - name: GH Release
         uses: softprops/action-gh-release@v1
@@ -128,8 +128,8 @@ jobs:
           tag_name: v${{ steps.extract_versions.outputs.eclipse_version }}-bc${{ steps.extract_versions.outputs.bloodcraft_version }}
           generate_release_notes: false
           files: |
-            ./bin/Release/net6.0/EclipsePlus.dll
-            ./Server/Bloodcraft/bin/Release/net6.0/Bloodcraftplus.dll
+            ./Client/EclipsePlus/bin/Release/net6.0/EclipsePlus.dll
+            ./Server/Bloodcraftplus/bin/Release/net6.0/Bloodcraftplus.dll
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -138,11 +138,12 @@ jobs:
 
       - name: Publish EclipsePlus to Thunderstore
         run: |
+          cd Client/EclipsePlus
           tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.eclipse_version }}"
         continue-on-error: true
 
       - name: Publish Bloodcraftplus to Thunderstore
         run: |
-          cd Server/Bloodcraft
+          cd Server/Bloodcraftplus
           tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.bloodcraft_version }}"
         continue-on-error: true

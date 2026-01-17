@@ -17,16 +17,17 @@
 
 ---
 
-## 📦 This Repository Contains Two Mods
+## 📦 Repository Structure
 
-This is a **monorepo** containing both the client and server components:
+This is a **monorepo** containing three projects:
 
-| Mod | Type | Description |
-|-----|------|-------------|
-| **EclipsePlus** | 🖥️ Client | Beautiful UI overlay for players |
-| **BloodCraftPlus** | 🖧 Server | Core RPG systems and game logic |
+| Project | Type | Location | Description |
+|---------|------|----------|-------------|
+| **EclipsePlus** | 🖥️ Client | `Client/EclipsePlus/` | Beautiful UI overlay for players |
+| **Bloodcraftplus** | 🖧 Server | `Server/Bloodcraft/` | Core RPG systems and game logic |
+| **VDebug** | 🛠️ Tool | `Tools/VDebug/` | Optional debug & asset inspection |
 
-> ⚡ **Both mods are required** - The server mod provides the features, and the client mod displays them!
+> ⚡ **EclipsePlus + Bloodcraftplus are required** - The server mod provides the features, and the client mod displays them!
 
 ---
 
@@ -41,6 +42,7 @@ This is a **monorepo** containing both the client and server components:
 - **Weapon Expertise** - Master each weapon type
 - **Blood Legacies** - Gain power from feeding
 - **Prestige System** - Reset and grow stronger
+- **Gear Level Mirage** - Display = Level + Expertise
 
 </td>
 <td width="50%">
@@ -58,7 +60,7 @@ This is a **monorepo** containing both the client and server components:
 
 ### 🐺 Familiars
 - **Unlock 100+ Familiars** - Capture defeated foes
-- **Level & Prestige** - Train your companions
+- **Talent Trees** - Speed, Power, Vitality paths
 - **Familiar Battles** - PvP battles with familiars
 - **Shiny Variants** - Rare cosmetic effects
 
@@ -98,10 +100,16 @@ This is a **monorepo** containing both the client and server components:
    └── EclipsePlus.dll
 ```
 
-### Server Setup (BloodCraftPlus)
+### Server Setup (Bloodcraftplus)
 ```
 📁 VRisingServer/BepInEx/plugins/
-   └── BloodCraftPlus.dll
+   └── Bloodcraftplus.dll
+```
+
+### Optional: VDebug (Development)
+```
+📁 V Rising/BepInEx/plugins/
+   └── VDebug.dll
 ```
 
 ---
@@ -117,6 +125,19 @@ After installation, use these chat commands to get started:
 .fam l            → List your familiars
 .quest d          → View daily quest
 ```
+
+---
+
+## 🛠️ VDebug (Developer Tool)
+
+Optional debug plugin for modders and developers:
+
+- **Asset Dumping** - Export game assets and sprites
+- **UI Inspector** - Explore Unity UI hierarchy
+- **Layout Editor** - Adjust UI positions in real-time
+- **Debug Logging** - Centralized log routing
+
+See [Tools/VDebug/README.md](Tools/VDebug/README.md) for details.
 
 ---
 
@@ -138,7 +159,7 @@ After installation, use these chat commands to get started:
 <div align="center">
 
 [![Thunderstore EclipsePlus](https://img.shields.io/badge/Thunderstore-EclipsePlus%20(Client)-blue?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/EclipsePlus/)
-[![Thunderstore BloodCraftPlus](https://img.shields.io/badge/Thunderstore-BloodCraftPlus%20(Server)-green?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/)
+[![Thunderstore BloodCraftPlus](https://img.shields.io/badge/Thunderstore-Bloodcraftplus%20(Server)-green?style=for-the-badge)](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/)
 
 [![GitHub Releases](https://img.shields.io/badge/GitHub-Releases-black?style=for-the-badge&logo=github)](https://github.com/DiNaSoR/BloodCraftPlus/releases)
 
