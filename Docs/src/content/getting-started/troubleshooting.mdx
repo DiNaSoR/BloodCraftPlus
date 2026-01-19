@@ -28,9 +28,18 @@ Common issues and their solutions when using BloodCraftPlus.
 **Symptoms:** Experience bar, expertise bar, etc. are not visible.
 
 **Solutions:**
-1. Press `F9` to enter Layout Mode and check if bars are positioned off-screen
+1. Press `F9` to enter Layout Mode and check if bars are positioned off-screen  
 2. Reset HUD layout by deleting the layout config file
 3. Verify the corresponding system is enabled on the server
+
+### Veil HUD not showing (F1)
+
+**Symptoms:** Pressing `F1` logs “UI SHOWN” but nothing appears on screen.
+
+**Solutions:**
+1. Update to **Veil v0.1.1+** (older builds could lose the canvas during scene changes)
+2. Make sure you’re in-game (Veil input runs when the HUD is active)
+3. Check `BepInEx/LogOutput.log` for `CanvasManager` warnings/errors
 
 ---
 

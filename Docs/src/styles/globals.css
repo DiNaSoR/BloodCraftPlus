@@ -6,7 +6,9 @@
    RESET & BASE
    ═══════════════════════════════════════════════════════════════ */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -51,7 +53,12 @@ body {
    TYPOGRAPHY
    ═══════════════════════════════════════════════════════════════ */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: var(--leading-tight);
@@ -112,7 +119,8 @@ em {
    LISTS
    ═══════════════════════════════════════════════════════════════ */
 
-ul, ol {
+ul,
+ol {
   margin-bottom: var(--space-4);
   padding-left: var(--space-6);
   color: var(--fg1);
@@ -167,7 +175,8 @@ table {
   font-size: var(--text-sm);
 }
 
-th, td {
+th,
+td {
   padding: var(--space-3) var(--space-4);
   text-align: left;
   border-bottom: 1px solid var(--border-color);
@@ -267,14 +276,33 @@ img {
    UTILITY CLASSES
    ═══════════════════════════════════════════════════════════════ */
 
-.text-accent { color: var(--accent); }
-.text-muted { color: var(--fg2); }
-.text-center { text-align: center; }
+.text-accent {
+  color: var(--accent);
+}
 
-.mt-4 { margin-top: var(--space-4); }
-.mt-8 { margin-top: var(--space-8); }
-.mb-4 { margin-bottom: var(--space-4); }
-.mb-8 { margin-bottom: var(--space-8); }
+.text-muted {
+  color: var(--fg2);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
+.mt-8 {
+  margin-top: var(--space-8);
+}
+
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+
+.mb-8 {
+  margin-bottom: var(--space-8);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    CHANGELOG "CODEBOX" MODE (full-width, monospace panel)
@@ -314,6 +342,11 @@ img {
 .changelog-codebox .changelog-plugin-header--eclipse {
   background: rgba(139, 233, 253, 0.10);
   border-left-color: var(--cyan);
+}
+
+.changelog-codebox .changelog-plugin-header--Veil {
+  background: rgba(80, 250, 123, 0.10);
+  border-left-color: var(--green);
 }
 
 .changelog-codebox .changelog-plugin-header--bloodcraft {
@@ -365,11 +398,9 @@ img {
   bottom: 0;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    var(--changelog-entry-accent, rgba(255, 255, 255, 0.22)),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      var(--changelog-entry-accent, rgba(255, 255, 255, 0.22)),
+      transparent);
   opacity: 0.9;
 }
 

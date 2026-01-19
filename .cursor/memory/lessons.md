@@ -675,3 +675,38 @@
   - `Docs/src/content/**/*.mdx`
   - `.cursor/memory/hot-rules.md`
   - `.cursor/memory/memo.md`
+
+---
+
+## L-021 — Unity “destroyed == null”: init guards must check object liveness
+
+### Status
+- Active
+
+### Tags
+- [UI] [Init] [Reliability] [Unity]
+
+### Introduced
+- 2026-01-18
+
+### Symptom
+- Veil overlay toggles to “shown” but nothing renders; status shows `Canvas Ready: False` and `HudRoot: NULL`.
+
+### Root cause
+- The Veil canvas (and HUD root) can be destroyed during scene transitions.
+- A boolean `_initialized` gate prevented re-creation because it stayed `true` even after Unity destroyed the underlying objects (`UnityEngine.Object` “fake null”).
+
+### Wrong approach (DO NOT REPEAT)
+- Gating initialization solely on a boolean flag and assuming stored Unity object references remain valid forever.
+
+### Correct approach
+- Treat readiness as “critical Unity objects exist”: check `canvas != null` and `hudRoot != null` (Unity null semantics).
+- If the canvas/root are missing, rebuild and re-initialize UI components safely.
+
+### Rule
+> Any init/ready guard that depends on `UnityEngine.Object` must also account for Unity’s “destroyed == null” behavior and allow self-healing reinitialization.
+
+### References
+- Files:
+  - `Client/Veil/Core/CanvasManager.cs`
+  - `Client/Veil/UI/Components/UIComponentBase.cs`

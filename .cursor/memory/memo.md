@@ -1,10 +1,10 @@
 # Project Memo
 
-Last updated: 2026-01-17 (Docs site added)
+Last updated: 2026-01-18 (Veil canvas resilience)
 
 ## Project Structure (current truth)
 
-This is a **monorepo** with three main projects:
+This is a **monorepo** with multiple projects:
 
 ```
 BloodCraftPlus/
@@ -22,6 +22,9 @@ BloodCraftPlus/
 │   └── VDebug.csproj
 └── Docs/                  # Documentation
 ```
+
+Notes:
+- `Client/Veil/` is a separate, manifest-driven UI framework (adapter-based), independent from `Client/EclipsePlus/`.
 
 ---
 
