@@ -10,10 +10,10 @@ v-rising = ["oakveil-update", "mods", "client"]
 
 [package]
 namespace = "DiNaSoR"
-name = "EclipsePlus"
-versionNumber = "1.4.0"
-description = "Client UI for Bloodcraftplus!"
-websiteUrl = "https://github.com/DiNaSoR/BloodCraftPlus"
+name = "BloodUI"
+versionNumber = "1.0.0"
+description = "Client UI companion for BloodCraft - HUD bars, character menu, and quest tracking!"
+websiteUrl = "https://github.com/DiNaSoR/BloodUI"
 containsNsfwContent = false
 
 [build]
@@ -23,5 +23,5 @@ changelog = "./CHANGELOG.md"
 outdir = "./build"
 
 [[build.copy]]
-source = "./bin/Release/net6.0/EclipsePlus.dll"
+source = "./bin/Release/net6.0/BloodUI.dll"
 target = "/BepInEx/plugins/"

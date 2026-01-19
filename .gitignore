@@ -296,7 +296,6 @@ __pycache__/
 
 
 # Local Development
-*.secrets
 *.lutconfig
 build/
 dist/
@@ -304,7 +303,6 @@ dist/
 /*.sln
 /TODO.txt
 *.env
-secrets.json
 DevCommands.cs
 SystemTesting.cs
 TestPatches.cs

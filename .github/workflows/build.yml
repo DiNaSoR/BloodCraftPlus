@@ -25,125 +25,102 @@ jobs:
       - name: Install xmllint
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils
 
-      - name: Extract versions from .csproj
+      - name: Extract version from .csproj
         id: extract_versions
         run: |
-          eclipse_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Client/EclipsePlus/EclipsePlus.csproj")
-          bloodcraft_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Server/Bloodcraftplus/Bloodcraftplus.csproj")
+          bloodui_version=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" "Client/BloodUI/BloodUI.csproj")
+          echo "bloodui_version=$bloodui_version" >> $GITHUB_OUTPUT
 
-          echo "eclipse_version=$eclipse_version" >> $GITHUB_OUTPUT
-          echo "bloodcraft_version=$bloodcraft_version" >> $GITHUB_OUTPUT
-
-      - name: Update thunderstore.toml versions
+      - name: Update thunderstore.toml version
         run: |
-          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.eclipse_version }}\"/" Client/EclipsePlus/thunderstore.toml
-          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.bloodcraft_version }}\"/" Server/Bloodcraftplus/thunderstore.toml
+          sed -i "s/versionNumber = \".*\"/versionNumber = \"${{ steps.extract_versions.outputs.bloodui_version }}\"/" Client/BloodUI/thunderstore.toml
 
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          if [ -n "$(git status --porcelain Client/EclipsePlus/thunderstore.toml Server/Bloodcraftplus/thunderstore.toml)" ]; then
-            git add Client/EclipsePlus/thunderstore.toml Server/Bloodcraftplus/thunderstore.toml
-            git commit -m "chore: sync thunderstore.toml versions (EclipsePlus ${{ steps.extract_versions.outputs.eclipse_version }}, Bloodcraftplus ${{ steps.extract_versions.outputs.bloodcraft_version }})"
+          if [ -n "$(git status --porcelain Client/BloodUI/thunderstore.toml)" ]; then
+            git add Client/BloodUI/thunderstore.toml
+            git commit -m "chore: sync thunderstore.toml version (BloodUI ${{ steps.extract_versions.outputs.bloodui_version }})"
             git push
           else
-            echo "No changes to commit in thunderstore.toml files"
+            echo "No changes to commit in thunderstore.toml"
           fi
           
       - name: Create secrets.json
         run: |
-          mkdir -p "${{ github.workspace }}/Client/EclipsePlus/Resources"
-          mkdir -p "${{ github.workspace }}/Server/Bloodcraftplus/Resources"
-          cat > "${{ github.workspace }}/Client/EclipsePlus/Resources/secrets.json" <<EOF
-          {
-            "NEW_SHARED_KEY": "${NEW_SHARED_KEY}"
-          }
-          EOF
-
-          cat > "${{ github.workspace }}/Server/Bloodcraftplus/Resources/secrets.json" <<EOF
+          mkdir -p "${{ github.workspace }}/Client/BloodUI/Resources"
+          cat > "${{ github.workspace }}/Client/BloodUI/Resources/secrets.json" <<EOF
           {
             "NEW_SHARED_KEY": "${NEW_SHARED_KEY}"
           }
           EOF
 
       - name: Restore
-        run: |
-          dotnet restore Client/EclipsePlus/EclipsePlus.csproj
-          dotnet restore Server/Bloodcraftplus/Bloodcraftplus.csproj
+        run: dotnet restore Client/BloodUI/BloodUI.csproj
           
-      - name: Build EclipsePlus (Release)
-        run: dotnet build Client/EclipsePlus/EclipsePlus.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.eclipse_version }} -p:RunGenerateREADME=false
-
-      - name: Build Bloodcraftplus (Release)
-        run: dotnet build Server/Bloodcraftplus/Bloodcraftplus.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.bloodcraft_version }} -p:RunGenerateREADME=false
+      - name: Build BloodUI (Release)
+        run: dotnet build Client/BloodUI/BloodUI.csproj --configuration Release -p:Version=${{ steps.extract_versions.outputs.bloodui_version }}
 
       - name: GH Release
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'workflow_dispatch'
         with:
           body: |
-            # 🧛 Release v${{ steps.extract_versions.outputs.eclipse_version }}
+            # 🩸 BloodUI v${{ steps.extract_versions.outputs.bloodui_version }}
 
             <div align="center">
             
             ![V Rising Mod](https://img.shields.io/badge/V%20Rising-Mod-red?style=for-the-badge&logo=steam)
-            ![EclipsePlus](https://img.shields.io/badge/Client-EclipsePlus%20v${{ steps.extract_versions.outputs.eclipse_version }}-blue?style=for-the-badge)
-            ![Bloodcraftplus](https://img.shields.io/badge/Server-Bloodcraftplus%20v${{ steps.extract_versions.outputs.bloodcraft_version }}-green?style=for-the-badge)
+            ![BloodUI](https://img.shields.io/badge/Client-BloodUI%20v${{ steps.extract_versions.outputs.bloodui_version }}-crimson?style=for-the-badge)
             
             </div>
 
             ---
 
-            ## 📦 Downloads
+            ## 📦 Download
 
             | Mod | Type | Version | Description |
             |-----|------|---------|-------------|
-            | **EclipsePlus.dll** | 🖥️ Client | `v${{ steps.extract_versions.outputs.eclipse_version }}` | Install on your game client |
-            | **Bloodcraftplus.dll** | 🖧 Server | `v${{ steps.extract_versions.outputs.bloodcraft_version }}` | Install on your server |
+            | **BloodUI.dll** | 🖥️ Client | `v${{ steps.extract_versions.outputs.bloodui_version }}` | UI companion for BloodCraft |
 
             ---
 
             ## 🚀 Installation
 
-            ### Client (EclipsePlus)
-            1. Download `EclipsePlus.dll`
+            1. Download `BloodUI.dll`
             2. Place in `VRising/BepInEx/plugins/`
-            3. Launch the game
+            3. Join a server running [BloodCraft](https://thunderstore.io/c/v-rising/p/zfolmt/Bloodcraft/)
+            4. Enjoy the enhanced UI!
 
-            ### Server (Bloodcraftplus)
-            1. Download `Bloodcraftplus.dll`
-            2. Place in `VRisingServer/BepInEx/plugins/`
-            3. Restart the server
+            ---
+
+            ## ⚠️ Requirements
+
+            - [BepInEx 6](https://builds.bepinex.dev/projects/bepinex_be) for V Rising
+            - Server running [BloodCraft](https://thunderstore.io/c/v-rising/p/zfolmt/Bloodcraft/) by zfolmt
 
             ---
 
             <div align="center">
             
-            Made with ❤️ for the V Rising modding community
+            Made with ❤️ by DiNaSoR for the V Rising modding community
             
             </div>
-          name: v${{ steps.extract_versions.outputs.eclipse_version }}-bc${{ steps.extract_versions.outputs.bloodcraft_version }}
+          name: BloodUI v${{ steps.extract_versions.outputs.bloodui_version }}
           fail_on_unmatched_files: true
-          prerelease: true
-          tag_name: v${{ steps.extract_versions.outputs.eclipse_version }}-bc${{ steps.extract_versions.outputs.bloodcraft_version }}
+          prerelease: false
+          tag_name: v${{ steps.extract_versions.outputs.bloodui_version }}
           generate_release_notes: false
           files: |
-            ./Client/EclipsePlus/bin/Release/net6.0/EclipsePlus.dll
-            ./Server/Bloodcraftplus/bin/Release/net6.0/Bloodcraftplus.dll
+            ./Client/BloodUI/bin/Release/net6.0/BloodUI.dll
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Thunderstore CLI (tcli)
         run: dotnet tool install --global tcli
 
-      - name: Publish EclipsePlus to Thunderstore
+      - name: Publish BloodUI to Thunderstore
         run: |
-          cd Client/EclipsePlus
-          tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.eclipse_version }}"
-        continue-on-error: true
-
-      - name: Publish Bloodcraftplus to Thunderstore
-        run: |
-          cd Server/Bloodcraftplus
-          tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.bloodcraft_version }}"
+          cd Client/BloodUI
+          tcli publish --token "${{ secrets.THUNDERSTORE_KEY }}" --package-version "${{ steps.extract_versions.outputs.bloodui_version }}"
         continue-on-error: true

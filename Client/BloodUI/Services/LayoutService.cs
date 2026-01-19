@@ -12,7 +12,7 @@ namespace BloodUI.Services;
 
 internal static class LayoutService
 {
-    const string WindowTitle = "EclipsePLUS Layout";
+    const string WindowTitle = "BloodUI Layout";
     const string LayoutFileName = "layout.json";
 
     static readonly string LayoutPath = Path.Combine(Paths.ConfigPath, $"{MyPluginInfo.PLUGIN_GUID}.{LayoutFileName}");

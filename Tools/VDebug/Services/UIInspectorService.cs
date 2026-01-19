@@ -1280,7 +1280,7 @@ internal static class UIInspectorService
             }
 
             // 2) Fallback path: hit-test RectTransforms directly.
-            // This allows inspecting UI that intentionally uses `raycastTarget = false` (common in EclipsePlus + base game UI)
+            // This allows inspecting UI that intentionally uses `raycastTarget = false` (common in BloodUI + base game UI)
             // while still avoiding our own VDebug UI.
             return FallbackPickRectTransform(screenPos);
         }

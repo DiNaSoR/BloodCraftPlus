@@ -1,19 +1,15 @@
-# CHANGELOG - EclipsePlus (Client)
+# CHANGELOG - BloodUI (Client)
 # ==================================
 # V Rising client-side UI mod
+# Companion for BloodCraft by zfolmt
 # ==================================
 
-## [1.4.0] - 2026-01-17
+## [1.0.0] - 2026-01-19
 ----------------------------------------
 
-CHANGED:
-  - Protocol: bumped Eclipse sync to 1.4.x (update client + server together)
-
-FIXED:
-  - Familiar stats display: HP/PP/SP no longer mis-parses when values exceed limits
-
-## [1.3.15] - 2026-01-15
-----------------------------------------
+INITIAL RELEASE:
+  - Renamed from EclipsePlus to BloodUI
+  - Now works with original BloodCraft by zfolmt
 
 ADDED:
   - Character Menu System
@@ -40,47 +36,22 @@ ADDED:
     - Canvas-relative bounds for hit-testing
     - Enhanced drag/hover functionality
 
-IMPROVED:
-  - Renamed Professions tab to Progression
-  - Modular CSS structure
-  - Updated icons
+---
 
-FIXED:
-  - Compilation issues with Professions -> Progression references
-  - Improved logging framework
+## Pre-release History (as EclipsePlus)
 
-REMOVED:
-  - Unnecessary Class UI and Tabs UI functionality
-  - Deprecated services from the codebase
-  - Unused UI elements (streamlined project)
+### [0.9.0] - 2026-01-15
+- VDebug integration bridge for development tools
+- Layout editor with drag-and-drop positioning
+- Enhanced canvas service for UI management
+- Better error handling in data synchronization
+- Optimized HUD rendering performance
 
-## [1.3.14] - 2026-01-14
-----------------------------------------
-
-ADDED:
-  - VDebug integration bridge for development tools
-  - Layout editor with drag-and-drop positioning
-  - Enhanced canvas service for UI management
-
-IMPROVED:
-  - Better error handling in data synchronization
-  - Optimized HUD rendering performance
-
-FIXED:
-  - Layout persistence across game sessions
-  - UI element overlap issues
-
-## [1.3.13] - 2026-01-13
-----------------------------------------
-
-IMPROVED:
-  - Code cleanup and refactoring
-  - Removed deprecated components
-  - Improved type safety throughout
-
-FIXED:
-  - Various minor UI fixes
-  - Memory leak in HUD components
+### [0.8.0] - 2026-01-13
+- Code cleanup and refactoring
+- Removed deprecated components
+- Improved type safety throughout
+- Various minor UI fixes
 
 # ==================================
 # End of Changelog
