@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Common issues and their solutions when using BloodCraftPlus.
+Common issues and their solutions when using BloodCraft.
 
 ## Client Issues
 
@@ -9,7 +9,7 @@ Common issues and their solutions when using BloodCraftPlus.
 **Symptoms:** Pressing F8 does nothing, or shows an error.
 
 **Solutions:**
-1. Make sure you're connected to a server running **Bloodcraftplus**
+1. Make sure you're connected to a server running **BloodCraft**
 2. Check that `BloodUI.dll` is in the correct plugins folder
 3. Look for errors in `BepInEx/LogOutput.log`
 4. Try restarting the game
@@ -50,14 +50,14 @@ Common issues and their solutions when using BloodCraftPlus.
 **Symptoms:** Using `.lvl`, `.class`, etc. returns "Command not found".
 
 **Solutions:**
-1. Verify `Bloodcraftplus.dll` is in the server's plugins folder
+1. Verify `BloodCraft.dll` is in the server's plugins folder
 2. Check server logs for initialization errors
 3. Ensure VampireCommandFramework (VCF) is installed
 4. Restart the server
 
 ### Server fails to start
 
-**Symptoms:** Server crashes or hangs on startup with BloodCraftPlus.
+**Symptoms:** Server crashes or hangs on startup with BloodCraft.
 
 **Solutions:**
 1. Check `BepInEx/LogOutput.log` for errors
@@ -74,7 +74,7 @@ Common issues and their solutions when using BloodCraftPlus.
 **Symptoms:** No config file appears in `BepInEx/config/`.
 
 **Solutions:**
-1. Run the server at least once with Bloodcraftplus installed
+1. Run the server at least once with BloodCraft installed
 2. Check folder permissions
 3. Look for errors during initialization in logs
 
@@ -131,7 +131,7 @@ Common issues and their solutions when using BloodCraftPlus.
 **Symptoms:** Unexpected values or errors loading character.
 
 **Solutions:**
-1. Character data is stored per-SteamID in the Bloodcraftplus data folder
+1. Character data is stored per-SteamID in the BloodCraft data folder
 2. Backup and delete the problematic character's data file
 3. Character will start fresh with default values
 
@@ -156,7 +156,7 @@ Common issues and their solutions when using BloodCraftPlus.
 If you can't resolve your issue:
 
 1. **Check the logs** — `BepInEx/LogOutput.log` contains valuable debug info
-2. **Search existing issues** — [GitHub Issues](https://github.com/DiNaSoR/BloodCraftPlus/issues)
+2. **Search existing issues** — [GitHub Issues](https://github.com/DiNaSoR/BloodCraft/issues)
 3. **Ask in the community** — V Rising modding Discord servers
 4. **Report a bug** — Create a GitHub issue with:
    - Your mod versions

@@ -1,12 +1,12 @@
 # Installation Guide
 
-This guide walks you through installing BloodCraftPlus for both clients and servers.
+This guide walks you through installing BloodCraft for both clients and servers.
 
 ## Prerequisites
 
 ### BepInEx Installation
 
-BloodCraftPlus requires BepInEx 6.x (IL2CPP version). If you don't have BepInEx installed:
+BloodCraft requires BepInEx 6.x (IL2CPP version). If you don't have BepInEx installed:
 
 1. Download **BepInEx 6.x** for IL2CPP from the [BepInEx releases](https://github.com/BepInEx/BepInEx/releases)
 2. Extract to your V Rising or V Rising Server folder
@@ -26,7 +26,7 @@ BloodUI provides the beautiful in-game UI for viewing your progression.
 
 Get `BloodUI.dll` from one of these sources:
 - [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/BloodUI/)
-- [GitHub Releases](https://github.com/DiNaSoR/BloodCraftPlus/releases)
+- [GitHub Releases](https://github.com/DiNaSoR/BloodCraft/releases)
 
 ### Step 2: Install
 
@@ -49,32 +49,32 @@ Copy `BloodUI.dll` to your plugins folder:
 
 ---
 
-## Server Installation (Bloodcraftplus)
+## Server Installation (BloodCraft)
 
-Bloodcraftplus provides all the RPG systems and progression mechanics.
+BloodCraft provides all the RPG systems and progression mechanics.
 
 ### Step 1: Download
 
-Get `Bloodcraftplus.dll` from one of these sources:
-- [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/Bloodcraftplus/)
-- [GitHub Releases](https://github.com/DiNaSoR/BloodCraftPlus/releases)
+Get `BloodCraft.dll` from one of these sources:
+- [Thunderstore](https://new.thunderstore.io/c/v-rising/p/DiNaSoR/BloodCraft/)
+- [GitHub Releases](https://github.com/DiNaSoR/BloodCraft/releases)
 
 ### Step 2: Install
 
-Copy `Bloodcraftplus.dll` to your server's plugins folder:
+Copy `BloodCraft.dll` to your server's plugins folder:
 
 ```
 📁 VRisingServer/
 ├── 📁 BepInEx/
 │   └── 📁 plugins/
-│       └── 📄 Bloodcraftplus.dll  ← Place here
+│       └── 📄 BloodCraft.dll  ← Place here
 ├── 📄 VRisingServer.exe
 └── ...
 ```
 
 ### Step 3: Configure
 
-On first run, Bloodcraftplus generates a configuration file at:
+On first run, BloodCraft generates a configuration file at:
 
 ```
 📁 BepInEx/config/io.zfolmt.Bloodcraft.cfg
@@ -109,19 +109,19 @@ See the [VDebug documentation](/tools/vdebug) for details.
 
 ## Version Compatibility
 
-| BloodUI | Bloodcraftplus | V Rising |
+| BloodUI | BloodCraft | V Rising |
 |-------------|----------------|----------|
 | 1.3.x | 1.12.x | 1.1+ |
 
 <Callout type="warning">
-  Always use matching versions of BloodUI and Bloodcraftplus!
+  Always use matching versions of BloodUI and BloodCraft!
 </Callout>
 
 ---
 
 ## Updating
 
-To update BloodCraftPlus:
+To update BloodCraft:
 
 1. **Backup your config** — Save `io.zfolmt.Bloodcraft.cfg`
 2. **Replace the DLLs** — Download new versions and overwrite old files

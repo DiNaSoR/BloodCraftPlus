@@ -1,10 +1,10 @@
 # Data Flow
 
-This page explains how BloodCraftPlus synchronizes data between server and client.
+This page explains how BloodCraft synchronizes data between server and client.
 
 ## Overview
 
-BloodCraftPlus uses a **chat-based protocol** to sync progression data:
+BloodCraft uses a **chat-based protocol** to sync progression data:
 
 1. Server generates progression updates
 2. Data is encoded and sent via game chat
@@ -88,7 +88,7 @@ Data is sent as specially formatted chat messages:
 ### Chat Interception
 
 `ClientChatSystemPatch` intercepts incoming messages:
-- Identifies BloodCraftPlus data packets
+- Identifies BloodCraft data packets
 - Routes to appropriate handlers
 - Suppresses from chat display
 

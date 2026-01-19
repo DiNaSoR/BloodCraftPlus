@@ -1,11 +1,11 @@
 # Contributing
 
-Guidelines for contributing to BloodCraftPlus.
+Guidelines for contributing to BloodCraft.
 
 ## Overview
 
-BloodCraftPlus is a monorepo containing:
-- **Server mod** — `Server/Bloodcraftplus/`
+BloodCraft is a monorepo containing:
+- **Server mod** — `Server/BloodCraft/`
 - **Client mod** — `Client/BloodUI/`
 - **Debug tools** — `Tools/VDebug/`
 - **Documentation** — `Docs/`
@@ -24,8 +24,8 @@ BloodCraftPlus is a monorepo containing:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/DiNaSoR/BloodCraftPlus.git
-cd BloodCraftPlus
+git clone https://github.com/DiNaSoR/BloodCraft.git
+cd BloodCraft
 ```
 
 ### Build the Mods
@@ -35,7 +35,7 @@ cd BloodCraftPlus
 dotnet build Client/BloodUI/BloodUI.csproj -c Release
 
 # Server mod
-dotnet build Server/Bloodcraftplus/Bloodcraftplus.csproj -c Release
+dotnet build Server/BloodCraft/BloodCraft.csproj -c Release
 
 # Debug tools
 dotnet build Tools/VDebug/VDebug.csproj -c Release
@@ -119,7 +119,7 @@ See `lessons.md` for complete list of IL2CPP pitfalls.
 
 ## Architecture Notes
 
-### Server (Bloodcraftplus)
+### Server (BloodCraft)
 
 - **Systems** handle game mechanics
 - **Services** provide shared functionality
@@ -183,7 +183,7 @@ Include:
 
 ## Resources
 
-- [GitHub Repository](https://github.com/DiNaSoR/BloodCraftPlus)
+- [GitHub Repository](https://github.com/DiNaSoR/BloodCraft)
 - [V Rising Modding Discord](https://discord.gg/vrising)
 - [BepInEx Documentation](https://docs.bepinex.dev/)
 
