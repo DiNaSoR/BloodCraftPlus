@@ -1,8 +1,8 @@
 <#
-setup-cursor-memory.ps1 (Memory v3.2.2)
-Windows-first, token-safe, scalable repo memory for Cursor (or any AI agent).
+memory.ps1 (Mnemo v3.3.0)
+Windows-first, token-safe, scalable repo memory for AI coding agents.
 
-Merged from v3 (our helpers) + GPT v3.1 (BOM handling, tag validation, portable hooks):
+Merged from v3 (our helpers) (BOM handling, tag validation, portable hooks):
 - Curated "always read" memory: hot-rules.md + active-context.md + memo.md
 - Atomic lessons (individual files) with strict YAML frontmatter
 - Monthly journal + auto-generated digest + journal index
@@ -496,6 +496,111 @@ SEARCH FIRST, THEN FETCH:
 "@
 
 Write-TextFile (Join-Path $RulesDir "00-memory-system.mdc") $memoryRule -ForceWrite:$Force
+
+# -------------------------
+# Multi-agent bridge files
+# -------------------------
+
+$AgentRulesDir = Join-Path $RepoRoot ".agent\rules"
+Ensure-Dir $AgentRulesDir
+
+# Claude Code - CLAUDE.md
+$claudeMd = @"
+# Project Memory (Mnemo)
+
+This project uses [Mnemo](https://github.com/DiNaSoR/Mnemo) for structured AI memory.
+Memory lives in ``.cursor/memory/`` as the single source of truth.
+
+## Read Order (ALWAYS)
+1. ``.cursor/memory/hot-rules.md`` - tiny invariants (<20 lines)
+2. ``.cursor/memory/active-context.md`` - current session state
+3. ``.cursor/memory/memo.md`` - long-term project truth + ownership
+
+## Search First, Then Fetch
+- ``.cursor/memory/lessons/index.md`` → find lesson ID → open only that lesson file
+- ``.cursor/memory/digests/YYYY-MM.digest.md`` → before raw journal archaeology
+- ``.cursor/memory/journal/YYYY-MM.md`` → only for deep history
+
+## After Any Feature/Fix
+1. Update ``active-context.md`` during work
+2. Add journal entry when done
+3. Create lesson if you discovered a pitfall
+4. Update ``memo.md`` if project truth changed
+5. Clear ``active-context.md`` when task is merged
+"@
+
+# Gemini Antigravity - .agent/rules/memory-system.md
+$geminiRule = @"
+---
+description: Mnemo memory system - structured AI memory in .cursor/memory/
+alwaysApply: true
+---
+
+# Memory System (Mnemo)
+
+This project uses Mnemo for structured AI memory. All memory lives in ``.cursor/memory/``.
+
+## Read Order (ALWAYS)
+1. ``.cursor/memory/hot-rules.md`` - tiny invariants (read first)
+2. ``.cursor/memory/active-context.md`` - current session state
+3. ``.cursor/memory/memo.md`` - project truth + ownership
+
+## Search First, Then Fetch
+- ``.cursor/memory/lessons/index.md`` - searchable lesson index
+- ``.cursor/memory/digests/*.digest.md`` - monthly summaries
+- ``.cursor/memory/journal/*.md`` - raw history (last resort)
+
+## Authority Order
+1. Lessons override everything
+2. active-context overrides memo/journal (but NOT lessons)
+3. memo.md is long-term truth
+4. Journal is history
+
+## After Any Task
+- Update active-context.md during work
+- Add journal entry when done
+- Create lesson if you discovered a pitfall
+- Clear active-context.md when task is merged
+"@
+
+# OpenAI Codex - AGENTS.md
+$agentsMd = @"
+# Memory System (Mnemo)
+
+This project uses Mnemo for structured AI memory.
+Memory location: ``.cursor/memory/``
+
+## Retrieval Order
+1. Read ``.cursor/memory/hot-rules.md`` first (tiny, <20 lines)
+2. Read ``.cursor/memory/active-context.md`` for current session
+3. Read ``.cursor/memory/memo.md`` for project truth + ownership
+4. Search ``.cursor/memory/lessons/index.md`` before creating new patterns
+5. Check ``.cursor/memory/digests/`` before raw journal archaeology
+
+## Authority Order (highest to lowest)
+1. Lessons override EVERYTHING
+2. active-context.md overrides memo/journal (but NOT lessons)
+3. memo.md is long-term project truth
+4. Journal is history
+5. Existing codebase
+6. New suggestions (lowest priority)
+
+## After Any Feature/Fix
+- Update active-context.md during work (scratchpad)
+- Add journal entry to journal/YYYY-MM.md when done
+- Create lessons/L-XXX-title.md if you discovered a pitfall
+- Update memo.md if project truth changed
+- Clear active-context.md when task is merged
+"@
+
+Write-TextFile (Join-Path $RepoRoot "CLAUDE.md") $claudeMd -ForceWrite:$Force
+Write-TextFile (Join-Path $AgentRulesDir "memory-system.md") $geminiRule -ForceWrite:$Force
+Write-TextFile (Join-Path $RepoRoot "AGENTS.md") $agentsMd -ForceWrite:$Force
+
+Write-Host "`nMulti-agent bridge files created:" -ForegroundColor Cyan
+Write-Host "  - CLAUDE.md (Claude Code)" -ForegroundColor DarkCyan
+Write-Host "  - .agent/rules/memory-system.md (Gemini Antigravity)" -ForegroundColor DarkCyan
+Write-Host "  - AGENTS.md (OpenAI Codex)" -ForegroundColor DarkCyan
 
 # -------------------------
 # Helper scripts
