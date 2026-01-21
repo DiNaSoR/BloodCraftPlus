@@ -4,6 +4,16 @@
 # Companion for BloodCraft by zfolmt
 # ==================================
 
+## [1.4.0] - 2026-01-21
+----------------------------------------
+
+VERSION COMPATIBILITY:
+  - Updated version to 1.4.0 for BloodCraft compatibility
+  - Fixed client-server registration protocol
+  - MAC authentication now works correctly with server
+
+---
+
 ## [1.0.0] - 2026-01-19
 ----------------------------------------
 

@@ -15,7 +15,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
 
 // Source files
-const CONFIG_SERVICE_PATH = resolve(ROOT, 'Server/Bloodcraftplus/Services/ConfigService.cs');
+const CONFIG_SERVICE_PATH = resolve(ROOT, 'Server/BloodUI/Services/ConfigService.cs');
 const OUTPUT_PATH = resolve(__dirname, '../src/content/reference/config-generated.mdx');
 
 interface ConfigEntry {
@@ -96,7 +96,7 @@ function generateMDX(grouped: Map<string, ConfigEntry[]>): string {
 
   lines.push(`# Configuration Reference (Generated)`);
   lines.push('');
-  lines.push(`> This file is auto-generated from \`Server/Bloodcraftplus/Services/ConfigService.cs\`.`);
+  lines.push(`> This file is auto-generated from \`Server/BloodUI/Services/ConfigService.cs\`.`);
   lines.push(`> Last generated: ${new Date().toISOString().split('T')[0]}`);
   lines.push('');
   lines.push(`<Callout type="info">`);

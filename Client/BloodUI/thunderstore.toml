@@ -11,7 +11,7 @@ v-rising = ["oakveil-update", "mods", "client"]
 [package]
 namespace = "DiNaSoR"
 name = "BloodUI"
-versionNumber = "1.0.0"
+versionNumber = "1.4.0"
 description = "Client UI companion for BloodCraft - HUD bars, character menu, and quest tracking!"
 websiteUrl = "https://github.com/DiNaSoR/BloodUI"
 containsNsfwContent = false

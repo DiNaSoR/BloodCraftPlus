@@ -144,7 +144,7 @@ DebugToolsBridge.TryLogError("Fatal error occurred");
 
 See the reference implementations:
 - Client: [`Client/BloodUI/Services/DebugToolsBridge.cs`](../../Client/BloodUI/Services/DebugToolsBridge.cs)
-- Server: [`Server/Bloodcraftplus/Services/DebugToolsBridge.cs`](../../Server/Bloodcraftplus/Services/DebugToolsBridge.cs)
+
 
 ### Option 2: Hard Dependency
 

@@ -7,7 +7,7 @@ Last updated: 2026-01-18 (Veil canvas resilience)
 This is a **monorepo** with multiple projects:
 
 ```
-BloodCraftPlus/
+BloodUI/
 ├── Client/EclipsePlus/    # Client mod (UI overlay)
 │   ├── EclipsePlus.csproj
 │   ├── Services/CharacterMenu/

@@ -95,8 +95,8 @@ After first run, edit `BepInEx/config/com.dinasor.bloodui.cfg`:
 ## 🖼️ UI Preview
 
 <p align="center">
-  <img src="https://dinasor.github.io/BloodCraftPlus/images/Progression_tab_01.png" alt="Professions Tab" width="400">
-  <img src="https://dinasor.github.io/BloodCraftPlus/images/Familiars_tab_01.png" alt="Familiars Tab" width="400">
+  <img src="https://dinasor.github.io/BloodUI/images/Progression_tab_01.png" alt="Professions Tab" width="400">
+  <img src="https://dinasor.github.io/BloodUI/images/Familiars_tab_01.png" alt="Familiars Tab" width="400">
 </p>
 
 ---
