@@ -592,6 +592,21 @@ internal static class DataService
 
             _classStatSynergies = parsedConfigData.ClassStatSynergies;
 
+            // Phase 2: Infer system enablement from config values for BloodCraft compatibility
+            _classSystemEnabled = true; // Always enabled for BloodCraft
+            _classDataReady = true;
+
+            _prestigeSystemEnabled = _prestigeStatMultiplier > 0;
+            _prestigeLeaderboardEnabled = _prestigeSystemEnabled;
+            _prestigeDataReady = true;
+
+            _exoFormEnabled = _prestigeSystemEnabled;
+            _exoFormDataReady = true;
+
+            _familiarSystemEnabled = _familiarMaxLevel > 0;
+            _familiarBattlesEnabled = _familiarSystemEnabled;
+            _familiarBattleDataReady = true;
+
             try
             {
                 if (_extraRecipes) Recipes.ModifyRecipes();

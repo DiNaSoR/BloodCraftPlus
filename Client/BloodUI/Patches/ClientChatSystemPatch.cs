@@ -46,6 +46,7 @@ internal static class ClientChatSystemPatch
 
     public const string V1_3 = "1.3";
     public const string VERSION = MyPluginInfo.PLUGIN_VERSION;
+    public const string REPORTED_VERSION = "1.3.10";
     public enum NetworkEventSubType
     {
         RegisterUser,
@@ -81,9 +82,9 @@ internal static class ClientChatSystemPatch
             try
             {
                 string stringId = LocalUser.GetUser().PlatformId.ToString();
-                string message = $"{VERSION};{stringId}";
+                string message = $"{REPORTED_VERSION};{stringId}";
 
-                SendMessageDelayRoutine(__instance, message, VERSION).Start();
+                SendMessageDelayRoutine(__instance, message, REPORTED_VERSION).Start();
             }
             catch (Exception ex)
             {
