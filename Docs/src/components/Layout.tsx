@@ -106,7 +106,7 @@ export function Layout({ children }: LayoutProps) {
             GitHub
           </a>
           <a
-            href={docsConfig.links.thunderstoreServer}
+            href={docsConfig.links.thunderstore}
             target="_blank"
             rel="noopener noreferrer"
             className="header-link"
