@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Client/BloodUI/icon.png" alt="BloodUI" width="200">
+  <img src="https://dinasor.github.io/BloodUI/images/banner.png" alt="BloodUI" width="900">
 </p>
 <div align="center">
 
