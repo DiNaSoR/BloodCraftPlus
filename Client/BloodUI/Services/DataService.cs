@@ -313,9 +313,7 @@ internal static class DataService
     public static bool _familiarOverflowDataReady;
     public static readonly List<FamiliarOverflowEntryData> _familiarOverflowEntries = [];
     
-    // Familiar Talent sync from server
-    public static readonly HashSet<int> _familiarAllocatedTalents = [];
-    public static bool _familiarTalentsDataReady = false;
+
     
     static bool _familiarBoxListCaptureActive;
     static bool _familiarBoxEntriesCaptureActive;
@@ -1206,52 +1204,6 @@ internal static class DataService
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Parses TALENTS:x,y,z response from server to sync allocated talents.
-    /// </summary>
-    public static bool TryParseFamiliarTalentMessage(string message)
-    {
-        if (string.IsNullOrEmpty(message)) return false;
-
-        // Remove color tags
-        string cleanMessage = FamiliarColorTagRegex.Replace(message, "").Trim();
-
-        if (!cleanMessage.StartsWith("TALENTS:", StringComparison.OrdinalIgnoreCase))
-            return false;
-
-        string payload = cleanMessage.Substring("TALENTS:".Length);
-        _familiarAllocatedTalents.Clear();
-
-        if (payload.Equals("NONE", StringComparison.OrdinalIgnoreCase))
-        {
-            // No active familiar - don't mark as ready, need to retry when familiar is bound
-            DebugToolsBridge.TryLogInfo("[DataService] Familiar talents: no active familiar, will retry");
-            return true; // Parsed successfully, but don't set ready flag
-        }
-
-        if (payload.Equals("EMPTY", StringComparison.OrdinalIgnoreCase))
-        {
-            // Active familiar exists but has no talents - this is valid data
-            _familiarTalentsDataReady = true;
-            DebugToolsBridge.TryLogInfo("[DataService] Familiar talents synced: none allocated");
-            return true;
-        }
-
-        // Parse comma-separated talent IDs
-        string[] talentParts = payload.Split(',', StringSplitOptions.RemoveEmptyEntries);
-        foreach (string part in talentParts)
-        {
-            if (int.TryParse(part.Trim(), out int talentId))
-            {
-                _familiarAllocatedTalents.Add(talentId);
-            }
-        }
-
-        _familiarTalentsDataReady = true;
-        DebugToolsBridge.TryLogInfo($"[DataService] Familiar talents synced: {string.Join(",", _familiarAllocatedTalents)}");
-        return true;
     }
 
     static bool IsFamiliarBoxHeader(string rawMessage, string cleanMessage)
